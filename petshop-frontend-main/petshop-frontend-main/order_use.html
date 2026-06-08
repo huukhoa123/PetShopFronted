@@ -529,7 +529,7 @@ function sid(v) { return (v !== null && v !== undefined) ? String(v).trim() : ''
 // ─── LẤY USER TỪ LOCALSTORAGE ──────────────
 function getUser() {
   try {
-    // Customers.html lưu vào key 'user' — kiểm tra cả 'currentUser'
+    // customers.html lưu vào key 'user' — kiểm tra cả 'currentUser'
     const raw = localStorage.getItem('currentUser') || localStorage.getItem('user');
     return raw ? JSON.parse(raw) : null;
   } catch { return null; }
