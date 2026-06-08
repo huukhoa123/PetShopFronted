@@ -243,7 +243,103 @@
       "vui lòng nhập đầy đủ thông tin!": "Please fill in all information!",
       "không kết nối được server!": "Cannot connect to server!",
       "đăng xuất?": "Log out?",
-      "sai tên đăng nhập hoặc mật khẩu!": "Incorrect username or password!"
+      "sai tên đăng nhập hoặc mật khẩu!": "Incorrect username or password!",
+
+      // --- Booking / Services Page (services_use.html) ---
+      "điền thông tin đặt lịch": "Fill Booking Information",
+      "thông tin của bạn": "Your Information",
+      "họ & tên *": "Full Name *",
+      "số điện thoại *": "Phone Number *",
+      "tên thú cưng & giống *": "Pet Name & Breed *",
+      "chọn dịch vụ": "Select Service",
+      "chọn ngày": "Select Date",
+      "chọn giờ": "Select Time",
+      "ghi chú (tuỳ chọn)": "Notes (optional)",
+      "tóm tắt đặt lịch": "Booking Summary",
+      "dịch vụ:": "Service:",
+      "ngày:": "Date:",
+      "giờ:": "Time:",
+      "tổng tiền:": "Total Price:",
+      "xác nhận đặt lịch": "Confirm Booking",
+      "vui lòng nhập họ và tên.": "Please enter your full name.",
+      "vui lòng nhập số điện thoại hợp lệ (10 số).": "Please enter a valid phone number (10 digits).",
+      "vui lòng nhập email hợp lệ.": "Please enter a valid email address.",
+      "vui lòng nhập tên thú cưng.": "Please enter your pet's name.",
+      "vui lòng chọn dịch vụ muốn đặt.": "Please select the service to book.",
+      "vui lòng chọn ngày hẹn.": "Please select the appointment date.",
+      "vui lòng chọn giờ hẹn.": "Please select the appointment time.",
+      "đặt lịch thành công! 🎉": "Booking Successful! 🎉",
+      "vui lòng thanh toán để xác nhận lịch hẹn. cảm ơn bạn đã tin tưởng pet luxury! 🐾": "Please complete the payment to confirm your appointment. Thank you for choosing PET LUXURY! 🐾",
+      "thanh toán ngay": "Pay Now",
+      "thanh toán sau": "Pay Later",
+      "mã lịch hẹn:": "Booking ID:",
+      "hôm nay": "Today",
+      "hết giờ hôm nay. vui lòng chọn ngày khác.": "Fully booked today. Please select another date.",
+      "đang tải dịch vụ...": "Loading services...",
+      "giá làm việc: thứ 2 – thứ 7, 09:00 – 18:00": "Working hours: Mon – Sat, 09:00 – 18:00",
+      "thông tin đặt lịch": "Booking Info",
+      "t2": "Mon",
+      "t3": "Tue",
+      "t4": "Wed",
+      "t5": "Thu",
+      "t6": "Fri",
+      "t7": "Sat",
+      "cn": "Sun",
+      "thứ 2": "Monday",
+      "thứ 3": "Tuesday",
+      "thứ 4": "Wednesday",
+      "thứ 5": "Thursday",
+      "thứ 6": "Friday",
+      "thứ 7": "Saturday",
+      "chủ nhật": "Sunday",
+      "chủ bé mochi – golden": "Owner of Mochi – Golden",
+      "chủ bé bông – corgi": "Owner of Bong – Corgi",
+      "chủ bé cam – maine coon": "Owner of Cam – Maine Coon",
+
+      // --- Admin Bookings Page (bookings.html) ---
+      "quản lý lịch hẹn": "Manage Appointments",
+      "danh sách lịch hẹn": "Appointment List",
+      "tạo lịch hẹn": "Create Appointment",
+      "tạo lịch hẹn mới": "Create New Appointment",
+      "lịch trình hôm nay": "Today's Schedule",
+      "tìm kiếm khách, thú cưng...": "Search customers, pets...",
+      "tất cả nhân viên": "All Employees",
+      "tất cả trạng thái": "All Statuses",
+      "chờ xác nhận": "Pending",
+      "đã xác nhận": "Confirmed",
+      "đang thực hiện": "In Progress",
+      "không đến": "No Show",
+      "lịch hẹn": "Appointments",
+      "lưu lịch hẹn": "Save Appointment",
+      "cập nhật trạng thái": "Update Status",
+      "lý do hủy": "Cancel Reason",
+      "khách hàng / thú cưng": "Customer / Pet",
+      "thời gian": "Time",
+      "thao tác": "Actions",
+      "khách không có lịch hẹn nào": "No appointments found",
+      "nhân viên thực hiện": "Assigned Employee",
+      "ghi chú": "Notes",
+      "ghi chú thêm...": "Additional notes...",
+      "chỉnh sửa lịch hẹn": "Edit Appointment",
+      "thông tin": "Info",
+
+      // --- Admin Schedules Page (schedules.html) ---
+      "dạng lịch": "Calendar View",
+      "danh sách": "List View",
+      "tải mẫu excel": "Download Excel Template",
+      "import excel": "Import Excel",
+      "thêm ca làm việc": "Add Shift",
+      "thêm ca làm việc mới": "Add New Shift",
+      "chỉnh sửa ca làm việc": "Edit Shift",
+      "lưu ca làm việc": "Save Shift",
+      "ngày làm": "Work Date",
+      "ngày làm việc *": "Work Date *",
+      "giờ bắt đầu": "Start Time",
+      "giờ bắt đầu *": "Start Time *",
+      "giờ kết thúc": "End Time",
+      "giờ kết thúc *": "End Time *",
+      "chọn nhân viên *": "Select Employee *",
+      "chưa có lịch làm việc nào.": "No work schedules found."
     }
   };
 
@@ -285,6 +381,27 @@
     // 2. "X sản phẩm" -> "X products"
     if (/^\d+\s+sản phẩm$/i.test(lowerText)) {
       return cleanText.replace(/sản phẩm/i, 'products');
+    }
+    // 3. "Tháng X, YYYY" -> "MonthName, YYYY"
+    if (/^tháng\s+(\d+),\s*(\d{4})$/i.test(lowerText)) {
+      const match = lowerText.match(/^tháng\s+(\d+),\s*(\d{4})$/i);
+      const mNum = parseInt(match[1]);
+      const year = match[2];
+      const enMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      return `${enMonths[mNum - 1]}, ${year}`;
+    }
+    // 4. "DD Tháng MM" or "DD Tháng M" -> "MonthName DD"
+    if (/^(\d+)\s+tháng\s+(\d+)$/i.test(lowerText)) {
+      const match = lowerText.match(/^(\d+)\s+tháng\s+(\d+)$/i);
+      const day = match[1];
+      const mNum = parseInt(match[2]);
+      const enMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      return `${enMonths[mNum - 1]} ${day}`;
+    }
+    // 5. "Mã lịch hẹn: #LHxxxx" -> "Booking ID: #LHxxxx"
+    if (/^mã lịch hẹn:\s*(#lh\d+)$/i.test(lowerText)) {
+      const match = cleanText.match(/^mã lịch hẹn:\s*(#lh\d+)$/i);
+      return `Booking ID: ${match[1]}`;
     }
 
     const dict = translations[currentLang];
