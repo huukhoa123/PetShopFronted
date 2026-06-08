@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme:{ extend:{
+      colors:{
+        "primary-container":"#58ff5e","secondary-fixed-dim":"#c4d4ff","primary-fixed":"#58ff5e",
+        "inverse-primary":"#58ff5e","outline-variant":"#adc500","surface-variant":"#d9f600",
+        "on-primary":"#ffffff","surface-dim":"#d3f000","on-tertiary":"#ffffff","primary":"#007517",
+        "on-secondary":"#ffffff","surface-bright":"#fcffdc","error-container":"#fa746f",
+        "background":"#fcffdc","tertiary-container":"#5289ef","secondary-fixed":"#d9e2ff",
+        "on-primary-fixed-variant":"#006914","tertiary-fixed":"#5289ef","outline":"#788900",
+        "on-secondary-container":"#174ea6","primary-fixed-dim":"#47f051","tertiary-fixed-dim":"#437ce1",
+        "secondary-container":"#d9e2ff","on-surface":"#333c00","surface-container":"#e9ff6f",
+        "error":"#af3d3b","secondary":"#3161ba","surface-tint":"#007517","primary-dim":"#006713",
+        "on-background":"#333c00","on-primary-container":"#005e11","inverse-on-surface":"#92a700",
+        "surface-container-high":"#defc00","on-surface-variant":"#5d6b00","tertiary-dim":"#0054b7",
+        "surface":"#fcffdc","on-tertiary-fixed":"#000000","on-error":"#ffffff",
+        "inverse-surface":"#0c1000","surface-container-highest":"#d9f600","secondary-dim":"#2155ad",
+        "on-tertiary-container":"#000311","error-dim":"#67040d","surface-container-low":"#f6ffbe",
+        "tertiary":"#1f61c4","on-error-container":"#6e0a12","on-tertiary-fixed-variant":"#001435",
+        "on-primary-fixed":"#00490b","on-secondary-fixed":"#003b8a","surface-container-lowest":"#ffffff",
+        "on-secondary-fixed-variant":"#2658b0"
+      },
+      borderRadius:{"DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px"},
+      fontFamily:{sans:["Inter","sans-serif"]}
+    }}
+  }
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;padding:0;font-family:'Inter',sans-serif}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+  .fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+  .nav-item.active{background:#eff6ff;color:#1d4ed8;font-weight:700}
+  .tab-btn.active{background:#58ff5e;color:#005e11;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .stat-card{transition:transform .15s,box-shadow .15s}
+  .stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.10)}
+  #toast{position:fixed;bottom:24px;right:24px;z-index:999;display:none}
+  .t-box{padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  .t-ok{background:#007517;color:#fff}.t-err{background:#af3d3b;color:#fff}
+  .skel{background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%);background-size:200% 100%;animation:skl 1.4s ease-in-out infinite;border-radius:4px;display:block}
+  @keyframes skl{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .spin{width:28px;height:28px;border:2.5px solid #adc500;border-top-color:#007517;border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .progress-bar{height:8px;border-radius:4px;transition:width .7s ease}
+  .s-Pending,.s-Scheduled{background:#fef3c7;color:#92400e}
+  .s-Confirmed{background:#dbeafe;color:#1e40af}
+  .s-Processing{background:#ede9fe;color:#5b21b6}
+  .s-Delivered,.s-Completed,.s-Done{background:#dcfce7;color:#166534}
+  .s-Cancelled{background:#fee2e2;color:#991b1b}
+  .trow:hover{background:#f8fff8}
+  svg text{font-family:'Inter',sans-serif}
+</style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors text-sm font-medium mb-1">
+      <span class="material-symbols-outlined text-[20px]">arrow_back</span>Về trang chủ
+    </a>
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="flex-1 flex flex-col ml-64 min-w-0 bg-background">
+
+  <!-- TOPBAR -->
+  <header class="bg-slate-50/90 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 flex justify-between items-center h-16 px-6">
+    <span class="text-xl font-black tracking-tight text-slate-900">PetShop Admin</span>
+    <div class="flex items-center gap-md">
+      <span class="text-xs text-slate-400 hidden md:block" id="lastUpdated"></span>
+      <button onclick="loadAll()" id="refreshBtn" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100" title="Làm mới">
+        <span class="material-symbols-outlined text-[20px]" id="refreshIcon">refresh</span>
+      </button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100">
+        <span class="material-symbols-outlined text-[20px]">notifications</span>
+      </button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+      </button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div id="dash-avatar" class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">Q</div>
+        <span id="dash-username" class="text-sm font-semibold text-on-surface">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CANVAS -->
+  <main class="flex-1 overflow-y-auto p-6">
+
+    <!-- Header + Tab switcher -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+      <div>
+        <h2 class="text-3xl font-black tracking-tight text-on-background">Thống kê</h2>
+        <p class="text-sm text-on-surface-variant mt-1" id="greeting">Chào mừng trở lại 👋</p>
+      </div>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+        <div class="flex items-center gap-2">
+          <button onclick="createExcelReport()" id="createExcelBtn" class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-primary-dim transition-colors" title="Tạo file Excel thống kê">
+            <span class="material-symbols-outlined text-[18px]">table_chart</span>
+            Tạo Excel
+          </button>
+          <button onclick="downloadExcelReport()" id="downloadExcelBtn" disabled class="inline-flex items-center justify-center gap-2 rounded-lg border border-outline-variant bg-surface px-4 py-2 text-xs font-bold text-on-surface transition-colors hover:bg-surface-container disabled:cursor-not-allowed disabled:opacity-50" title="Tải file Excel thống kê">
+            <span class="material-symbols-outlined text-[18px]">download</span>
+            Tải Excel
+          </button>
+        </div>
+        <div class="flex bg-surface-container-low rounded-full p-1 border border-outline-variant/30 gap-1 flex-shrink-0">
+          <button onclick="switchTab('revenue')"   data-tab="revenue"   class="tab-btn active  px-5 py-2 rounded-full text-xs font-semibold transition-all">Doanh thu</button>
+          <button onclick="switchTab('products')"  data-tab="products"  class="tab-btn px-5 py-2 rounded-full text-xs font-semibold transition-all text-on-surface-variant hover:bg-surface-variant/40">Sản phẩm</button>
+          <button onclick="switchTab('customers')" data-tab="customers" class="tab-btn px-5 py-2 rounded-full text-xs font-semibold transition-all text-on-surface-variant hover:bg-surface-variant/40">Khách hàng</button>
+          <button onclick="switchTab('services')"  data-tab="services"  class="tab-btn px-5 py-2 rounded-full text-xs font-semibold transition-all text-on-surface-variant hover:bg-surface-variant/40">Dịch vụ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STAT CARDS ── -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <!-- Doanh thu -->
+      <div class="stat-card bg-surface-container rounded-xl p-6 border border-outline-variant/20 relative overflow-hidden group cursor-pointer" onclick="location.href='payments.html'">
+        <div class="absolute -right-5 -top-5 w-20 h-20 bg-primary-container/30 rounded-full blur-xl group-hover:bg-primary-container/50 transition-colors"></div>
+        <div class="flex items-center justify-between mb-4 relative z-10">
+          <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tổng doanh thu</span>
+          <div class="p-2 bg-surface-bright rounded-lg text-primary"><span class="material-symbols-outlined fill">account_balance_wallet</span></div>
+        </div>
+        <div class="font-black text-2xl text-on-surface relative z-10 leading-tight" id="cardRevenue"><span class="skel h-7 w-32 inline-block"></span></div>
+        <div class="text-sm text-primary flex items-center mt-2 font-semibold relative z-10">
+          <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span><span id="cardRevenueSubTxt">Đang tải...</span>
+        </div>
+      </div>
+      <!-- Đơn hàng -->
+      <div class="stat-card bg-surface-container rounded-xl p-6 border border-outline-variant/20 relative overflow-hidden group cursor-pointer" onclick="location.href='orders.html'">
+        <div class="absolute -right-5 -top-5 w-20 h-20 bg-tertiary-container/20 rounded-full blur-xl group-hover:bg-tertiary-container/40 transition-colors"></div>
+        <div class="flex items-center justify-between mb-4 relative z-10">
+          <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tổng đơn hàng</span>
+          <div class="p-2 bg-surface-bright rounded-lg text-tertiary"><span class="material-symbols-outlined fill">shopping_bag</span></div>
+        </div>
+        <div class="font-black text-2xl text-on-surface relative z-10 leading-tight" id="cardOrders"><span class="skel h-7 w-16 inline-block"></span></div>
+        <div class="text-sm text-primary flex items-center mt-2 font-semibold relative z-10">
+          <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span><span id="cardOrdersSub">Đang tải...</span>
+        </div>
+      </div>
+      <!-- Khách hàng -->
+      <div class="stat-card bg-surface-container rounded-xl p-6 border border-outline-variant/20 relative overflow-hidden group cursor-pointer" onclick="location.href='customers.html'">
+        <div class="absolute -right-5 -top-5 w-20 h-20 bg-secondary-container/30 rounded-full blur-xl group-hover:bg-secondary-container/50 transition-colors"></div>
+        <div class="flex items-center justify-between mb-4 relative z-10">
+          <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tổng khách hàng</span>
+          <div class="p-2 bg-surface-bright rounded-lg text-secondary"><span class="material-symbols-outlined fill">person_add</span></div>
+        </div>
+        <div class="font-black text-2xl text-on-surface relative z-10 leading-tight" id="cardCustomers"><span class="skel h-7 w-16 inline-block"></span></div>
+        <div class="text-sm text-primary flex items-center mt-2 font-semibold relative z-10">
+          <span class="material-symbols-outlined text-[16px] mr-1">group</span><span id="cardCustomersSub">Đang tải...</span>
+        </div>
+      </div>
+      <!-- Dịch vụ (primary bg) -->
+      <div class="stat-card bg-primary rounded-xl p-6 shadow-lg relative overflow-hidden group cursor-pointer" onclick="location.href='services.html'">
+        <div class="absolute -right-8 -top-8 w-28 h-28 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="flex items-center justify-between mb-4 relative z-10">
+          <span class="text-[11px] font-semibold text-primary-container uppercase tracking-wider">Dịch vụ</span>
+          <div class="p-2 bg-white/15 rounded-lg text-primary-container backdrop-blur-sm"><span class="material-symbols-outlined fill">medical_services</span></div>
+        </div>
+        <div class="font-black text-2xl text-white relative z-10 leading-tight" id="cardServices"><span class="skel h-7 w-12 inline-block" style="background:rgba(255,255,255,.2)"></span></div>
+        <div class="text-sm text-primary-container flex items-center mt-2 font-semibold relative z-10">
+          <span class="material-symbols-outlined text-[16px] mr-1">medical_services</span><span id="cardServicesSub">Đang tải...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: DOANH THU ══ -->
+    <div id="tab-revenue" class="tab-panel">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+        <!-- Line Chart -->
+        <div class="lg:col-span-2 bg-surface-container-low rounded-xl p-6 border border-outline-variant/20 flex flex-col" style="min-height:360px">
+          <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+            <h3 class="font-bold text-lg text-on-surface">Doanh thu theo thời gian</h3>
+            <select id="chartRange" onchange="loadRevenueChart()" class="bg-surface border border-outline-variant/50 text-sm rounded-lg px-3 py-1.5 text-on-surface focus:ring-primary outline-none">
+              <option value="7">7 ngày qua</option>
+              <option value="30" selected>30 ngày qua</option>
+              <option value="365">Theo tháng</option>
+            </select>
+          </div>
+          <div class="flex-1 flex flex-col relative" style="min-height:250px">
+            <div id="chartWrap" class="flex-1 flex relative">
+              <!-- Y axis -->
+              <div class="w-14 flex-shrink-0 flex flex-col justify-between text-[10px] text-on-surface-variant text-right pr-2 pb-7" id="yAxis"></div>
+              <!-- Chart -->
+              <div class="flex-1 relative pb-7 min-w-0">
+                <svg id="lineChart" width="100%" height="100%" style="display:none;position:absolute;top:0;left:0;right:0;bottom:28px" preserveAspectRatio="none"></svg>
+                <div id="chartLoader" class="absolute inset-0 flex items-center justify-center"><div class="spin"></div></div>
+                <!-- X axis labels -->
+                <div class="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] text-on-surface-variant" id="xAxis"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right panel -->
+        <div class="flex flex-col gap-4">
+          <!-- Monthly revenue -->
+          <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/20">
+            <h3 class="font-bold text-sm text-on-surface mb-4">Doanh thu theo tháng</h3>
+            <div id="monthlyList" class="flex flex-col gap-3">
+              <span class="skel h-4 w-full"></span><span class="skel h-4 w-5/6"></span><span class="skel h-4 w-4/6"></span>
+            </div>
+          </div>
+          <!-- Order status donut-style -->
+          <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/20 flex-1">
+            <h3 class="font-bold text-sm text-on-surface mb-4">Trạng thái đơn hàng</h3>
+            <div id="orderStatusList" class="flex flex-col gap-2.5">
+              <span class="skel h-4 w-full"></span><span class="skel h-4 w-5/6"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent orders table -->
+      <div class="mt-4 bg-surface-container-low rounded-xl border border-outline-variant/20 overflow-hidden">
+        <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center justify-between">
+          <h3 class="font-bold text-base text-on-surface">Đơn hàng gần đây</h3>
+          <a href="orders.html" class="text-xs text-secondary font-semibold hover:underline">Xem tất cả →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left min-w-[580px]">
+            <thead><tr class="bg-surface border-b border-outline-variant/20">
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Mã đơn</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Khách hàng</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tổng tiền</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Trạng thái</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Ngày</th>
+            </tr></thead>
+            <tbody id="recentOrdersBody" class="divide-y divide-outline-variant/20 text-sm">
+              <tr><td colspan="5" class="px-4 py-10 text-center text-slate-300">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: SẢN PHẨM ══ -->
+    <div id="tab-products" class="tab-panel hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Top products -->
+        <div class="lg:col-span-2 bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <h3 class="font-bold text-base text-on-surface mb-5 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">trending_up</span>Top sản phẩm bán chạy
+          </h3>
+          <div id="topProductsChart" class="flex flex-col gap-4">
+            <span class="skel h-6 w-full"></span><span class="skel h-6 w-5/6"></span><span class="skel h-6 w-4/6"></span>
+          </div>
+        </div>
+        <!-- Low stock alert -->
+        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <h3 class="font-bold text-base text-on-surface mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-error text-[20px]">warning</span>Tồn kho thấp
+          </h3>
+          <div id="lowStockList" class="flex flex-col gap-2.5">
+            <span class="skel h-8 w-full rounded-lg"></span><span class="skel h-8 w-full rounded-lg"></span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 bg-surface-container-low rounded-xl border border-outline-variant/20 overflow-hidden">
+        <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center justify-between">
+          <h3 class="font-bold text-base text-on-surface">Danh sách sản phẩm</h3>
+          <a href="products.html" class="text-xs text-secondary font-semibold hover:underline">Quản lý →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left min-w-[480px]">
+            <thead><tr class="bg-surface border-b border-outline-variant/20">
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Sản phẩm</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Giá bán</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tồn kho</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Trạng thái</th>
+            </tr></thead>
+            <tbody id="productsBody" class="divide-y divide-outline-variant/20 text-sm">
+              <tr><td colspan="4" class="px-4 py-10 text-center text-slate-300">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: KHÁCH HÀNG ══ -->
+    <div id="tab-customers" class="tab-panel hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Donut phân khúc -->
+        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <h3 class="font-bold text-base text-on-surface mb-5">Phân khúc khách hàng</h3>
+          <div class="flex items-center justify-center gap-6 flex-wrap">
+            <div class="relative w-36 h-36 flex-shrink-0" id="donutWrap">
+              <div class="w-full h-full rounded-full" id="donutChart" style="background:conic-gradient(#e9ff6f 0% 100%)"></div>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <div class="w-24 h-24 rounded-full bg-surface-container-low absolute"></div>
+                <span class="relative font-black text-2xl text-on-surface z-10" id="donutTotal">—</span>
+                <span class="relative text-[10px] text-on-surface-variant z-10">KH</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2" id="donutLegend"></div>
+          </div>
+        </div>
+        <!-- Tier bars -->
+        <div class="lg:col-span-2 bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <h3 class="font-bold text-base text-on-surface mb-5">Phân bố hạng thành viên</h3>
+          <div id="tierChart" class="flex flex-col gap-4">
+            <span class="skel h-6 w-full"></span><span class="skel h-6 w-3/4"></span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 bg-surface-container-low rounded-xl border border-outline-variant/20 overflow-hidden">
+        <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center justify-between">
+          <h3 class="font-bold text-base text-on-surface">Danh sách khách hàng</h3>
+          <a href="customers.html" class="text-xs text-secondary font-semibold hover:underline">Quản lý →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left min-w-[480px]">
+            <thead><tr class="bg-surface border-b border-outline-variant/20">
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Khách hàng</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Liên hệ</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Hạng</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Điểm</th>
+            </tr></thead>
+            <tbody id="customersBody" class="divide-y divide-outline-variant/20 text-sm">
+              <tr><td colspan="4" class="px-4 py-10 text-center text-slate-300">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: DỊCH VỤ ══ -->
+    <div id="tab-services" class="tab-panel hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Booking stat cards -->
+        <div class="lg:col-span-2 bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <h3 class="font-bold text-base text-on-surface mb-5 flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[20px]">analytics</span>Thống kê lịch hẹn
+          </h3>
+          <div class="grid grid-cols-2 gap-4" id="bookingStats">
+            <span class="skel h-20 w-full rounded-xl"></span><span class="skel h-20 w-full rounded-xl"></span>
+            <span class="skel h-20 w-full rounded-xl"></span><span class="skel h-20 w-full rounded-xl"></span>
+          </div>
+          <!-- Booking status bars -->
+          <div class="mt-5" id="bookingStatusBars"></div>
+        </div>
+        <!-- Services list -->
+        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <h3 class="font-bold text-base text-on-surface mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">content_cut</span>Dịch vụ hiện có
+          </h3>
+          <div id="servicesList" class="flex flex-col gap-2">
+            <span class="skel h-10 w-full rounded-lg"></span><span class="skel h-10 w-full rounded-lg"></span>
+          </div>
+          <a href="services.html" class="mt-4 flex items-center justify-center gap-1 text-xs text-secondary font-semibold hover:underline">
+            Quản lý dịch vụ →
+          </a>
+        </div>
+      </div>
+      <div class="mt-4 bg-surface-container-low rounded-xl border border-outline-variant/20 overflow-hidden">
+        <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center justify-between">
+          <h3 class="font-bold text-base text-on-surface">Lịch hẹn gần đây</h3>
+          <a href="bookings.html" class="text-xs text-secondary font-semibold hover:underline">Xem tất cả →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left min-w-[500px]">
+            <thead><tr class="bg-surface border-b border-outline-variant/20">
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Mã lịch</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Dịch vụ</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Ngày hẹn</th>
+              <th class="px-4 py-3 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Trạng thái</th>
+            </tr></thead>
+            <tbody id="bookingsBody" class="divide-y divide-outline-variant/20 text-sm">
+              <tr><td colspan="4" class="px-4 py-10 text-center text-slate-300">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast"><div id="tBox" class="t-box t-ok"><span class="material-symbols-outlined text-[18px]">check_circle</span><span id="tMsg"></span></div></div>
+
+<script>
+const API   = 'http://localhost:8080/api';
+const TOKEN = localStorage.getItem('token');
+if (!TOKEN) location.href = 'login.html';
+
+// Init user
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  const displayEl = document.getElementById('userDisplay') || document.getElementById('dash-username');
+  const avatarEl = document.getElementById('avatarInitial') || document.getElementById('dash-avatar');
+  if (displayEl) displayEl.textContent = n;
+  if (avatarEl) avatarEl.textContent = n.charAt(0).toUpperCase();
+  document.getElementById('userRole').textContent      = u.role||'Administrator';
+  const h = new Date().getHours();
+  document.getElementById('greeting').textContent = `${h<12?'Chào buổi sáng':h<18?'Chào buổi chiều':'Chào buổi tối'}, ${n} 👋`;
+} catch(e){}
+
+// ── HELPERS ──
+const H = () => ({'Content-Type':'application/json','Authorization':`Bearer ${TOKEN}`});
+
+function fmtVND(n){
+  const v=Number(n||0);
+  if(v>=1e9) return (v/1e9).toFixed(2)+' Tỷ ₫';
+  if(v>=1e6) return (v/1e6).toFixed(1)+' Tr ₫';
+  return v.toLocaleString('vi-VN')+' ₫';
+}
+function fmtDate(s){ try{ return new Date(s).toLocaleDateString('vi-VN'); }catch{return s||'—';} }
+
+function toast(msg,type='ok'){
+  document.getElementById('tMsg').textContent=msg;
+  document.getElementById('tBox').className=`t-box t-${type}`;
+  document.getElementById('toast').style.display='block';
+  setTimeout(()=>document.getElementById('toast').style.display='none',3000);
+}
+function logout(){ if(!confirm('Đăng xuất?'))return; localStorage.clear(); location.href='login.html'; }
+
+function statusBadge(s){
+  const l={Pending:'Chờ xử lý',Confirmed:'Xác nhận',Processing:'Đang xử lý',Delivered:'Đã giao',Completed:'Hoàn thành',Cancelled:'Đã hủy',Scheduled:'Đã đặt',Done:'Hoàn thành'};
+  return `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold s-${s}">${l[s]||s}</span>`;
+}
+function tierBadge(t){
+  const m={BRONZE:['#fde8d0','#92400e','🥉 Đồng'],SILVER:['#e2e8f0','#334155','🥈 Bạc'],GOLD:['#fef08a','#713f12','🥇 Vàng'],PLATINUM:['#d9e2ff','#174ea6','💎 Bạch Kim']};
+  const [bg,c,l]=(m[t||'BRONZE']||m.BRONZE);
+  return `<span style="background:${bg};color:${c}" class="px-2 py-0.5 rounded-full text-[10px] font-bold">${l}</span>`;
+}
+
+// ── STATE ──
+let allOrders=[], allCustomers=[], allProducts=[], allServices=[], allBookings=[];
+let revenueMonthly=[], topProducts=[];
+let currentTab='revenue';
+let dashboardSummary={};
+let excelReportWorkbook=null;
+let excelReportFileName='';
+
+// ── TAB SWITCH ──
+function switchTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    const on=b.dataset.tab===tab;
+    b.classList.toggle('active',on);
+    b.classList.toggle('text-on-surface-variant',!on);
+    b.classList.toggle('hover:bg-surface-variant/40',!on);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+  document.getElementById('tab-'+tab).classList.remove('hidden');
+  if(tab==='revenue')   renderRevenueTab();
+  if(tab==='products')  renderProductsTab();
+  if(tab==='customers') renderCustomersTab();
+  if(tab==='services')  renderServicesTab();
+}
+
+// ── LOAD ALL ──
+async function loadAll(){
+  const icon=document.getElementById('refreshIcon');
+  icon.style.animation='sp .7s linear infinite';
+  document.getElementById('lastUpdated').textContent='Đang tải...';
+  await Promise.allSettled([
+    fetchDashboardSummary(),   // ✅ revenue cards từ DB thực
+    fetchOrders(), fetchCustomers(), fetchProducts(),
+    fetchServices(), fetchBookings(), fetchTopProducts(), fetchMonthlyRevenue()
+  ]);
+  excelReportWorkbook=null;
+  excelReportFileName='';
+  const dlBtn=document.getElementById('downloadExcelBtn');
+  if(dlBtn) dlBtn.disabled=true;
+  loadRevenueChart();
+  document.getElementById('lastUpdated').textContent=`Cập nhật: ${new Date().toLocaleTimeString('vi-VN')}`;
+  icon.style.animation='';
+  if(currentTab!=='revenue') switchTab(currentTab);
+}
+
+// ── FETCH DASHBOARD SUMMARY (từ Payments thực tế trong DB) ──
+async function fetchDashboardSummary(){
+  try{
+    const j=await fetch(`${API}/statistics/dashboard`,{headers:H()}).then(r=>r.json());
+    const s=j.data||j||{};
+    dashboardSummary=s;
+    document.getElementById('cardRevenue').textContent=fmtVND(s.totalRevenue||0);
+    document.getElementById('cardRevenueSubTxt').textContent=
+      `Hôm nay: ${fmtVND(s.todayRevenue||0)} | Tháng: ${fmtVND(s.monthRevenue||0)}`;
+    document.getElementById('cardOrders').textContent=(s.totalOrders||0).toLocaleString();
+    document.getElementById('cardOrdersSub').textContent=`${s.pendingOrders||0} đang chờ xử lý`;
+    document.getElementById('cardCustomers').textContent=(s.totalCustomers||0).toLocaleString();
+    document.getElementById('cardCustomersSub').textContent=`${s.goldPlusCustomers||0} hạng Gold+`;
+    document.getElementById('cardServices').textContent=(s.totalServices||0).toLocaleString();
+    document.getElementById('cardServicesSub').textContent=`${s.totalServices||0} dịch vụ hiện có`;
+
+  }catch(e){
+    console.warn('[Dashboard] fetchDashboardSummary lỗi, fallback localStorage:', e);
+
+    // ✅ THÊM: Đọc từ localStorage khi API lỗi
+    try {
+      const payments = JSON.parse(localStorage.getItem('petshop_completed_payments') || '[]');
+      const paid = payments.filter(p => p.paymentStatus === 'paid');
+      const getAmt = p => Number(p.finalAmount || p.amount) || 0;
+      const totalRevenue = paid.reduce((s, p) => s + getAmt(p), 0);
+      const today = new Date().toDateString();
+      const todayRevenue = paid
+        .filter(p => new Date(p.paidAt || p.orderDate).toDateString() === today)
+        .reduce((s, p) => s + getAmt(p), 0);
+      const thisMonth = new Date().getMonth();
+      const thisYear  = new Date().getFullYear();
+      const monthRevenue = paid
+        .filter(p => { const d = new Date(p.paidAt || p.orderDate); return d.getMonth() === thisMonth && d.getFullYear() === thisYear; })
+        .reduce((s, p) => s + getAmt(p), 0);
+
+      document.getElementById('cardRevenue').textContent = fmtVND(totalRevenue);
+      document.getElementById('cardRevenueSubTxt').textContent =
+        `Hôm nay: ${fmtVND(todayRevenue)} | Tháng: ${fmtVND(monthRevenue)}`;
+      document.getElementById('cardOrders').textContent = paid.length;
+      document.getElementById('cardOrdersSub').textContent = `${paid.length} đơn đã thanh toán`;
+      dashboardSummary={totalRevenue,todayRevenue,monthRevenue,totalOrders:paid.length,totalPayments:paid.length};
+    } catch(e2) { console.warn('Fallback localStorage lỗi:', e2); }
+  }
+}
+
+// ── FETCH FUNCTIONS ──
+async function fetchOrders(){
+  try{
+    const j=await fetch(`${API}/orders`,{headers:H()}).then(r=>r.json());
+    allOrders=j.data||j||[];
+    // Chỉ render list/chart — revenue cards đã được fetchDashboardSummary lo
+    if(currentTab==='revenue'){ renderRecentOrders(); renderOrderStatus(); }
+  }catch(e){ console.warn('fetchOrders lỗi',e); }
+}
+
+async function fetchCustomers(){
+  try{
+    const j=await fetch(`${API}/customers`,{headers:H()}).then(r=>r.json());
+    allCustomers=j.data||j||[];
+  }catch(e){ document.getElementById('cardCustomers').textContent='—'; }
+}
+
+async function fetchProducts(){
+  try{
+    const j=await fetch(`${API}/products`,{headers:H()}).then(r=>r.json());
+    allProducts=j.data||j||[];
+  }catch(e){}
+}
+
+async function fetchServices(){
+  try{
+    const j=await fetch(`${API}/services`,{headers:H()}).then(r=>r.json());
+    allServices=j.data||j||[];
+    document.getElementById('cardServices').textContent=allServices.length;
+    document.getElementById('cardServicesSub').textContent=`${allServices.length} dịch vụ hiện có`;
+  }catch(e){ document.getElementById('cardServices').textContent='—'; }
+}
+
+async function fetchBookings(){
+  try{
+    const j=await fetch(`${API}/bookings`,{headers:H()}).then(r=>r.json());
+    allBookings=j.data||j||[];
+  }catch(e){}
+}
+
+async function fetchTopProducts(){
+  try{
+    const j=await fetch(`${API}/statistics/top-products`,{headers:H()}).then(r=>r.json());
+    topProducts=j.data||j||[];
+  }catch(e){ topProducts=[]; }
+}
+
+async function fetchMonthlyRevenue(){
+  try{
+    const j=await fetch(`${API}/statistics/revenue/monthly`,{headers:H()}).then(r=>r.json());
+    revenueMonthly=j.data||j||[];
+    renderMonthlyRevenue();
+  }catch(e){}
+}
+
+// ════════════════════════════════════════════════════════════════
+//  PETSHOP ADMIN  —  EXCEL EXPORT ENGINE
+//  Design: Corporate Minimal — Slate + Teal accent
+// ════════════════════════════════════════════════════════════════
+
+// ─── Design Token System ────────────────────────────────────────
+const T = {
+  dark1:   'FF0F172A',
+  dark2:   'FF1E293B',
+  dark3:   'FF334155',
+
+  teal600: 'FF0D9488',
+  teal500: 'FF14B8A6',
+  teal200: 'FF99F6E4',
+  teal50:  'FFF0FDFA',
+
+  n50:     'FFF8FAFC',
+  n100:    'FFF1F5F9',
+  n200:    'FFE2E8F0',
+  n300:    'FFCBD5E1',
+  n500:    'FF64748B',
+  n700:    'FF334155',
+  n900:    'FF0F172A',
+  white:   'FFFFFFFF',
+
+  sPendBg: 'FFFEFCE8', sPendFg: 'FF854D0E',
+  sConfBg: 'FFEFF6FF', sConfFg: 'FF1D4ED8',
+  sDoneBg: 'FFF0FDF4', sDoneFg: 'FF166534',
+  sShipBg: 'FFF5F3FF', sShipFg: 'FF5B21B6',
+  sCancBg: 'FFFEF2F2', sCancFg: 'FFB91C1C',
+};
+
+// ─── Helpers ────────────────────────────────────────────────────
+const VN_STATUS = {
+  Pending:'Chờ xử lý', Confirmed:'Xác nhận', Processing:'Đang xử lý',
+  Shipped:'Đang giao',  Delivered:'Đã giao',  Cancelled:'Đã hủy', Refunded:'Hoàn tiền'
+};
+const VN_PAYMENT = {
+  BankTransfer:'Chuyển khoản', Cash:'Tiền mặt', QRCode:'QR Code',
+  COD:'COD', VNPAY:'VNPay', MOMO:'MoMo'
+};
+const statusText = s => VN_STATUS[s]  || s || '';
+const payText    = m => VN_PAYMENT[m] || m || '';
+const dateVal    = s => { if(!s)return''; const d=new Date(s); return Number.isNaN(d.getTime())?'':d; };
+const moneyFmt   = () => '#,##0 "đ"';
+const numFmt     = () => '#,##0';
+const dateFmt    = () => 'dd/mm/yyyy';
+const dtFmt      = () => 'dd/mm/yyyy hh:mm';
+
+// ─── Cell styler ─────────────────────────────────────────────────
+function C(cell, {bg, fg=T.n700, bold=false, italic=false, size=9.5,
+                   h='left', v='middle', wrap=false, indent=0,
+                   border='data', nf}={}){
+
+  if(bg) cell.fill = { type:'pattern', pattern:'solid', fgColor:{argb:bg} };
+
+  cell.font = { name:'Segoe UI', size, bold, italic, color:{argb:fg} };
+  cell.alignment = { horizontal:h, vertical:v, wrapText:wrap, indent };
+
+  const bThin  = s => ({ style:'thin',   color:{argb:s||T.n200} });
+  const bMed   = s => ({ style:'medium', color:{argb:s||T.n300} });
+
+  if(border==='data'){
+    cell.border = { top:bThin(), left:bThin(), bottom:bThin(), right:bThin() };
+  } else if(border==='head'){
+    cell.border = {
+      top:bMed(T.dark3), left:bThin(T.dark3), right:bThin(T.dark3),
+      bottom:{ style:'thick', color:{argb:T.teal600} }
+    };
+  } else if(border==='total'){
+    cell.border = {
+      top:{ style:'medium', color:{argb:T.teal600} },
+      bottom:bMed(T.dark3),
+      left:bThin(), right:bThin()
+    };
+  }
+
+  if(nf) cell.numFmt = nf;
+  return cell;
+}
+
+// ─── Sheet setup ─────────────────────────────────────────────────
+function setupSheet(ws, cols=[]){
+  ws.properties.defaultRowHeight = 19;
+  ws.views = [{ state:'frozen', ySplit:7, showGridLines:false }];
+  cols.forEach((w,i) => ws.getColumn(i+1).width = w);
+}
+
+// ─── Banner ──────────────────────────────────────────────────────
+function banner(ws, {title, meta, cols}){
+  ws.mergeCells(1,1,2,3);
+  const logo = ws.getCell(1,1);
+  logo.value = 'PETSHOP';
+  C(logo,{bg:T.dark1, fg:T.teal200, bold:true, size:20, h:'center', v:'middle', border:false});
+
+  ws.mergeCells(1,4,1,cols);
+  const t1 = ws.getCell(1,4);
+  t1.value  = title;
+  C(t1,{bg:T.dark1, fg:T.white, bold:true, size:15, h:'left', v:'bottom', indent:1, border:false});
+
+  ws.mergeCells(2,4,2,cols);
+  const t2 = ws.getCell(2,4);
+  t2.value  = meta;
+  C(t2,{bg:T.dark1, fg:T.n500, italic:true, size:8.5, h:'left', v:'top', indent:1, border:false});
+
+  ws.getRow(1).height = 28;
+  ws.getRow(2).height = 20;
+
+  ws.mergeCells(3,1,3,cols);
+  const stripe = ws.getCell(3,1);
+  stripe.value = '';
+  stripe.fill  = { type:'pattern', pattern:'solid', fgColor:{argb:T.teal600} };
+  ws.getRow(3).height = 3;
+}
+
+// ─── KPI row ─────────────────────────────────────────────────────
+function kpiRow(ws, cards, cols){
+  ws.getRow(4).height = 10;
+  const span = Math.floor(cols / cards.length);
+
+  cards.forEach((card, i) => {
+    const c1 = i*span + 1;
+    const c2 = i===cards.length-1 ? cols : c1+span-1;
+
+    ws.mergeCells(5, c1, 5, c2);
+    const vCell = ws.getCell(5, c1);
+    vCell.value = card.value;
+    C(vCell,{
+      bg: card.primary ? T.teal600 : T.n50,
+      fg: card.primary ? T.white   : (card.color||T.n900),
+      bold:true, size:20, h:'center', v:'middle', border:false, nf:card.fmt
+    });
+    vCell.border = {
+      left:   { style: i===0?'thin':'medium', color:{argb:i===0?T.n200:(card.primary?T.teal200:T.n300)} },
+      right:  { style:'thin',   color:{argb:T.n200} },
+      top:    { style:'medium', color:{argb:T.n300} },
+      bottom: { style:'thin',   color:{argb:T.n200} },
+    };
+    ws.getRow(5).height = 34;
+
+    ws.mergeCells(6, c1, 6, c2);
+    const lCell = ws.getCell(6, c1);
+    lCell.value = card.label;
+    C(lCell,{
+      bg: card.primary ? T.teal50 : T.n100,
+      fg: T.n500, size:8, h:'center', v:'middle', border:false
+    });
+    lCell.border = {
+      left:   { style:'thin', color:{argb:T.n200} },
+      right:  { style:'thin', color:{argb:T.n200} },
+      bottom: { style:'medium', color:{argb:T.n300} },
+    };
+    ws.getRow(6).height = 18;
+  });
+}
+
+// ─── Section header ──────────────────────────────────────────────
+function section(ws, row, label, cols){
+  ws.mergeCells(row,1,row,cols);
+  const cell = ws.getCell(row,1);
+  cell.value = label.toUpperCase();
+  C(cell,{bg:T.dark2, fg:T.teal200, bold:true, size:8.5, h:'left', v:'middle', indent:2, border:false});
+  ws.getRow(row).height = 18;
+  return row + 1;
+}
+
+// ─── Data table ──────────────────────────────────────────────────
+function table(ws, startRow, headers, rows, fmts={}){
+  if(!rows.length){
+    ws.mergeCells(startRow,1,startRow,headers.length);
+    const ec = ws.getCell(startRow,1);
+    ec.value = 'Không có dữ liệu';
+    C(ec,{bg:T.n100,fg:T.n500,italic:true,h:'center',border:false});
+    ws.getRow(startRow).height = 26;
+    return startRow+1;
+  }
+
+  // Header
+  const HR = ws.getRow(startRow);
+  HR.height = 22;
+  headers.forEach((h,ci)=>{
+    const cell = HR.getCell(ci+1);
+    cell.value = h.label;
+    C(cell,{bg:T.dark3, fg:T.white, bold:true, size:9, h:h.align||'center', v:'middle', border:'head'});
+  });
+
+  // Data rows
+  rows.forEach((row,ri)=>{
+    const DR   = ws.getRow(startRow+1+ri);
+    DR.height  = 19;
+    const even = ri%2===0;
+    row.forEach((val,ci)=>{
+      const cell = DR.getCell(ci+1);
+      cell.value = val;
+      const isNum = typeof val==='number';
+      C(cell,{
+        bg:   even ? T.white : T.n50,
+        fg:   T.n700,
+        size: 9.5,
+        h:    fmts[ci]?.align || (isNum?'right':'left'),
+        v:    'middle',
+        indent: fmts[ci]?.align==='left'?1:0,
+        border:'data',
+        nf:   fmts[ci]?.nf,
+      });
+    });
+  });
+
+  ws.autoFilter = {
+    from:{row:startRow,column:1},
+    to:  {row:startRow+rows.length,column:headers.length}
+  };
+
+  // Totals row
+  const moneyIdx = Object.entries(fmts)
+    .filter(([,f])=>f.nf&&f.nf.includes('đ')&&f.total!==false)
+    .map(([i])=>Number(i));
+
+  if(moneyIdx.length && rows.length>1){
+    const TR = ws.getRow(startRow+1+rows.length);
+    TR.height = 21;
+    headers.forEach((_,ci)=>{
+      const cell = TR.getCell(ci+1);
+      if(moneyIdx.includes(ci)){
+        cell.value = rows.reduce((s,r)=>s+(typeof r[ci]==='number'?r[ci]:0),0);
+        C(cell,{bg:T.teal50,fg:T.teal600,bold:true,h:'right',border:'total',nf:fmts[ci].nf});
+      } else if(ci===0){
+        cell.value = 'TỔNG CỘNG';
+        C(cell,{bg:T.teal50,fg:T.teal600,bold:true,h:'left',indent:1,border:'total'});
+      } else {
+        C(cell,{bg:T.teal50,border:'total'});
+      }
+    });
+    return startRow+1+rows.length+1;
+  }
+
+  return startRow+rows.length+2;
+}
+
+// ─── Fetch daily revenue ─────────────────────────────────────────
+async function getDailyRevenueForExcel(){
+  try{
+    const j=await fetch(`${API}/statistics/revenue/daily`,{headers:H()}).then(r=>r.json());
+    return j.data||j||[];
+  }catch{ return []; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  BUILD WORKBOOK
+// ════════════════════════════════════════════════════════════════
+function buildExcelWorkbook(dailyRevenue=[]){
+  if(typeof ExcelJS==='undefined')
+    throw new Error('Không tải được ExcelJS. Kiểm tra kết nối mạng và thử lại.');
+
+  const wb      = new ExcelJS.Workbook();
+  wb.creator    = 'PetShop Admin';
+  wb.company    = 'PetShop';
+  wb.created    = wb.modified = new Date();
+
+  const stamp   = new Date().toLocaleString('vi-VN');
+  const today   = new Date().toLocaleDateString('vi-VN');
+  const S       = dashboardSummary || {};
+
+
+  // ─────────────────────────────────────────────────────────────
+  //  SHEET 1: TỔNG QUAN
+  // ─────────────────────────────────────────────────────────────
+  const ws1 = wb.addWorksheet('Tổng quan');
+  ws1.views = [{ showGridLines:false }];
+  ws1.properties.tabColor = { argb:T.teal600 };
+  [28,20,20,20,20,20].forEach((w,i)=>ws1.getColumn(i+1).width=w);
+
+  ws1.mergeCells('A1:F3');
+  const h1=ws1.getCell('A1');
+  h1.value='PETSHOP ADMIN';
+  h1.fill={type:'pattern',pattern:'solid',fgColor:{argb:T.dark1}};
+  h1.font={name:'Segoe UI',size:32,bold:true,color:{argb:T.white}};
+  h1.alignment={horizontal:'left',vertical:'middle',indent:2};
+  ws1.getRow(1).height=60; ws1.getRow(2).height=2; ws1.getRow(3).height=2;
+
+  ws1.mergeCells('A4:F4');
+  const h2=ws1.getCell('A4');
+  h2.value='BÁO CÁO THỐNG KÊ TỔNG HỢP';
+  h2.fill={type:'pattern',pattern:'solid',fgColor:{argb:T.dark2}};
+  h2.font={name:'Segoe UI',size:13,bold:false,color:{argb:T.teal200}};
+  h2.alignment={horizontal:'left',vertical:'middle',indent:2};
+  ws1.getRow(4).height=28;
+
+  ws1.mergeCells('A5:F5');
+  ws1.getCell('A5').fill={type:'pattern',pattern:'solid',fgColor:{argb:T.teal600}};
+  ws1.getRow(5).height=3;
+
+  ws1.mergeCells('A6:F6');
+  const meta=ws1.getCell('A6');
+  meta.value=`Ngày xuất: ${today}  |  Thời gian: ${stamp}  |  Nguồn: PetShop Admin System`;
+  meta.font={name:'Segoe UI',size:8,italic:true,color:{argb:T.n500}};
+  meta.alignment={horizontal:'left',indent:2};
+  ws1.getRow(6).height=16;
+  ws1.getRow(7).height=14;
+
+  // KPI matrix — chỉ giữ số liệu quan trọng, bỏ tier
+  const kpis=[
+    {label:'Tổng doanh thu',    val:Number(S.totalRevenue||0), nf:moneyFmt(), primary:true},
+    {label:'Doanh thu tháng',   val:Number(S.monthRevenue||0), nf:moneyFmt()},
+    {label:'Doanh thu hôm nay', val:Number(S.todayRevenue||0), nf:moneyFmt()},
+    {label:'Tổng đơn hàng',     val:Number(S.totalOrders||allOrders.length), nf:numFmt()},
+    {label:'Tổng khách hàng',   val:allCustomers.length, nf:numFmt()},
+    {label:'Đơn bị hủy',        val:allOrders.filter(o=>o.status==='Cancelled').length, nf:numFmt()},
+  ];
+
+  const KPI_START=8;
+  kpis.forEach((k,i)=>{
+    const row = KPI_START + Math.floor(i/2)*4;
+    const col = (i%2)*3 + 1;
+
+    ws1.mergeCells(row,col,row,col+1);
+    const numCell=ws1.getCell(row,col);
+    numCell.value=k.val;
+    numCell.fill={type:'pattern',pattern:'solid',fgColor:{argb:k.primary?T.dark1:T.n50}};
+    numCell.font={name:'Segoe UI',size:22,bold:true,color:{argb:k.primary?T.teal200:T.n900}};
+    numCell.numFmt=k.nf;
+    numCell.alignment={horizontal:'left',vertical:'middle',indent:2};
+    numCell.border={
+      top:{style:'medium',color:{argb:k.primary?T.teal600:T.n300}},
+      left:{style:'thick', color:{argb:k.primary?T.teal500:T.n300}},
+      right:{style:'thin', color:{argb:T.n200}},
+      bottom:{style:'thin',color:{argb:T.n200}},
+    };
+    ws1.getRow(row).height=32;
+
+    ws1.mergeCells(row+1,col,row+1,col+1);
+    const lblCell=ws1.getCell(row+1,col);
+    lblCell.value=k.label.toUpperCase();
+    lblCell.fill={type:'pattern',pattern:'solid',fgColor:{argb:k.primary?T.teal50:T.n100}};
+    lblCell.font={name:'Segoe UI',size:7.5,bold:false,color:{argb:T.n500}};
+    lblCell.alignment={horizontal:'left',vertical:'top',indent:2};
+    lblCell.border={bottom:{style:'thin',color:{argb:T.n200}},
+                    left:{style:'thin',color:{argb:T.n200}},right:{style:'thin',color:{argb:T.n200}}};
+    ws1.getRow(row+1).height=14;
+    ws1.getRow(row+2).height=2;
+    ws1.getRow(row+3).height=2;
+  });
+
+  const footRow=KPI_START+Math.ceil(kpis.length/2)*4+1;
+  ws1.mergeCells(footRow,1,footRow,6);
+  const foot=ws1.getCell(footRow,1);
+  foot.value='Dữ liệu trích xuất tự động — Không chỉnh sửa thủ công. Bảo mật nội bộ.';
+  foot.font={name:'Segoe UI',size:7.5,italic:true,color:{argb:T.n500}};
+  foot.alignment={horizontal:'left',indent:2};
+  ws1.getRow(footRow).height=16;
+
+
+  // ─────────────────────────────────────────────────────────────
+  //  SHEET 2: DOANH THU
+  //  Bỏ: cột biểu đồ barChart, cột tỉ lệ %
+  // ─────────────────────────────────────────────────────────────
+  const ws2=wb.addWorksheet('Doanh thu');
+  ws2.properties.tabColor={argb:T.teal600};
+  setupSheet(ws2,[16,14,14,18,20,20,18]);  // bỏ 2 cột chart/tỉ lệ
+  banner(ws2,{
+    title:'BÁO CÁO DOANH THU',
+    meta:`Xuất lúc ${stamp}  ·  Phân tích theo phương thức và thời gian`,
+    cols:7
+  });
+
+  kpiRow(ws2,[
+    {label:'Tổng doanh thu', value:Number(S.totalRevenue||0), fmt:moneyFmt(), primary:true},
+    {label:'Tháng này',      value:Number(S.monthRevenue||0), fmt:moneyFmt()},
+    {label:'Hôm nay',        value:Number(S.todayRevenue||0), fmt:moneyFmt()},
+    {label:'Số đơn',         value:Number(S.totalOrders||allOrders.length), fmt:numFmt()},
+  ],7);
+
+  ws2.getRow(7).height=12;
+
+  // Section A: Phương thức thanh toán — bỏ cột Tỉ lệ
+  let row2=section(ws2,8,'Doanh thu theo phương thức thanh toán',7);
+  row2=table(ws2,row2,
+    [{label:'Phương thức'},{label:'Số giao dịch',align:'right'},{label:'Doanh thu',align:'right'}],
+    (S.paymentMethods||[]).map(m=>[
+      payText(m.PaymentMethod||m.paymentMethod),
+      Number(m.cnt||0),
+      Number(m.total||0),
+    ]),
+    {2:{nf:moneyFmt(),align:'right'}}
+  )+1;
+
+  // Section B: Theo tháng — bỏ cột barChart
+  row2=section(ws2,row2,'Doanh thu theo tháng',7);
+  row2=table(ws2,row2,
+    [{label:'Năm',align:'center'},{label:'Tháng',align:'center'},{label:'Số đơn',align:'right'},
+     {label:'Doanh thu',align:'right'},{label:'Trung bình/đơn',align:'right'}],
+    [...revenueMonthly]
+      .sort((a,b)=>(+a.year-+b.year)||(+a.month-+b.month))
+      .map(m=>[
+        +m.year, `Tháng ${m.month}`, +m.totalOrders||0,
+        Number(m.totalRevenue||0), +m.avgOrderValue||0,
+      ]),
+    {3:{nf:moneyFmt(),align:'right'},4:{nf:moneyFmt(),align:'right',total:false}}
+  )+1;
+
+  // Section C: Theo ngày — bỏ cột barChart
+  row2=section(ws2,row2,'Doanh thu theo ngày',7);
+  table(ws2,row2,
+    [{label:'Ngày',align:'center'},{label:'Số đơn',align:'right'},
+     {label:'Doanh thu',align:'right'},{label:'Khách hàng',align:'right'}],
+    [...dailyRevenue]
+      .sort((a,b)=>String(a.orderDate).localeCompare(String(b.orderDate)))
+      .map(d=>[
+        dateVal(d.orderDate), +d.totalOrders||0,
+        Number(d.totalRevenue||0), +d.uniqueCustomers||0,
+      ]),
+    {0:{nf:dateFmt(),align:'center'},2:{nf:moneyFmt(),align:'right'}}
+  );
+
+
+  // ─────────────────────────────────────────────────────────────
+  //  SHEET 3: ĐƠN HÀNG
+  // ─────────────────────────────────────────────────────────────
+  const ws3=wb.addWorksheet('Đơn hàng');
+  ws3.properties.tabColor={argb:T.dark3};
+  setupSheet(ws3,[10,17,11,22,15,15,14,15,16,15]);
+  banner(ws3,{
+    title:'BÁO CÁO ĐƠN HÀNG',
+    meta:`Xuất lúc ${stamp}  ·  Tổng ${allOrders.length} đơn`,
+    cols:10
+  });
+
+  kpiRow(ws3,[
+    {label:'Tổng đơn',   value:allOrders.length, fmt:numFmt()},
+    {label:'Chờ xử lý', value:allOrders.filter(o=>o.status==='Pending').length,    fmt:numFmt(), color:T.sPendFg},
+    {label:'Đã giao',    value:allOrders.filter(o=>['Delivered','Completed'].includes(o.status)).length, fmt:numFmt(), color:T.sDoneFg},
+    {label:'Đã hủy',     value:allOrders.filter(o=>o.status==='Cancelled').length, fmt:numFmt(), color:T.sCancFg},
+  ],10);
+
+  ws3.getRow(7).height=12;
+  let row3=section(ws3,8,'Danh sách đơn hàng',10);
+
+  table(ws3,row3,
+    [{label:'Mã đơn',align:'center'},{label:'Ngày đặt',align:'center'},{label:'Mã KH',align:'center'},
+     {label:'Khách hàng'},{label:'SĐT',align:'center'},
+     {label:'Tổng tiền',align:'right'},{label:'Giảm giá',align:'right'},{label:'Thực thu',align:'right'},
+     {label:'Thanh toán',align:'center'},{label:'Trạng thái',align:'center'}],
+    allOrders.map(o=>[
+      `#${o.orderId}`, dateVal(o.orderDate), o.customerCode||'',
+      o.customerName||'', o.customerPhone||'',
+      +o.totalAmount||0, +o.discountAmount||0, +o.finalAmount||0,
+      o.paymentStatus==='Completed'?'Đã TT':'Chưa TT',
+      statusText(o.status),
+    ]),
+    {1:{nf:dtFmt(),align:'center'},5:{nf:moneyFmt(),align:'right'},
+     6:{nf:moneyFmt(),align:'right'},7:{nf:moneyFmt(),align:'right'}}
+  );
+
+  // Status badge coloring
+  const orderDataEnd=row3+allOrders.length;
+  for(let r=row3+1;r<=orderDataEnd;r++){
+    const sc=ws3.getCell(r,10);
+    const v=String(sc.value||'');
+    let bg=T.white,fg=T.n700;
+    if(v.includes('Chờ'))       {bg=T.sPendBg;fg=T.sPendFg;}
+    if(v.includes('Xác')||v.includes('Đang giao')) {bg=T.sShipBg;fg=T.sShipFg;}
+    if(v.includes('Đang xử'))   {bg=T.sConfBg;fg=T.sConfFg;}
+    if(v.includes('Đã giao'))   {bg=T.sDoneBg;fg=T.sDoneFg;}
+    if(v.includes('hủy'))       {bg=T.sCancBg;fg=T.sCancFg;}
+    sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:bg}};
+    sc.font={name:'Segoe UI',size:9,bold:true,color:{argb:fg}};
+    sc.alignment={horizontal:'center',vertical:'middle'};
+  }
+
+  // Payment coloring
+  for(let r=row3+1;r<=orderDataEnd;r++){
+    const pc=ws3.getCell(r,9);
+    const v=String(pc.value||'');
+    const isDone=v.includes('Đã');
+    pc.font={name:'Segoe UI',size:9,bold:true,color:{argb:isDone?T.sDoneFg:T.sCancFg}};
+    pc.alignment={horizontal:'center',vertical:'middle'};
+  }
+
+
+  // ─────────────────────────────────────────────────────────────
+  //  SHEET 4: KHÁCH HÀNG
+  //  Bỏ: KPI hạng tier, tier badge, loyalty sparkbar
+  // ─────────────────────────────────────────────────────────────
+  const ws4=wb.addWorksheet('Khách hàng');
+  ws4.properties.tabColor={argb:T.dark2};
+  setupSheet(ws4,[8,13,22,15,28,30,13,10,13]);  // bỏ cột hạng tier
+  banner(ws4,{
+    title:'BÁO CÁO KHÁCH HÀNG',
+    meta:`Xuất lúc ${stamp}  ·  Tổng ${allCustomers.length} khách hàng`,
+    cols:9
+  });
+
+  // KPI đơn giản — chỉ tổng và trạng thái hoạt động
+  kpiRow(ws4,[
+    {label:'Tổng khách hàng', value:allCustomers.length, fmt:numFmt(), primary:true},
+    {label:'Đang hoạt động',  value:allCustomers.filter(c=>c.isActive).length, fmt:numFmt(), color:T.sDoneFg},
+    {label:'Đã khoá',         value:allCustomers.filter(c=>!c.isActive).length, fmt:numFmt(), color:T.sCancFg},
+  ],9);
+
+  ws4.getRow(7).height=12;
+  let row4=section(ws4,8,'Danh sách khách hàng',9);
+
+  // Bỏ cột Hạng (tier), giữ các cột thông tin cơ bản
+  const customerDataEnd=row4+allCustomers.length;
+  table(ws4,row4,
+    [{label:'ID',align:'center'},{label:'Mã KH',align:'center'},
+     {label:'Họ tên'},{label:'SĐT',align:'center'},{label:'Email'},{label:'Địa chỉ'},
+     {label:'Ngày sinh',align:'center'},{label:'Điểm tích lũy',align:'right'},
+     {label:'Trạng thái',align:'center'}],
+    allCustomers.map(c=>[
+      c.id||'', c.customerCode||'', c.fullName||'', c.phone||'',
+      c.email||'', c.address||'', dateVal(c.birthDate),
+      +c.loyaltyPoints||0,
+      c.isActive?'Hoạt động':'Khoá',
+    ]),
+    {6:{nf:dateFmt(),align:'center'},7:{nf:numFmt(),align:'right'}}
+  );
+
+  // Active/Locked badge
+  for(let r=row4+1;r<=customerDataEnd;r++){
+    const cell=ws4.getCell(r,9);
+    const v=String(cell.value||'');
+    const active=v.includes('Hoạt');
+    cell.font={name:'Segoe UI',size:9,bold:true,color:{argb:active?T.sDoneFg:T.sCancFg}};
+    cell.alignment={horizontal:'center',vertical:'middle'};
+  }
+
+  return wb;
+}
+
+// ── Handlers ─────────────────────────────────────────────────────
+async function createExcelReport(){
+  const btn=document.getElementById('createExcelBtn');
+  const dlBtn=document.getElementById('downloadExcelBtn');
+  try{
+    if(btn){btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-[18px]">hourglass_top</span> Đang tạo...';}
+    if(!allOrders.length||!allCustomers.length||!revenueMonthly.length||!Object.keys(dashboardSummary||{}).length){
+      await Promise.allSettled([fetchDashboardSummary(),fetchOrders(),fetchCustomers(),fetchMonthlyRevenue()]);
+    }
+    const daily=await getDailyRevenueForExcel();
+    excelReportWorkbook=buildExcelWorkbook(daily);
+    excelReportFileName=`bao-cao-petshop-${new Date().toISOString().slice(0,10)}.xlsx`;
+    if(dlBtn)dlBtn.disabled=false;
+    toast('✅ Đã tạo file — bấm Tải Excel để lưu','ok');
+  }catch(e){
+    console.error(e);
+    toast(e.message||'Không tạo được file Excel','err');
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-[18px]">table_chart</span>Tạo Excel';}
+  }
+}
+
+async function downloadExcelReport(){
+  try{
+    if(!excelReportWorkbook)await createExcelReport();
+    if(!excelReportWorkbook)return;
+    const buf=await excelReportWorkbook.xlsx.writeBuffer();
+    const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download=excelReportFileName||'bao-cao-petshop.xlsx';
+    document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    toast('📥 Đã tải file Excel','ok');
+  }catch(e){
+    console.error(e);
+    toast(e.message||'Không tạo được file','err');
+  }
+}
+
+// ── LINE CHART ──
+async function loadRevenueChart(){
+  const days=parseInt(document.getElementById('chartRange').value);
+  const chart=document.getElementById('lineChart');
+  const loader=document.getElementById('chartLoader');
+  chart.style.display='none';
+  loader.style.display='flex';
+  document.getElementById('yAxis').innerHTML='';
+  document.getElementById('xAxis').innerHTML='';
+  try{
+    let data=[];
+    if(days<=30){
+      const j=await fetch(`${API}/statistics/revenue/daily`,{headers:H()}).then(r=>r.json());
+      data=(j.data||j||[]).slice(-days);
+    } else {
+      data=revenueMonthly;
+    }
+    if(!data.length){ loader.innerHTML='<p class="text-xs text-slate-300">Chưa có dữ liệu</p>'; return; }
+    loader.style.display='none';
+    chart.style.display='block';
+    drawLineChart(chart, data, days);
+  }catch(e){
+    loader.innerHTML='<p class="text-xs text-slate-300">Không thể tải biểu đồ</p>';
+  }
+}
+
+function drawLineChart(svg, data, days){
+  const vals=data.map(d=>Number(d.totalRevenue||d.tongDoanhThu||d.revenue||0));
+  const maxV=Math.max(...vals,1);
+  const W=100,H=85; // viewBox units (leave 15 for x-labels)
+
+  // Y axis
+  const yEl=document.getElementById('yAxis');
+  const ySteps=[1,0.75,0.5,0.25,0].map(p=>maxV*p);
+  yEl.innerHTML=ySteps.map(v=>`<span>${fmtVND(v).replace(' Tr ₫','M').replace(' Tỷ ₫','B').replace(' ₫','')}</span>`).join('');
+
+  // X labels - show up to 8
+  const xEl=document.getElementById('xAxis');
+  const step=Math.max(1,Math.ceil(data.length/8));
+  xEl.innerHTML=data.map((d,i)=>{
+    if(i%step!==0&&i!==data.length-1) return '<span></span>';
+    const dt=new Date(d.orderDate||d.ngayDoanhThu||d.date||'');
+    const lbl=days<=30?`${dt.getDate()}/${dt.getMonth()+1}`:`T${dt.getMonth()+1}`;
+    return `<span>${lbl}</span>`;
+  }).join('');
+
+  const pts=vals.map((v,i)=>{
+    const x=(vals.length===1)?50:(i/(vals.length-1))*W;
+    const y=H-(v/maxV)*H;
+    return `${x},${y}`;
+  }).join(' ');
+
+  const areaClose=vals.length===1?` ${(0/(vals.length-1))*W},${H}`:'';
+  const areaPath=`M0,${H} ${pts.split(' ').map(p=>`L${p}`).join(' ')} L${W},${H} Z`;
+
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.innerHTML=`
+    <defs>
+      <linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#007517" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#007517" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    ${[0.25,0.5,0.75].map(p=>`<line x1="0" y1="${H-p*H}" x2="${W}" y2="${H-p*H}" stroke="#adc500" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>`).join('')}
+    <path d="${areaPath}" fill="url(#lg2)"/>
+    <polyline points="${pts}" fill="none" stroke="#007517" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    ${vals.slice(-3).map((v,i)=>{
+      const idx=vals.length-3+i;
+      const x=(vals.length===1)?50:(idx/(vals.length-1))*W;
+      const y=H-(v/maxV)*H;
+      return `<circle cx="${x}" cy="${y}" r="2" fill="white" stroke="#007517" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
+    }).join('')}
+  `;
+}
+
+// ── RENDER FUNCTIONS ──
+function renderRecentOrders(){
+  const tbody=document.getElementById('recentOrdersBody');
+  const rows=[...allOrders].reverse().slice(0,10);
+  if(!rows.length){ tbody.innerHTML='<tr><td colspan="5" class="px-4 py-10 text-center text-slate-300">Chưa có đơn hàng</td></tr>'; return; }
+  tbody.innerHTML=rows.map(o=>`
+    <tr class="trow cursor-pointer transition-colors" onclick="location.href='order-detail.html?id=${o.orderId}'">
+      <td class="px-4 py-3 font-bold text-on-surface">#${o.orderId}</td>
+      <td class="px-4 py-3">${o.customerName||o.customerId||'—'}</td>
+      <td class="px-4 py-3 font-semibold">${fmtVND(o.finalAmount||o.totalAmount)}</td>
+      <td class="px-4 py-3">${statusBadge(o.status)}</td>
+      <td class="px-4 py-3 text-on-surface-variant text-xs">${fmtDate(o.orderDate||o.createdAt)}</td>
+    </tr>`).join('');
+}
+
+function renderOrderStatus(){
+  const el=document.getElementById('orderStatusList');
+  const statuses=[
+    {k:'Pending',l:'Chờ xử lý',c:'#fbbf24'},
+    {k:'Confirmed',l:'Xác nhận',c:'#3b82f6'},
+    {k:'Processing',l:'Đang xử lý',c:'#8b5cf6'},
+    {k:'Delivered',l:'Đã giao',c:'#22c55e'},
+    {k:'Cancelled',l:'Đã hủy',c:'#ef4444'}
+  ];
+  const max=allOrders.length||1;
+  el.innerHTML=statuses.map(s=>{
+    const cnt=allOrders.filter(o=>o.status===s.k).length;
+    const pct=Math.round(cnt/max*100);
+    return `<div>
+      <div class="flex justify-between text-xs mb-1">
+        <span class="font-medium text-on-surface">${s.l}</span>
+        <span class="text-on-surface-variant">${cnt} (${pct}%)</span>
+      </div>
+      <div class="w-full bg-surface-variant rounded-full h-1.5">
+        <div class="progress-bar h-1.5 rounded-full" style="width:${pct}%;background:${s.c}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderMonthlyRevenue(){
+  const el=document.getElementById('monthlyList');
+  if(!revenueMonthly.length){ el.innerHTML='<p class="text-xs text-slate-300">Chưa có dữ liệu</p>'; return; }
+  const data=revenueMonthly.slice(-6);
+  const max=Math.max(...data.map(d=>Number(d.totalRevenue||d.tongDoanhThu||0)),1);
+  el.innerHTML=data.map(d=>{
+    const v=Number(d.totalRevenue||d.tongDoanhThu||0);
+    const pct=Math.round(v/max*100);
+    const lbl=d.month?`Tháng ${d.month}`:(d.thang?`Tháng ${d.thang}`:'—');
+    return `<div>
+      <div class="flex justify-between text-xs mb-1">
+        <span class="font-medium text-on-surface">${lbl}</span>
+        <span class="font-semibold text-on-surface-variant">${fmtVND(v)}</span>
+      </div>
+      <div class="w-full bg-surface-variant rounded-full h-2">
+        <div class="progress-bar h-2 rounded-full bg-primary" style="width:${Math.max(3,pct)}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderRevenueTab(){ renderRecentOrders(); renderOrderStatus(); renderMonthlyRevenue(); }
+
+function renderProductsTab(){
+  const src=topProducts.length?topProducts:allProducts.slice(0,8).map(p=>({...p,totalSold:p.stockQuantity||0}));
+  const el=document.getElementById('topProductsChart');
+  const colors=['#007517','#1f61c4','#3161ba','#eab308','#ef4444','#8b5cf6','#f97316','#06b6d4'];
+  if(!src.length){ el.innerHTML='<p class="text-xs text-slate-300 py-4">Chưa có dữ liệu</p>'; }
+  else{
+    const max=Math.max(...src.map(p=>Number(p.totalSold||p.soLuongBan||0)),1);
+    el.innerHTML=src.slice(0,8).map((p,i)=>{
+      const name=p.productName||p.tenSanPham||p.name||'—';
+      const sold=Number(p.totalSold||p.soLuongBan||0);
+      return `<div>
+        <div class="flex justify-between text-sm mb-1.5">
+          <span class="font-medium text-on-surface truncate max-w-[220px]">${i+1}. ${name}</span>
+          <span class="text-on-surface-variant ml-2 flex-shrink-0">${sold.toLocaleString()} sp</span>
+        </div>
+        <div class="w-full bg-surface-variant rounded-full h-2">
+          <div class="progress-bar h-2 rounded-full" style="width:${Math.max(4,Math.round(sold/max*100))}%;background:${colors[i]}"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Low stock
+  const lowEl=document.getElementById('lowStockList');
+  const low=allProducts.filter(p=>Number(p.stockQuantity||0)<10).sort((a,b)=>a.stockQuantity-b.stockQuantity);
+  if(!low.length){ lowEl.innerHTML='<div class="text-center py-6"><span class="material-symbols-outlined text-primary text-3xl">check_circle</span><p class="text-sm text-on-surface-variant mt-2">Tồn kho ổn định</p></div>'; }
+  else lowEl.innerHTML=low.slice(0,7).map(p=>{
+    const q=Number(p.stockQuantity||0);
+    return `<div class="flex items-center justify-between px-3 py-2 rounded-lg ${q===0?'bg-red-50':'bg-yellow-50'}">
+      <span class="text-sm font-medium text-on-surface truncate max-w-[140px]">${p.productName||'—'}</span>
+      <span class="ml-2 flex-shrink-0 text-xs font-bold px-2 py-0.5 rounded-full ${q===0?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700'}">${q} còn</span>
+    </div>`;
+  }).join('');
+
+  // Products table
+  const tbody=document.getElementById('productsBody');
+  if(!allProducts.length){ tbody.innerHTML='<tr><td colspan="4" class="px-4 py-10 text-center text-slate-300">Chưa có sản phẩm</td></tr>'; return; }
+  tbody.innerHTML=allProducts.slice(0,15).map(p=>{
+    const q=Number(p.stockQuantity||0);
+    const badge=q===0?'<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700">Hết hàng</span>':q<10?'<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-yellow-100 text-yellow-700">Sắp hết</span>':'<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Còn hàng</span>';
+    return `<tr class="trow cursor-pointer transition-colors" onclick="location.href='products.html'">
+      <td class="px-4 py-3 font-medium text-on-surface">${p.productName||'—'}</td>
+      <td class="px-4 py-3 font-semibold text-on-surface">${fmtVND(p.price)}</td>
+      <td class="px-4 py-3 text-on-surface">${q.toLocaleString()}</td>
+      <td class="px-4 py-3">${badge}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCustomersTab(){
+  // Donut
+  document.getElementById('donutTotal').textContent=allCustomers.length;
+  const tiers={BRONZE:0,SILVER:0,GOLD:0,PLATINUM:0};
+  allCustomers.forEach(c=>{ const t=c.tier||'BRONZE'; tiers[t]=(tiers[t]||0)+1; });
+  const total=allCustomers.length||1;
+  const tc={BRONZE:'#cd7f32',SILVER:'#94a3b8',GOLD:'#eab308',PLATINUM:'#3161ba'};
+  const tn={BRONZE:'🥉 Đồng',SILVER:'🥈 Bạc',GOLD:'🥇 Vàng',PLATINUM:'💎 Bạch Kim'};
+  let off=0;
+  const segs=Object.entries(tiers).filter(([,v])=>v>0).map(([k,v])=>{
+    const pct=v/total*100; const seg={k,v,pct,off}; off+=pct; return seg;
+  });
+  document.getElementById('donutChart').style.background=segs.length?`conic-gradient(${segs.map(s=>`${tc[s.k]} ${s.off.toFixed(1)}% ${(s.off+s.pct).toFixed(1)}%`).join(',')})`:'#e9ff6f';
+  document.getElementById('donutLegend').innerHTML=segs.map(s=>`
+    <div class="flex items-center gap-2 text-xs">
+      <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:${tc[s.k]}"></div>
+      <span class="text-on-surface-variant">${tn[s.k]} (${s.v})</span>
+    </div>`).join('');
+
+  // Tier bars
+  const tierEl=document.getElementById('tierChart');
+  const maxT=Math.max(...Object.values(tiers),1);
+  tierEl.innerHTML=Object.entries(tn).map(([k,l])=>{
+    const cnt=tiers[k]||0;
+    return `<div>
+      <div class="flex justify-between text-sm mb-1.5">
+        <span class="font-medium text-on-surface">${l}</span>
+        <span class="text-on-surface-variant">${cnt} KH</span>
+      </div>
+      <div class="w-full bg-surface-variant rounded-full h-3">
+        <div class="progress-bar h-3 rounded-full" style="width:${Math.max(2,Math.round(cnt/maxT*100))}%;background:${tc[k]}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Customers table
+  const tbody=document.getElementById('customersBody');
+  if(!allCustomers.length){ tbody.innerHTML='<tr><td colspan="4" class="px-4 py-10 text-center text-slate-300">Chưa có khách hàng</td></tr>'; return; }
+  tbody.innerHTML=allCustomers.slice(0,12).map(c=>`
+    <tr class="trow cursor-pointer transition-colors" onclick="location.href='customers.html'">
+      <td class="px-4 py-3">
+        <div class="font-semibold text-on-surface">${c.fullName||'—'}</div>
+        <div class="text-[11px] text-on-surface-variant">${c.customerCode||''}</div>
+      </td>
+      <td class="px-4 py-3 text-xs text-on-surface-variant">${c.phone||c.email||'—'}</td>
+      <td class="px-4 py-3">${tierBadge(c.tier)}</td>
+      <td class="px-4 py-3 font-semibold text-on-surface">${(c.loyaltyPoints||0).toLocaleString()}</td>
+    </tr>`).join('');
+}
+
+function renderServicesTab(){
+  // Booking stats 4 cards
+  const total=allBookings.length;
+  const pending=allBookings.filter(b=>['Pending','Scheduled'].includes(b.status)).length;
+  const done=allBookings.filter(b=>['Completed','Done'].includes(b.status)).length;
+  const cancelled=allBookings.filter(b=>b.status==='Cancelled').length;
+  const confirmed=allBookings.filter(b=>b.status==='Confirmed').length;
+  document.getElementById('bookingStats').innerHTML=`
+    <div class="bg-white rounded-xl p-4 border border-outline-variant/20 text-center stat-card">
+      <div class="text-2xl font-black text-on-surface">${total}</div>
+      <div class="text-xs text-on-surface-variant mt-1">Tổng lịch hẹn</div>
+    </div>
+    <div class="bg-blue-50 rounded-xl p-4 border border-blue-100 text-center stat-card">
+      <div class="text-2xl font-black text-blue-700">${confirmed}</div>
+      <div class="text-xs text-on-surface-variant mt-1">Đã xác nhận</div>
+    </div>
+    <div class="bg-green-50 rounded-xl p-4 border border-green-100 text-center stat-card">
+      <div class="text-2xl font-black text-green-700">${done}</div>
+      <div class="text-xs text-on-surface-variant mt-1">Hoàn thành</div>
+    </div>
+    <div class="bg-red-50 rounded-xl p-4 border border-red-100 text-center stat-card">
+      <div class="text-2xl font-black text-red-600">${cancelled}</div>
+      <div class="text-xs text-on-surface-variant mt-1">Đã hủy</div>
+    </div>`;
+
+  // Booking status bar (dưới cards)
+  const barEl=document.getElementById('bookingStatusBars');
+  const bStatuses=[{k:'Pending',l:'Chờ xử lý',c:'#fbbf24'},{k:'Confirmed',l:'Xác nhận',c:'#3b82f6'},{k:'Completed',l:'Hoàn thành',c:'#22c55e'},{k:'Cancelled',l:'Đã hủy',c:'#ef4444'}];
+  barEl.innerHTML=`<div class="mt-4 flex flex-col gap-2.5">${bStatuses.map(s=>{
+    const cnt=allBookings.filter(b=>b.status===s.k||(s.k==='Completed'&&b.status==='Done')).length;
+    const pct=total?Math.round(cnt/total*100):0;
+    return `<div>
+      <div class="flex justify-between text-xs mb-1"><span class="font-medium">${s.l}</span><span class="text-on-surface-variant">${cnt} (${pct}%)</span></div>
+      <div class="w-full bg-surface-variant rounded-full h-1.5"><div class="progress-bar h-1.5 rounded-full" style="width:${pct}%;background:${s.c}"></div></div>
+    </div>`;
+  }).join('')}</div>`;
+
+  // Services list
+  const sEl=document.getElementById('servicesList');
+  if(!allServices.length){ sEl.innerHTML='<p class="text-xs text-slate-300">Chưa có dịch vụ</p>'; }
+  else sEl.innerHTML=allServices.map(s=>`
+    <div class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-surface hover:bg-surface-container transition-colors cursor-pointer" onclick="location.href='services.html'">
+      <span class="text-sm font-medium text-on-surface">${s.serviceName||s.name||'—'}</span>
+      <span class="text-xs font-semibold text-primary">${fmtVND(s.price)}</span>
+    </div>`).join('');
+
+  // Bookings table
+  const tbody=document.getElementById('bookingsBody');
+  if(!allBookings.length){ tbody.innerHTML='<tr><td colspan="4" class="px-4 py-10 text-center text-slate-300">Chưa có lịch hẹn</td></tr>'; return; }
+  tbody.innerHTML=[...allBookings].reverse().slice(0,10).map(b=>`
+    <tr class="trow cursor-pointer transition-colors" onclick="location.href='bookings.html'">
+      <td class="px-4 py-3 font-bold text-on-surface">#${b.bookingId||b.id}</td>
+      <td class="px-4 py-3">${b.serviceName||b.serviceId||'—'}</td>
+      <td class="px-4 py-3 text-on-surface-variant">${fmtDate(b.bookingDate)}</td>
+      <td class="px-4 py-3">${statusBadge(b.status)}</td>
+    </tr>`).join('');
+}
+
+// Boot
+loadAll();
+
+// ✅ Auto-refresh dashboard mỗi 60 giây
+setInterval(() => {
+  fetchDashboardSummary();
+  fetchOrders();
+}, 60_000);
+
+// ✅ Refresh ngay khi user quay lại tab dashboard (sau khi thanh toán xong ở tab khác)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    const flag = localStorage.getItem('dashboard_needs_refresh');
+    if (flag) {
+      localStorage.removeItem('dashboard_needs_refresh');
+      fetchDashboardSummary();
+      fetchOrders();
+      toast('Đã cập nhật dữ liệu mới nhất', 'ok');
+    }
+  }
+});
+</script>
+<script>
+// Init dashboard user display
+(function(){
+  const userData = JSON.parse(localStorage.getItem('user') || 'null');
+  const token = localStorage.getItem('token');
+  if (!token || !userData) {
+    // Not logged in — redirect to login
+    window.location.href = 'login.html';
+    return;
+  }
+  const displayName = userData.fullName || userData.username || userData.name || 'Quản trị hệ thống';
+  const initial = displayName.charAt(0).toUpperCase();
+  const avatar = document.getElementById('dash-avatar') || document.getElementById('avatarInitial');
+  const uname = document.getElementById('dash-username') || document.getElementById('userDisplay');
+  if (avatar) avatar.textContent = initial;
+  if (uname) uname.textContent = displayName;
+  // Set greeting
+  const greet = document.getElementById('greeting');
+  if (greet) greet.textContent = 'Xin chào, ' + displayName + ' 👋';
+})();
+</script>
+
+<script src="i18n.js"></script>
+</body>
+</html>
+

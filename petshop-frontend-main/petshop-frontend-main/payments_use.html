@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thanh toán - Paw & Bloom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#735c00',
+        surface: '#fcf9f8',
+        card: '#ffffff',
+        muted: '#7f7663',
+        line: '#d0c5af',
+        accent: '#d4af37',
+        "primary-container": "#ffe088",
+        "surface-container": "#f0edec",
+        "surface-container-low": "#f6f3f2",
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+      },
+    }
+  }
+};
+</script>
+<style>
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #fcf9f8; }
+  ::-webkit-scrollbar-thumb { background: #d0c5af; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #735c00; }
+  .glass-panel {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 0.5px solid rgba(208,197,175,0.5);
+    box-shadow: 0 8px 32px rgba(115,92,0,0.08), 0 2px 8px rgba(17,17,17,0.04);
+  }
+  .pay-method-active { border: 2px solid #735c00 !important; background: #fef8e6 !important; }
+  .pay-method-active .method-icon { color: #735c00 !important; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  #toast { transition: opacity 0.3s, transform 0.3s; }
+</style>
+</head>
+<body class="min-h-screen bg-surface text-stone-900 font-sans">
+<header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-line shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+    <a href="product_use.html" class="flex items-center gap-2 font-bold text-primary text-lg" style="font-family:'Playfair Display',serif;">
+      <span class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+        <span class="material-symbols-outlined text-primary" style="font-size:18px;">pets</span>
+      </span>
+      PET LUXURY
+    </a>
+    <nav class="hidden sm:flex items-center gap-2 text-sm font-semibold text-stone-600">
+      <a class="px-3 py-2 rounded-lg hover:bg-amber-50 hover:text-primary transition-all" href="product_use.html">Shop</a>
+      <a class="px-3 py-2 rounded-lg hover:bg-amber-50 hover:text-primary transition-all" href="services_use.html">Spa</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
+  <div id="emptyState" class="hidden max-w-xl mx-auto bg-white rounded-xl border border-line p-8 text-center glass-panel">
+    <div class="w-16 h-16 rounded-full bg-primary-container text-primary mx-auto flex items-center justify-center mb-4">
+      <span class="material-symbols-outlined text-3xl">receipt_long</span>
+    </div>
+    <h1 class="text-2xl font-bold mb-2" style="font-family:'Playfair Display',serif;">Chưa có thông tin thanh toán</h1>
+    <p class="text-muted mb-6">Vui lòng quay lại shop hoặc trang dịch vụ để chọn sản phẩm/dịch vụ trước.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="product_use.html" class="px-5 py-3 rounded-lg bg-primary text-white font-bold hover:opacity-90 transition">Quay lại Shop</a>
+      <a href="services_use.html" class="px-5 py-3 rounded-lg border border-line bg-white font-bold text-stone-700 hover:bg-amber-50 transition">Đặt dịch vụ</a>
+    </div>
+  </div>
+
+  <section id="checkoutPage" class="hidden grid lg:grid-cols-[1.1fr_0.9fr] gap-6 lg:gap-8">
+    <div class="space-y-6">
+      <div class="bg-white rounded-xl border border-line p-5 md:p-6 glass-panel">
+        <div class="flex items-start justify-between gap-4 mb-5">
+          <div>
+            <p class="text-sm font-semibold text-primary mb-1">Thanh toán đơn hàng</p>
+            <h1 id="orderTitle" class="text-2xl md:text-3xl font-bold tracking-tight" style="font-family:'Playfair Display',serif;">Đơn hàng</h1>
+          </div>
+          <span id="typeBadge" class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-primary text-xs font-bold"></span>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-sm font-semibold text-stone-600">Họ tên</span>
+            <input id="customerName" class="mt-1 w-full rounded-lg border-line focus:border-primary focus:ring-primary" placeholder="Tên khách hàng"/>
+          </label>
+          <label class="block">
+            <span class="text-sm font-semibold text-stone-600">Số điện thoại</span>
+            <input id="phone" class="mt-1 w-full rounded-lg border-line focus:border-primary focus:ring-primary" placeholder="Số điện thoại"/>
+          </label>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-line p-5 md:p-6 glass-panel">
+        <h2 class="text-lg font-bold mb-4" style="font-family:'Playfair Display',serif;">Phương thức thanh toán</h2>
+        <div class="grid sm:grid-cols-2 gap-3" id="methodList">
+          <button data-method="Cash" class="pay-method pay-method-active rounded-xl border-2 border-primary bg-amber-50 p-4 text-left transition">
+            <span class="material-symbols-outlined method-icon text-primary">payments</span>
+            <span class="block font-bold mt-2">Tiền mặt</span>
+            <span class="block text-xs text-muted mt-1">Thanh toán khi nhận hàng</span>
+          </button>
+          <button data-method="QRCode" class="pay-method rounded-xl border border-line bg-white p-4 text-left transition hover:bg-amber-50">
+            <span class="material-symbols-outlined method-icon text-stone-600">qr_code_2</span>
+            <span class="block font-bold mt-2">VNPay</span>
+            <span class="block text-xs text-muted mt-1">Thanh toán online qua VNPay</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="successBox" class="hidden bg-white rounded-xl border border-amber-200 p-6 glass-panel">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-primary-container text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined">check_circle</span>
+          </div>
+          <div class="flex-1">
+            <h2 class="text-xl font-bold mb-1" style="font-family:'Playfair Display',serif;">Thanh toán thành công</h2>
+            <p id="successText" class="text-muted"></p>
+            <div class="flex flex-wrap gap-3 mt-5">
+              <a href="product_use.html" class="px-4 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:opacity-90 transition">Tiếp tục mua sắm</a>
+              <a href="index.html" class="px-4 py-2.5 rounded-lg border border-line bg-white font-bold text-sm hover:bg-amber-50 transition">Về trang chủ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="bg-white rounded-xl border border-line p-5 md:p-6 glass-panel h-fit lg:sticky lg:top-24">
+      <h2 class="text-lg font-bold mb-4" style="font-family:'Playfair Display',serif;">Tóm tắt</h2>
+      <div id="itemList" class="space-y-3 mb-5"></div>
+      <div class="space-y-3 border-t border-line pt-4 text-sm">
+        <div class="flex justify-between"><span class="text-muted">Tạm tính</span><span id="subtotal" class="font-bold"></span></div>
+        <div class="flex justify-between"><span class="text-muted">Phí giao hàng</span><span id="shippingFee" class="font-bold"></span></div>
+        <div class="flex justify-between text-lg border-t border-line pt-4">
+          <span class="font-bold">Tổng thanh toán</span>
+          <span id="totalAmount" class="font-bold text-primary"></span>
+        </div>
+      </div>
+      <button id="payBtn" onclick="completePayment()" class="mt-6 w-full rounded-xl bg-primary text-white py-3.5 font-bold hover:opacity-90 active:scale-[0.99] transition flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">lock</span>
+        Xác nhận thanh toán
+      </button>
+      <p class="text-xs text-muted text-center mt-3">Thông tin thanh toán sẽ được lưu để admin kiểm tra đơn.</p>
+    </aside>
+  </section>
+</main>
+
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold opacity-0 pointer-events-none transition z-50"></div>
+
+<script>
+const COMPLETED_KEY = 'petshop_completed_payments';
+const BASE = 'http://localhost:8080/api';
+let context = null;
+let selectedMethod = 'Cash';
+
+function fmtVND(value) {
+  return Number(value || 0).toLocaleString('vi-VN') + ' đ';
+}
+
+function getContext() {
+  try {
+    const raw = sessionStorage.getItem('payment_context');
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function normalizeContext(ctx) {
+  const items = Array.isArray(ctx.items) ? ctx.items : [];
+  const subtotal = Number(ctx.subtotal ?? items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || item.quantity || 1), 0));
+  const shippingFee = Number(ctx.shippingFee || 0);
+  const totalAmount = Number(ctx.totalAmount ?? (subtotal + shippingFee));
+  // orderId null = chưa tạo đơn, hiển thị "Đang tạo..."
+  return {
+    ...ctx,
+    items,
+    subtotal,
+    shippingFee,
+    totalAmount,
+    orderId: ctx.orderId ?? null,
+  };
+}
+
+function renderCheckout() {
+  context = getContext();
+  if (!context) {
+    document.getElementById('emptyState').classList.remove('hidden');
+    return;
+  }
+
+  context = normalizeContext(context);
+  const isBooking = context.type === 'booking';
+  document.getElementById('checkoutPage').classList.remove('hidden');
+  document.getElementById('orderTitle').textContent = context.orderId ? `#${context.orderId}` : '#Đang tạo...';
+  document.getElementById('typeBadge').innerHTML = `<span class="material-symbols-outlined text-[16px]">${isBooking ? 'spa' : 'shopping_bag'}</span>${isBooking ? 'Dịch vụ' : 'Sản phẩm'}`;
+  document.getElementById('customerName').value = context.customerName || '';
+  document.getElementById('phone').value = context.phone || '';
+  document.getElementById('subtotal').textContent = fmtVND(context.subtotal);
+  document.getElementById('shippingFee').textContent = context.shippingFee ? fmtVND(context.shippingFee) : 'Miễn phí';
+  document.getElementById('totalAmount').textContent = fmtVND(context.totalAmount);
+
+  const itemList = document.getElementById('itemList');
+  itemList.innerHTML = context.items.length
+    ? context.items.map(item => {
+        const qty = Number(item.qty || item.quantity || 1);
+        return `
+          <div class="flex items-start justify-between gap-3 rounded-lg bg-surface-container-low p-3">
+            <div class="min-w-0">
+              <p class="font-bold text-sm truncate">${item.name || item.productName || 'Mục thanh toán'}</p>
+              <p class="text-xs text-muted mt-1">SL: ${qty}${item.unit ? ' / ' + item.unit : ''}</p>
+            </div>
+            <span class="font-bold text-sm whitespace-nowrap text-primary">${fmtVND(Number(item.price || 0) * qty)}</span>
+          </div>`;
+      }).join('')
+    : '<p class="text-sm text-muted bg-stone-50 rounded-lg p-3">Không có chi tiết sản phẩm/dịch vụ.</p>';
+}
+
+function setMethod(method) {
+  selectedMethod = method;
+  document.querySelectorAll('.pay-method').forEach(button => {
+    const active = button.dataset.method === method;
+    if (active) {
+      button.classList.add('pay-method-active');
+      button.classList.remove('border-line', 'bg-white');
+      button.classList.add('border-primary', 'bg-amber-50');
+    } else {
+      button.classList.remove('pay-method-active', 'border-primary', 'bg-amber-50');
+      button.classList.add('border-line', 'bg-white');
+    }
+    const icon = button.querySelector('.method-icon');
+    if (icon) icon.className = active ? 'material-symbols-outlined method-icon text-primary' : 'material-symbols-outlined method-icon text-stone-600';
+  });
+
+  const payBtn = document.getElementById('payBtn');
+  if (method === 'QRCode') {
+    payBtn.innerHTML = '<span class="material-symbols-outlined">open_in_new</span>Thanh toán VNPay';
+  } else {
+    payBtn.innerHTML = '<span class="material-symbols-outlined">lock</span>Xác nhận thanh toán';
+  }
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+}
+
+function saveCompletedPayment(record) {
+  let list = [];
+  try {
+    list = JSON.parse(localStorage.getItem(COMPLETED_KEY) || '[]');
+    if (!Array.isArray(list)) list = [];
+  } catch (e) {
+    list = [];
+  }
+  list = list.filter(item => String(item.orderId) !== String(record.orderId));
+  list.unshift(record);
+  localStorage.setItem(COMPLETED_KEY, JSON.stringify(list));
+}
+
+function isNumericOrderId(orderId) {
+  return /^\d+$/.test(String(orderId || ''));
+}
+
+function getOrderAmountForBackend(order) {
+  return Number(order.finalAmount ?? order.totalAmount ?? order.amount ?? context.totalAmount);
+}
+
+async function createBackendOrderIfNeeded() {
+  // Nếu đã có orderId số nguyên hợp lệ (đã tạo đơn rồi), dùng luôn
+  if (isNumericOrderId(context.orderId)) return Number(context.orderId);
+
+  // Cần customerId để tạo đơn trên backend
+  if (!context.customerId) {
+    throw new Error('Cần đăng nhập để tạo đơn hàng. Vui lòng đăng nhập và thử lại.');
+  }
+
+  const productItems = context.items
+    .filter(item => item.productId || item.id)
+    .map(item => ({
+      productId: Number(item.productId || item.id),
+      quantity: Number(item.qty || item.quantity || 1),
+    }))
+    .filter(item => item.productId && item.quantity > 0);
+
+  const body = {
+    customerId: Number(context.customerId),
+    discountAmount: 0,
+    serviceAmount: context.type === 'booking' ? context.totalAmount : context.shippingFee,
+    notes: context.type === 'booking'
+      ? `[Checkout booking] ${context.items.map(item => item.name).join(', ')}`
+      : `[Checkout shop] Phi giao hang: ${fmtVND(context.shippingFee)}`,
+    items: context.type === 'booking' ? [] : productItems,
+  };
+
+  const res = await fetch(`${BASE}/orders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || 'Không tạo được đơn hàng.');
+  }
+
+  // Cập nhật context với orderId số nguyên thật từ backend
+  context.orderId = data.orderId;
+  context.totalAmount = getOrderAmountForBackend(data);
+  context.subtotal = Number(data.totalAmount ?? context.subtotal);
+  sessionStorage.setItem('payment_context', JSON.stringify(context));
+  document.getElementById('orderTitle').textContent = `#${context.orderId}`;
+  document.getElementById('totalAmount').textContent = fmtVND(context.totalAmount);
+  return Number(data.orderId);
+}
+
+async function startVnPayPayment() {
+  const orderId = await createBackendOrderIfNeeded();
+  const body = {
+    orderId,
+    amount: context.totalAmount,
+    paymentMethod: 'QRCode',
+    transactionRef: null,
+    notes: context.type === 'booking' ? 'Thanh toán lịch hẹn qua VNPay' : 'Thanh toán đơn hàng qua VNPay',
+    frontendReturnUrl: window.location.href.split('?')[0],
+  };
+
+  const res = await fetch(`${BASE}/payments/vnpay/create`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const result = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(result.message || 'Không tạo được liên kết thanh toán VNPay.');
+  }
+  if (!result.paymentUrl) {
+    throw new Error('Backend không trả về URL thanh toán VNPay.');
+  }
+
+  localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+  window.location.href = result.paymentUrl;
+}
+
+async function completePayment() {
+  if (!context) return;
+
+  const customerName = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  if (!customerName) {
+    showToast('Vui lòng nhập họ tên.');
+    document.getElementById('customerName').focus();
+    return;
+  }
+
+  const payBtn = document.getElementById('payBtn');
+  payBtn.disabled = true;
+  payBtn.classList.add('opacity-60', 'cursor-wait');
+
+  if (selectedMethod === 'QRCode') {
+    try {
+      payBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span>Đang mở VNPay...';
+      await startVnPayPayment();
+    } catch (e) {
+      showToast(e.message || 'Không thể mở VNPay.');
+      payBtn.disabled = false;
+      payBtn.classList.remove('opacity-60', 'cursor-wait');
+      setMethod(selectedMethod);
+    }
+    return;
+  }
+
+  // Cash / Chuyển khoản: tạo đơn thật trên backend nếu có customerId
+  try {
+    payBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span>Đang xử lý...';
+
+    let finalOrderId = context.orderId;
+    let finalAmount  = context.totalAmount;
+
+    // Nếu có customerId → tạo đơn + ghi payment trên backend
+    if (context.customerId) {
+      const backendOrderId = await createBackendOrderIfNeeded();
+      finalOrderId = backendOrderId;
+      finalAmount  = context.totalAmount; // đã được cập nhật trong createBackendOrderIfNeeded
+
+      // Ghi payment vào DB
+      const payRes = await fetch(`${BASE}/payments/process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: backendOrderId,
+          amount: finalAmount,
+          paymentMethod: selectedMethod === 'Cash' ? 'Cash' : 'BankTransfer',
+          transactionRef: null,
+          notes: `[Frontend] ${selectedMethod} - ${customerName}`,
+        }),
+      });
+      const payData = await payRes.json().catch(() => ({}));
+      if (!payRes.ok) {
+        throw new Error(payData.message || 'Không ghi được thanh toán vào hệ thống.');
+      }
+    }
+
+    const paidAt = new Date().toISOString();
+    const record = {
+      ...context,
+      orderId: finalOrderId,
+      customerName,
+      phone,
+      amount: finalAmount,
+      finalAmount: finalAmount,
+      paymentMethod: selectedMethod,
+      paymentStatus: 'paid',
+      status: 'Confirmed',
+      paidAt,
+      orderDate: context.orderDate || paidAt,
+      txnId: `${selectedMethod.toUpperCase()}-${Date.now()}`,
+    };
+
+    saveCompletedPayment(record);
+    localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+    sessionStorage.removeItem('payment_context');
+    localStorage.removeItem('petshop_cart');
+
+    document.getElementById('successText').textContent = `Đơn #${finalOrderId} đã được ghi nhận với số tiền ${fmtVND(finalAmount)}.`;
+    document.getElementById('successBox').classList.remove('hidden');
+    payBtn.classList.remove('cursor-wait');
+    payBtn.classList.add('cursor-not-allowed');
+    payBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Đã thanh toán';
+    showToast('Thanh toán thành công!');
+
+  } catch (e) {
+    showToast(e.message || 'Thanh toán thất bại.');
+    payBtn.disabled = false;
+    payBtn.classList.remove('opacity-60', 'cursor-wait');
+    setMethod(selectedMethod);
+  }
+}
+
+function handleVnPayReturnParams() {
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get('vnpayStatus');
+  if (!status) return;
+
+  if (status === 'success') {
+    const orderId = params.get('orderId') || context?.orderId;
+    const paymentId = params.get('paymentId');
+    const paidAt = new Date().toISOString();
+    if (context) {
+      const record = {
+        ...context,
+        orderId,
+        amount: context.totalAmount,
+        finalAmount: context.totalAmount,
+        paymentMethod: 'VNPay',
+        paymentStatus: 'paid',
+        status: 'Confirmed',
+        paidAt,
+        orderDate: context.orderDate || paidAt,
+        txnId: paymentId ? `VNPAY-${paymentId}` : `VNPAY-${Date.now()}`,
+      };
+      saveCompletedPayment(record);
+      sessionStorage.removeItem('payment_context');
+      localStorage.removeItem('petshop_cart');
+    }
+    localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+    document.getElementById('successText').textContent = `Đơn #${orderId} đã thanh toán VNPay thành công.`;
+    document.getElementById('successBox').classList.remove('hidden');
+    document.getElementById('payBtn').disabled = true;
+    document.getElementById('payBtn').classList.add('opacity-60', 'cursor-not-allowed');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined">check_circle</span>Đã thanh toán VNPay';
+    showToast('Thanh toán VNPay thành công!');
+  } else {
+    const code = params.get('responseCode');
+    showToast(`Thanh toán VNPay thất bại${code ? ` (mã ${code})` : ''}.`);
+  }
+
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+document.querySelectorAll('.pay-method').forEach(button => {
+  button.addEventListener('click', () => setMethod(button.dataset.method));
+});
+
+renderCheckout();
+handleVnPayReturnParams();
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>

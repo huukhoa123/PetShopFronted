@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dịch Vụ Chăm Sóc - PET LUXURY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "inverse-surface": "#313030",
+          "secondary-fixed-dim": "#f7bd48",
+          "surface-container-highest": "#e5e2e1",
+          "secondary-fixed": "#ffdea6",
+          "surface-container-high": "#ebe7e7",
+          "on-tertiary-fixed": "#1a1c1a",
+          "surface-variant": "#e5e2e1",
+          "surface-container-lowest": "#ffffff",
+          "primary-container": "#d4af37",
+          "tertiary-fixed-dim": "#c7c6c4",
+          "primary-fixed-dim": "#e9c349",
+          "tertiary-container": "#b3b3b0",
+          "inverse-on-surface": "#f3f0ef",
+          "primary": "#735c00",
+          "on-error": "#ffffff",
+          "on-primary": "#ffffff",
+          "surface": "#fcf9f8",
+          "surface-container": "#f0edec",
+          "on-error-container": "#93000a",
+          "tertiary": "#5e5f5d",
+          "surface-bright": "#fcf9f8",
+          "on-secondary": "#ffffff",
+          "background": "#fcf9f8",
+          "primary-fixed": "#ffe088",
+          "secondary": "#7b5800",
+          "on-secondary-container": "#715000",
+          "on-secondary-fixed-variant": "#5d4200",
+          "on-background": "#1c1b1b",
+          "on-surface-variant": "#4d4635",
+          "surface-tint": "#735c00",
+          "on-tertiary": "#ffffff",
+          "error-container": "#ffdad6",
+          "tertiary-fixed": "#e3e2e0",
+          "outline-variant": "#d0c5af",
+          "surface-container-low": "#f6f3f2",
+          "on-tertiary-container": "#444543",
+          "outline": "#7f7663",
+          "on-surface": "#1c1b1b",
+          "on-primary-fixed": "#241a00",
+          "on-secondary-fixed": "#271900",
+          "on-primary-container": "#554300",
+          "error": "#ba1a1a",
+          "secondary-container": "#fdc34d",
+          "on-tertiary-fixed-variant": "#464745",
+          "inverse-primary": "#e9c349",
+          "on-primary-fixed-variant": "#574500",
+          "surface-dim": "#dcd9d9"
+        },
+        borderRadius: {
+          DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"
+        },
+        spacing: {
+          "margin-desktop": "80px", "container-max": "1440px", "section-gap": "120px",
+          "margin-mobile": "20px", base: "8px", gutter: "24px"
+        },
+        fontFamily: {
+          "body-lg": ["Inter"], "display-lg": ["Playfair Display"], "headline-lg": ["Playfair Display"],
+          "headline-lg-mobile": ["Playfair Display"], "body-md": ["Inter"], "label-sm": ["Inter"],
+          "label-md": ["Inter"], "headline-md": ["Playfair Display"], "display-lg-mobile": ["Playfair Display"]
+        },
+        fontSize: {
+          "body-lg": ["18px", {lineHeight:"1.6",fontWeight:"400"}],
+          "display-lg": ["64px", {lineHeight:"1.1",letterSpacing:"-0.02em",fontWeight:"700"}],
+          "headline-lg": ["48px", {lineHeight:"1.2",fontWeight:"600"}],
+          "headline-lg-mobile": ["32px", {lineHeight:"1.3",fontWeight:"600"}],
+          "body-md": ["16px", {lineHeight:"1.6",fontWeight:"400"}],
+          "label-sm": ["12px", {lineHeight:"1",letterSpacing:"0.1em",fontWeight:"500"}],
+          "label-md": ["14px", {lineHeight:"1",letterSpacing:"0.05em",fontWeight:"600"}],
+          "headline-md": ["32px", {lineHeight:"1.3",fontWeight:"500"}],
+          "display-lg-mobile": ["40px", {lineHeight:"1.2",letterSpacing:"-0.01em",fontWeight:"700"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #fcf9f8; }
+  ::-webkit-scrollbar-thumb { background: #d0c5af; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #735c00; }
+
+  .glass-panel {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 0.5px solid rgba(208,197,175,0.5);
+    box-shadow: 0 20px 40px rgba(17,17,17,0.05);
+  }
+
+  .fade-in { opacity:0; animation: fadeIn 1.5s ease-out forwards; }
+  .slide-up { opacity:0; transform:translateY(40px); transition: all 1s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .slide-up.visible { opacity:1; transform:translateY(0); }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes spin { to{transform:rotate(360deg)} }
+
+  .stagger-1 { transition-delay:0.1s; animation-delay:0.1s; }
+  .stagger-2 { transition-delay:0.3s; animation-delay:0.3s; }
+  .stagger-3 { transition-delay:0.5s; animation-delay:0.5s; }
+
+  .hover-tier { transition: all 0.4s ease; }
+  .hover-tier:hover { transform:translateX(8px); color:#735c00; }
+  .hover-tier:hover .tier-price { transform:scale(1.05); color:#735c00; }
+
+  /* Service card selected */
+  .service-card.selected { border:2px solid #735c00 !important; background:#fef8e6; }
+
+  /* Date button active */
+  .date-btn { flex-shrink:0; width:76px; padding:10px 6px; border-radius:10px; border:1.5px solid #d0c5af; background:#fcf9f8; text-align:center; display:flex; flex-direction:column; align-items:center; cursor:pointer; transition:all .2s; }
+  .date-btn:hover { border-color:#735c00; background:#fdf4d6; }
+  .date-btn.active { border-color:#735c00; background:#ffe088; color:#735c00; font-weight:700; }
+  .date-btn.disabled-past { opacity:0.4; cursor:not-allowed; pointer-events:none; }
+
+  /* Time button */
+  .time-btn { padding:8px 12px; border:1.5px solid #d0c5af; border-radius:8px; font-size:14px; color:#1c1b1b; background:#fcf9f8; cursor:pointer; transition:all .2s; }
+  .time-btn:hover:not([disabled]) { border-color:#735c00; color:#735c00; }
+  .time-btn.active { background:#735c00; color:#fff; border-color:#735c00; }
+  .time-btn[disabled] { opacity:0.45; cursor:not-allowed; background:#f0edec; }
+
+  /* Booking radio */
+  .booking-service-radio:has(input:checked) { border-color:#735c00 !important; background:#fef8e6; }
+
+  /* Field error */
+  .field-error { border-color:#ba1a1a !important; }
+  .error-msg { color:#ba1a1a; font-size:12px; margin-top:4px; display:none; }
+  .error-msg.show { display:block; }
+
+  /* Toast */
+  #toast { opacity:0; transition:opacity .3s; pointer-events:none; }
+  #toast.show { opacity:1; }
+
+  /* Modal */
+  #modal-overlay { display:none; }
+  #modal-overlay.open { display:flex; }
+
+  /* Glassmorphism */
+  .glassmorphism {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* Ambient shadow */
+  .ambient-shadow {
+    box-shadow: 0 8px 32px rgba(115,92,0,0.10), 0 2px 8px rgba(17,17,17,0.06);
+  }
+
+  /* Logo */
+  .logo-pulse { animation: logoPulse 3s ease-in-out infinite; transition: all 0.3s ease; }
+  @keyframes logoPulse { 0%,100%{box-shadow:0 0 0 0 rgba(115,92,0,0.15)} 50%{box-shadow:0 0 0 6px rgba(115,92,0,0)} }
+  .shimmer { position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.4) 50%,transparent 60%);background-size:200% 100%;animation:shimmer 2.5s infinite; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  .logo-img { transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .group:hover .logo-img { transform: scale(1.12) rotate(12deg); }
+  .group:hover .logo-pulse { border-color: #d4af37 !important; box-shadow: 0 0 15px rgba(212, 175, 55, 0.7) !important; transform: scale(1.05); }
+
+  /* Dropdown menus */
+  .service-dropdown,
+  .store-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    z-index: 100;
+  }
+  .nav-service-item:hover .service-dropdown,
+  .nav-store-item:hover .store-dropdown {
+    display: block;
+  }
+  /* Bridge gap so hover stays active */
+  .service-dropdown::before,
+  .store-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+  }
+
+  /* Opaque dropdown menu background */
+  .service-dropdown .glassmorphism,
+  .store-dropdown .glassmorphism {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Mobile menu */
+  #mobile-menu { display:none; }
+  #mobile-menu.open { display:block; max-height:none !important; }
+
+  /* Mobile submenu */
+  .mobile-submenu { display:none; }
+  .mobile-submenu.open { display:block; padding-bottom:8px; }
+
+  /* Star rating */
+  .star-filled { color:#f59e0b; }
+
+  /* Step badge */
+  .step-badge { width:26px; height:26px; background:#735c00; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  /* Avatar dropdown hidden state */
+  .av-hidden { display: none !important; }
+
+  /* Outline button */
+  .outline-button {
+    border: 1.5px solid #735c00;
+    color: #735c00;
+    background: transparent;
+    transition: all .2s;
+  }
+  .outline-button:hover { background: #735c00; color: #fff; }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed overflow-x-hidden">
+
+<!-- ===== NAVBAR ===== -->
+<nav class="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-md border-b border-transparent transition-all duration-500" id="main-nav">
+  <div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-24">
+
+    <!-- Brand -->
+    <a class="brand-link group font-display-lg text-headline-md text-primary tracking-tight shrink-0 flex items-center" href="index.html">
+      <div class="flex items-center gap-3">
+        <div class="relative rounded-full overflow-hidden w-10 h-10 md:w-12 md:h-12 logo-pulse shadow-sm border border-primary/10">
+          <img alt="PET LUXURY Logo" class="logo-img h-full w-full object-cover rounded-full" src="favicon.png">
+          <div class="shimmer"></div>
+        </div>
+        <span class="transition-colors duration-300 group-hover:text-secondary">PET LUXURY</span>
+      </div>
+    </a>
+
+    <!-- Nav Links Desktop -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="index.html">Trang Chủ</a>
+
+      <!-- DỊCH VỤ với submenu -->
+      <div class="relative nav-service-item">
+        <a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md transition-all flex items-center gap-1 cursor-pointer" href="services_use.html">
+          Dịch Vụ <span class="material-symbols-outlined text-[16px] transition-transform duration-200" style="font-size:16px;">expand_more</span>
+        </a>
+        <div class="service-dropdown">
+          <div class="glassmorphism rounded-xl overflow-hidden ambient-shadow py-2 border border-outline-variant/20">
+            <div class="px-4 py-2 border-b border-outline-variant/20">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Chăm Sóc & Làm Đẹp</span>
+            </div>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">content_cut</span> Spa & Grooming
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#tắm">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">water_drop</span> Tắm & Sấy Lông
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#grooming">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">pets</span> Cắt Tỉa Lông
+            </a>
+            <div class="px-4 py-2 border-b border-t border-outline-variant/20 mt-1">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Y Tế & Sức Khoẻ</span>
+            </div>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#vet">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">stethoscope</span> Khám Thú Y
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#vaccine">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">vaccines</span> Tiêm Phòng
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#dental">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">dentistry</span> Chăm Sóc Răng Miệng
+            </a>
+           
+            <div class="px-4 pb-3 pt-2 border-t border-outline-variant/20">
+              <a href="services_use.html" class="flex items-center justify-center gap-1.5 bg-primary text-on-primary rounded-full px-4 py-2 font-label-md text-xs hover:bg-on-surface transition-colors">
+                <span class="material-symbols-outlined text-sm">calendar_add_on</span> Đặt Lịch Ngay
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CỬA HÀNG với submenu -->
+      <div class="relative nav-store-item">
+        <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md flex items-center gap-1 cursor-pointer py-1" href="product_use.html">
+          Cửa Hàng <span class="material-symbols-outlined transition-transform duration-200" style="font-size:16px;">expand_more</span>
+        </a>
+        <div class="store-dropdown">
+          <div class="glassmorphism rounded-xl overflow-hidden ambient-shadow py-2 border border-outline-variant/20">
+            <div class="px-4 py-2 border-b border-outline-variant/20">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Sản Phẩm</span>
+            </div>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">restaurant</span> Thức Ăn
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">circle</span> Vòng Cổ &amp; Phụ Kiện
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">nutrition</span> Canxi &amp; Thực Phẩm Chức Năng
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">water_drop</span> Dầu Tắm &amp; Chăm Sóc
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">category</span> Khác
+            </a>
+            <div class="px-4 pb-3 pt-2 border-t border-outline-variant/20">
+              <a href="product_use.html" class="flex items-center justify-center gap-1.5 bg-primary text-on-primary rounded-full px-4 py-2 font-label-md text-xs hover:bg-on-surface transition-colors">
+                <span class="material-symbols-outlined text-sm">storefront</span> Xem Tất Cả Sản Phẩm
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="order_use.html">Đơn Hàng</a>
+     
+      <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="contact.html">Liên Hệ</a>
+
+      <!-- Dashboard (staff only) -->
+      <a id="nav-dashboard" class="hidden items-center gap-1 text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="dashboard.html">
+        <span class="material-symbols-outlined" style="font-size:16px;">storefront</span> Quản Lý
+      </a>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="flex items-center space-x-3 shrink-0">
+      <button class="text-primary hover:text-primary-fixed-dim transition-transform hover:scale-110 duration-300">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0;">search</span>
+      </button>
+      <a href="product_use.html?openCart=true" class="text-primary hover:text-primary-fixed-dim transition-transform hover:scale-110 duration-300 relative flex items-center justify-center">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0;">shopping_cart</span>
+        <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+      </a>
+      <button class="text-primary hover:text-primary-fixed-dim transition-transform hover:scale-110 duration-300 hidden sm:block">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0;">notifications</span>
+      </button>
+
+      <!-- Login button -->
+      <a href="login.html" id="btn-login"
+         class="hidden items-center gap-1.5 bg-primary text-on-primary font-label-md text-sm px-4 py-2 rounded-full hover:scale-95 active:scale-90 transition-transform shadow-sm"
+         style="font-family:Inter,sans-serif;">
+        <span class="material-symbols-outlined" style="font-size:16px;">login</span> Đăng nhập
+      </a>
+
+      <!-- Avatar + Dropdown -->
+      <div class="relative" id="avatar-wrapper" style="display:none;">
+        <button id="avatar-btn" class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full hover:bg-primary/10 border border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+          <div id="avatar-circle" class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm shadow-sm ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all">?</div>
+          <span id="avatar-name" class="text-sm font-semibold text-on-surface hidden sm:block" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+          <span class="material-symbols-outlined text-on-surface-variant transition-transform duration-200" id="avatar-chevron" style="font-size:18px;">expand_more</span>
+        </button>
+        <div id="avatar-dropdown" class="av-hidden absolute right-0 mt-2 w-56 bg-surface rounded-xl shadow-[0_8px_32px_rgba(17,17,17,.12)] border border-outline-variant overflow-hidden z-50">
+          <div class="px-4 py-3 bg-surface-container-low border-b border-outline-variant">
+            <p class="text-xs text-on-surface-variant font-medium">Đã đăng nhập với</p>
+            <p id="dropdown-username" class="text-sm font-bold text-on-surface truncate mt-0.5"></p>
+            <p id="dropdown-role" class="text-xs text-primary font-semibold mt-0.5"></p>
+          </div>
+          <div class="py-1">
+            <a href="dashboard.html" id="dropdown-dashboard" class="hidden items-center gap-3 px-4 py-2.5 text-sm text-secondary font-semibold hover:bg-primary/5 transition-colors">
+              <span class="material-symbols-outlined text-secondary" style="font-size:18px;">storefront</span> Quản lý cửa hàng
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-on-surface hover:bg-surface-container-low transition-colors">
+              <span class="material-symbols-outlined text-on-surface-variant" style="font-size:18px;">settings</span> Cài đặt
+            </a>
+          </div>
+          <div class="border-t border-outline-variant py-1">
+            <button id="btn-logout" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-error hover:bg-error-container/30 transition-colors">
+              <span class="material-symbols-outlined text-error" style="font-size:18px;">logout</span> Đăng xuất
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-toggle" onclick="document.getElementById('mobile-menu').classList.toggle('open')" class="md:hidden text-primary hover:bg-primary/10 rounded-lg p-2">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-surface border-t border-outline-variant/30 px-6">
+    <div class="py-4 space-y-1">
+      <a class="block text-on-surface-variant py-2 text-sm" href="index.html">Trang Chủ</a>
+
+      <!-- Dịch Vụ mobile -->
+      <div>
+        <button onclick="toggleMobileMenu('mobile-services')" class="w-full flex justify-between items-center text-primary font-semibold border-l-2 border-primary pl-3 py-2 text-sm">
+          Dịch Vụ <span class="material-symbols-outlined text-sm">expand_more</span>
+        </button>
+        <div id="mobile-services" class="mobile-submenu pl-4 space-y-1">
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">content_cut</span> Spa & Grooming</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">water_drop</span> Tắm & Sấy Lông</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">stethoscope</span> Khám Thú Y</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">vaccines</span> Tiêm Phòng</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">bed</span> Khách Sạn</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">school</span> Huấn Luyện</a>
+          <a class="mt-2 inline-flex items-center gap-1.5 bg-primary text-on-primary rounded-full px-4 py-2 text-xs font-semibold" href="services_use.html">Đặt Lịch Ngay</a>
+        </div>
+      </div>
+
+      <!-- Cửa Hàng mobile -->
+      <div>
+        <button onclick="toggleMobileMenu('mobile-store')" class="w-full flex justify-between items-center text-on-surface-variant py-2 text-sm font-medium px-1">
+          Cửa Hàng <span class="material-symbols-outlined text-sm">expand_more</span>
+        </button>
+        <div id="mobile-store" class="mobile-submenu pl-4 space-y-1">
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="#">Thức Ăn</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="#">Vòng Cổ & Phụ Kiện</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="#">Canxi & Thực Phẩm Chức Năng</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="#">Dầu Tắm & Chăm Sóc</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="#">Khác</a>
+        </div>
+      </div>
+
+      <a class="block text-on-surface-variant py-2 text-sm" href="order_use.html">Đơn Hàng</a>
+      <a class="block text-on-surface-variant py-2 text-sm" href="contact.html">Liên Hệ</a>
+      <a id="mobile-dashboard" class="hidden items-center gap-2 text-secondary py-2 text-sm font-semibold" href="dashboard.html">
+        <span class="material-symbols-outlined" style="font-size:16px;">storefront</span> Quản lý cửa hàng
+      </a>
+      <div class="pt-2 pb-1">
+        <a href="login.html" id="btn-login-mobile" class="inline-flex items-center gap-1.5 bg-primary text-on-primary font-semibold text-sm px-5 py-2.5 rounded-full">
+          <span class="material-symbols-outlined" style="font-size:16px;">login</span> Đăng nhập
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-20">
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="relative w-full h-[614px] min-h-[500px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img alt="Chó Afghan Hound trong nội thất sang trọng" class="w-full h-full object-cover object-center scale-105 transform origin-center transition-transform duration-[10s] ease-out hover:scale-100"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1daHrXOC5LW9Ps6QfO-mC-YRyziJswFE_sxxY7yMMb-s7tlwQxVytMBYzZKH3OQRpBKY2Fez-ZxXrLbXzXDJwUnyzUiTzrXS8wPyzP5VMqe5Ov8UWvT8aThzxoUiF3CvJJnhsLuA2jDdbQ6EV6jrfRy-lpP4-AR_jjhrTGi2qx22kwWs31ZerGLGG_14i_gc09sqia7bFGdfuHDQQ9JUnndGw5Xvit0aO2BwOpGiCkrK0auFBMpUP8p3jXNY8BZVGNjhMTTCBfu4"/>
+      <div class="absolute inset-0 bg-surface/40 backdrop-blur-[2px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+    </div>
+    <div class="relative z-10 text-center max-w-4xl px-margin-mobile md:px-margin-desktop">
+      <span class="font-label-md text-label-md text-primary tracking-widest uppercase mb-6 block drop-shadow-sm fade-in stagger-1">Atelier of Pet Care</span>
+      <h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface mb-6 fade-in stagger-2">DỊCH VỤ CHĂM SÓC THÚ CƯNG CAO CẤP</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto fade-in stagger-3">Trải nghiệm bộ sưu tập dịch vụ đẳng cấp thế giới, được thiết kế riêng cho sức khỏe, vẻ đẹp và sự an lành của người bạn đồng hành yêu quý.</p>
+      <div class="flex flex-wrap gap-4 justify-center mt-8 fade-in stagger-3">
+        <a href="#dat-lich" class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-4 rounded-full font-label-md hover:scale-95 transition-all shadow-lg">
+          Đặt Lịch Ngay
+        </a>
+        <a href="#dich-vu" class="inline-flex items-center gap-2 border-2 border-primary/60 text-primary px-8 py-4 rounded-full font-label-md hover:bg-primary/10 transition-all">
+          Xem Dịch Vụ
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE CATEGORIES ===== -->
+  <section id="dich-vu" class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop bg-surface">
+    <div class="text-center mb-16 slide-up stagger-1">
+      <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase mb-4 block">The Complete Experience</span>
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Danh Mục Dịch Vụ</h2>
+      <div class="w-24 h-1 bg-primary mx-auto mt-6"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="glass-panel p-8 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 group slide-up stagger-1">
+        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-primary text-3xl">content_cut</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-4 text-2xl">Spa & Grooming</h3>
+        <ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Tắm thú cưng</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Cắt tỉa lông</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Vệ sinh tai</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Chăm sóc da</li>
+        </ul>
+      </div>
+      <div class="glass-panel p-8 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 group slide-up stagger-2">
+        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-4 text-2xl">Thú Y</h3>
+        <ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Khám tổng quát</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Tiêm phòng</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Điều trị bệnh</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Tư vấn sức khỏe</li>
+        </ul>
+      </div>
+      <div class="glass-panel p-8 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 group slide-up stagger-3">
+        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-primary text-3xl">bed</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-4 text-2xl">Khách Sạn Thú Cưng</h3>
+        <ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Phòng VIP</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Camera theo dõi</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Chăm sóc 24/7</li>
+        </ul>
+      </div>
+      <div class="glass-panel p-8 rounded-2xl border border-outline-variant/30 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 group slide-up stagger-3">
+        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-primary text-3xl">sports_score</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-4 text-2xl">Huấn Luyện</h3>
+        <ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Huấn luyện cơ bản</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Huấn luyện nâng cao</li>
+          <li class="flex items-center"><span class="material-symbols-outlined text-primary text-sm mr-2">check_circle</span> Điều chỉnh hành vi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES DYNAMIC GRID ===== -->
+  <section class="py-section-gap bg-surface-container-low border-y border-outline-variant/20">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="mb-12 slide-up stagger-1">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-md mb-3">
+          <span class="material-symbols-outlined text-sm">auto_awesome</span> Dịch Vụ Của Chúng Tôi
+        </span>
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-4">Chăm Sóc Toàn Diện Cho Thú Cưng</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Các liệu pháp được thiết kế riêng, sử dụng sản phẩm cao cấp an toàn để đảm bảo thú cưng của bạn trông đẹp và cảm thấy tuyệt vời nhất.</p>
+      </div>
+      <div id="services-grid" class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+        <div class="md:col-span-12 flex items-center justify-center py-16">
+          <div class="flex flex-col items-center gap-4 text-on-surface-variant">
+            <div style="width:36px;height:36px;border:3px solid #d0c5af;border-top-color:#735c00;border-radius:50%;animation:spin .8s linear infinite;"></div>
+            <span class="font-body-md text-sm">Đang tải dịch vụ...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LUXURY SPA SECTION ===== -->
+  <section class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+      <div class="md:col-span-5 md:col-start-1 order-2 md:order-1 mt-12 md:mt-0 slide-up stagger-1">
+        <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase mb-4 block">01 / Grooming & Wellness</span>
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-6">Luxury Spa</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8">Các liệu pháp spa đặc trưng kết hợp sản phẩm thực vật hữu cơ với kỹ thuật chuyên gia để phục hồi da và lông cho thú cưng của bạn. Từ thủy trị liệu đến tạo kiểu đặc biệt, mỗi buổi là một kỳ nghỉ dưỡng giác quan.</p>
+        <div class="glass-panel p-8 rounded-xl mb-8 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-16 -mt-16 transition-all duration-700 group-hover:scale-150 group-hover:bg-primary/10"></div>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-6 text-xl">Gói Dịch Vụ</h3>
+          <ul class="space-y-4">
+            <li class="flex justify-between items-center border-b border-outline-variant/30 pb-4 hover-tier cursor-pointer">
+              <span class="font-body-md text-body-md font-medium transition-colors">The Essential Refresh</span>
+              <span class="font-label-md text-label-md text-primary tracking-widest tier-price transition-all">TỪ 350.000₫</span>
+            </li>
+            <li class="flex justify-between items-center border-b border-outline-variant/30 pb-4 hover-tier cursor-pointer">
+              <span class="font-body-md text-body-md font-medium transition-colors">The Signature Groom</span>
+              <span class="font-label-md text-label-md text-primary tracking-widest tier-price transition-all">TỪ 650.000₫</span>
+            </li>
+            <li class="flex justify-between items-center hover-tier cursor-pointer pt-2">
+              <span class="font-body-md text-body-md font-medium transition-colors">The Ultimate Royal Ritual</span>
+              <span class="font-label-md text-label-md text-primary tracking-widest tier-price transition-all">TỪ 1.200.000₫</span>
+            </li>
+          </ul>
+        </div>
+        <a href="#dat-lich" class="bg-on-surface text-on-primary font-label-md text-label-md uppercase tracking-[0.1em] px-8 py-4 rounded-full hover:bg-primary transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(115,92,0,0.2)] w-full md:w-auto text-center block">Đặt Lịch Spa</a>
+      </div>
+      <div class="md:col-span-6 md:col-start-7 order-1 md:order-2 relative slide-up stagger-2">
+        <div class="absolute -inset-4 border border-outline-variant/40 rounded-2xl transform rotate-2 hidden md:block transition-transform duration-700 hover:rotate-0"></div>
+        <img alt="Luxury Spa" class="w-full h-[600px] object-cover rounded-2xl shadow-[0_20px_40px_rgba(17,17,17,0.08)] relative z-10 transition-transform duration-700 hover:scale-[1.02]"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQbTQSUpX3fSigQtxJthWFS-cNUR07OpgES51lRw3RxL7VveCOYE9YTrig5R1FMEXRsiFhzidAZ_1YxxpU54vSo3bO7HXpVv6juFbccYnRONM_uKyDwCxb7Cr6qs8MXWsD_ZRKU4IQ_n1tuOIuZ3VWtxTyEO4Cl0EocJrGc8J2XYrzaCqfWlK7SBXeBjxXUWXyfvTWu0Iy_1LGRKhuzL3FnfnVV4rfhvHiJRyATSkbRLdR8MgIsZEhTu3oNMGiuyVqY1zb6IWe-wg"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY US ===== -->
+  <section class="bg-surface-container py-section-gap border-y border-outline-variant/20">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="text-center mb-12">
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-4">Tại Sao Chọn PET LUXURY?</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Chúng tôi cam kết mang lại trải nghiệm tốt nhất cho thú cưng của bạn</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div class="text-center p-6 slide-up stagger-1">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-primary text-3xl">verified</span>
+          </div>
+          <h3 class="font-headline-md text-on-surface mb-3 text-xl">Nhân Viên Chứng Nhận</h3>
+          <p class="font-body-md text-on-surface-variant">Đội ngũ chuyên nghiệp được đào tạo bài bản với chứng chỉ quốc tế.</p>
+        </div>
+        <div class="text-center p-6 slide-up stagger-2">
+          <div class="w-16 h-16 bg-secondary-container/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-secondary text-3xl">eco</span>
+          </div>
+          <h3 class="font-headline-md text-on-surface mb-3 text-xl">Sản Phẩm Thiên Nhiên</h3>
+          <p class="font-body-md text-on-surface-variant">100% sản phẩm từ thiên nhiên, không hóa chất độc hại, an toàn tuyệt đối.</p>
+        </div>
+        <div class="text-center p-6 slide-up stagger-3">
+          <div class="w-16 h-16 bg-tertiary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-tertiary text-3xl">favorite</span>
+          </div>
+          <h3 class="font-headline-md text-on-surface mb-3 text-xl">Chăm Sóc Tận Tâm</h3>
+          <p class="font-body-md text-on-surface-variant">Không gian yên tĩnh, thân thiện — như ở nhà của chính bé thú cưng.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOKING SECTION ===== -->
+  <section id="dat-lich" class="py-section-gap bg-surface-container-low border-y border-outline-variant/30">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="text-center mb-12 slide-up stagger-1">
+        <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase mb-4 block">Reserve Your Experience</span>
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-4">Đặt Lịch Dịch Vụ</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Chọn dịch vụ, ngày và giờ phù hợp. Chúng tôi sẽ xác nhận trong vòng 30 phút.</p>
+      </div>
+
+      <div class="glass-panel rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row slide-up stagger-2">
+
+        <!-- Info Side -->
+        <div class="lg:w-2/5 relative min-h-[300px] p-10 flex flex-col justify-center bg-on-surface text-on-primary">
+          <div class="absolute inset-0 opacity-15">
+            <img alt="" class="w-full h-full object-cover mix-blend-overlay"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjG1L7yJx8R33zbik2I72GzaPS_UWF_GyrSVRqs3jashQYHxURCUahOYXvhG9kWz76DGdfvn5ix6hNYyOg5rilEORIVI5rF41POQqp3jZNAUDO0xRUshDXLsppJtSn2Y3tcO43OgMm03oEtmOJkYp_cpkk7x5H8T1E3K8ob3HcspX0nptrRv-0v0NcDN-LH_9_Xk5ZN6Dd894cucHSmpqQSH5X9AC7WUdZSQn1spuONM1t-uI3-X9k06ZNycaFWgucpn9s_AxLPHA"/>
+          </div>
+          <div class="relative z-10">
+            <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-white mb-4">Đặt Lịch Chăm Sóc</h2>
+            <p class="font-body-md text-body-md text-outline-variant mb-8">Trải nghiệm dịch vụ chăm sóc cao cấp được thiết kế riêng cho thú cưng của bạn.</p>
+            <div class="space-y-5">
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary-fixed">schedule</span>
+                <div>
+                  <h4 class="font-label-md text-label-md text-white">Giờ Làm Việc</h4>
+                  <p class="font-body-md text-body-md text-outline-variant text-sm">Thứ 2 – Thứ 7: 9:00 – 18:00</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary-fixed">location_on</span>
+                <div>
+                  <h4 class="font-label-md text-label-md text-white">Địa Chỉ</h4>
+                  <p class="font-body-md text-body-md text-outline-variant text-sm">123 Đường Grooming, Quận Thú Cưng, TP.HCM</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary-fixed">call</span>
+                <div>
+                  <h4 class="font-label-md text-label-md text-white">Hotline</h4>
+                  <p class="font-body-md text-body-md text-outline-variant text-sm">0909 888 999</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary-fixed">payments</span>
+                <div>
+                  <h4 class="font-label-md text-label-md text-white">Thanh Toán</h4>
+                  <p class="font-body-md text-body-md text-outline-variant text-sm">Tiền mặt, chuyển khoản, thẻ ngân hàng</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="lg:w-3/5 p-8 md:p-12">
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-8 text-2xl">Điền Thông Tin Đặt Lịch</h3>
+          <div class="space-y-8">
+
+            <!-- Step 1: Customer Info -->
+            <div>
+              <h4 class="font-label-md text-label-md text-on-surface mb-4 flex items-center gap-2">
+                <span class="step-badge">1</span> Thông Tin Của Bạn
+              </h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="font-label-md text-on-surface-variant block mb-2 text-xs uppercase tracking-wider">Họ & Tên *</label>
+                  <input id="inp-name" type="text" placeholder="Nguyễn Văn A"
+                    class="w-full border border-outline-variant rounded-lg px-4 py-3 font-body-md text-on-surface bg-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"/>
+                  <p class="error-msg" id="err-name">Vui lòng nhập họ và tên.</p>
+                </div>
+                <div>
+                  <label class="font-label-md text-on-surface-variant block mb-2 text-xs uppercase tracking-wider">Số Điện Thoại *</label>
+                  <input id="inp-phone" type="tel" placeholder="09xx xxx xxx"
+                    class="w-full border border-outline-variant rounded-lg px-4 py-3 font-body-md text-on-surface bg-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"/>
+                  <p class="error-msg" id="err-phone">Vui lòng nhập số điện thoại hợp lệ (10 số).</p>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="font-label-md text-on-surface-variant block mb-2 text-xs uppercase tracking-wider">Email</label>
+                  <input id="inp-email" type="email" placeholder="example@email.com"
+                    class="w-full border border-outline-variant rounded-lg px-4 py-3 font-body-md text-on-surface bg-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"/>
+                  <p class="error-msg" id="err-email">Vui lòng nhập email hợp lệ.</p>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="font-label-md text-on-surface-variant block mb-2 text-xs uppercase tracking-wider">Tên Thú Cưng & Giống *</label>
+                  <input id="inp-pet" type="text" placeholder="Ví dụ: Mochi – Golden Retriever 2 tuổi"
+                    class="w-full border border-outline-variant rounded-lg px-4 py-3 font-body-md text-on-surface bg-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"/>
+                  <p class="error-msg" id="err-pet">Vui lòng nhập tên thú cưng.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Service -->
+            <div>
+              <h4 class="font-label-md text-label-md text-on-surface mb-4 flex items-center gap-2">
+                <span class="step-badge">2</span> Chọn Dịch Vụ
+              </h4>
+              <div id="booking-service-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="sm:col-span-2 flex items-center justify-center py-6 text-on-surface-variant text-sm">
+                  <div style="width:18px;height:18px;border:2px solid #d0c5af;border-top-color:#735c00;border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;"></div>
+                  Đang tải dịch vụ...
+                </div>
+              </div>
+              <p class="error-msg" id="err-service">Vui lòng chọn dịch vụ muốn đặt.</p>
+            </div>
+
+            <!-- Step 3: Date -->
+            <div>
+              <h4 class="font-label-md text-label-md text-on-surface mb-4 flex items-center gap-2">
+                <span class="step-badge">3</span> Chọn Ngày
+              </h4>
+              <div id="date-picker" class="flex gap-3 overflow-x-auto pb-2 -mx-2 px-2 snap-x"></div>
+              <p class="error-msg mt-2" id="err-date">Vui lòng chọn ngày hẹn.</p>
+              <p class="text-xs text-on-surface-variant mt-2 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">info</span>
+                Giờ làm việc: Thứ 2 – Thứ 7, 09:00 – 18:00
+              </p>
+            </div>
+
+            <!-- Step 4: Time -->
+            <div>
+              <h4 class="font-label-md text-label-md text-on-surface mb-4 flex items-center gap-2">
+                <span class="step-badge">4</span> Chọn Giờ
+              </h4>
+              <div id="time-picker" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+              <p class="error-msg mt-2" id="err-time">Vui lòng chọn giờ hẹn.</p>
+            </div>
+
+            <!-- Step 5: Notes -->
+            <div>
+              <h4 class="font-label-md text-label-md text-on-surface mb-4 flex items-center gap-2">
+                <span class="step-badge">5</span> Ghi Chú (tuỳ chọn)
+              </h4>
+              <textarea id="inp-notes" placeholder="Ví dụ: Bé sợ máy sấy, xin nhẹ nhàng... Dị ứng với sản phẩm nào không..." rows="3"
+                class="w-full border border-outline-variant rounded-lg px-4 py-3 font-body-md text-on-surface bg-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"></textarea>
+            </div>
+
+            <!-- Order Summary -->
+            <div id="order-summary" class="hidden bg-surface-container-low rounded-xl p-5 border border-outline-variant/50">
+              <h4 class="font-label-md text-label-md text-on-surface mb-3 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">receipt_long</span> Tóm Tắt Đặt Lịch
+              </h4>
+              <div class="space-y-2">
+                <div class="flex justify-between font-body-md text-on-surface-variant">
+                  <span>Dịch vụ:</span><span id="summary-service" class="text-on-surface font-medium">–</span>
+                </div>
+                <div class="flex justify-between font-body-md text-on-surface-variant">
+                  <span>Ngày:</span><span id="summary-date" class="text-on-surface font-medium">–</span>
+                </div>
+                <div class="flex justify-between font-body-md text-on-surface-variant">
+                  <span>Giờ:</span><span id="summary-time" class="text-on-surface font-medium">–</span>
+                </div>
+                <div class="border-t border-outline-variant pt-3 flex justify-between">
+                  <span class="font-label-md text-on-surface">Tổng tiền:</span>
+                  <span id="summary-price" class="font-headline-md text-primary text-xl">–</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button id="submit-btn" onclick="submitBooking()"
+              class="w-full bg-primary text-on-primary py-4 rounded-full font-label-md text-label-md uppercase tracking-[0.1em] hover:bg-on-surface transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(115,92,0,0.2)] flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-xl">calendar_add_on</span>
+              Xác Nhận Đặt Lịch
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VETERINARY SECTION ===== -->
+  <section class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+      <div class="md:col-span-6 md:col-start-1 relative slide-up stagger-1">
+        <img alt="Phòng khám thú y cao cấp" class="w-full h-[600px] object-cover rounded-2xl shadow-[0_20px_40px_rgba(17,17,17,0.05)] transition-transform duration-700 hover:scale-[1.02]"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0XNbTXVIRZ7Az2O7nqGcR8E6delaXksPBPtG-gZx-xdM5T84nBb6tZoW8jdZzRviccpBX15ZnnYILBEb-3yZwKhXO2x_r6R9E_PFgZywkeiB25ASz0X9-LRLD24kfz_0nu9GZ70jg9bZK3JGv0QVZP-Mc5SmCCGeLHpTMQ7W9BiDyHQdv5UfF-2UyTRefzbbh4wECZ3R4qjEIRYX8bqxKdkLhvATqAlU5qhbQfuPU27BUOpZigWLshbGeRbiNrWJuc4eERZrH7gM"/>
+      </div>
+      <div class="md:col-span-5 md:col-start-8 mt-12 md:mt-0 slide-up stagger-2">
+        <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase mb-4 block">02 / Medical Excellence</span>
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-6">Veterinary Clinic</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8">Chẩn đoán hiện đại gặp gỡ sự chăm sóc tận tâm. Phòng khám được trang bị công nghệ y tế tiên tiến nhất, do đội ngũ bác sĩ thú y chuyên khoa vận hành.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+          <div class="flex flex-col group cursor-pointer">
+            <span class="material-symbols-outlined text-primary text-3xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">monitor_heart</span>
+            <h4 class="font-label-md text-label-md text-on-surface font-semibold mb-2 group-hover:text-primary transition-colors">Chẩn Đoán Tiên Tiến</h4>
+            <p class="font-body-md text-body-md text-sm text-on-surface-variant">Phòng thí nghiệm nội bộ, chẩn đoán hình ảnh kỹ thuật số.</p>
+          </div>
+          <div class="flex flex-col group cursor-pointer">
+            <span class="material-symbols-outlined text-primary text-3xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">medical_services</span>
+            <h4 class="font-label-md text-label-md text-on-surface font-semibold mb-2 group-hover:text-primary transition-colors">Bác Sĩ Chuyên Khoa</h4>
+            <p class="font-body-md text-body-md text-sm text-on-surface-variant">Chuyên gia nội khoa, phẫu thuật và tim mạch.</p>
+          </div>
+        </div>
+        <a href="#dat-lich" class="border border-primary text-primary font-label-md text-label-md uppercase tracking-[0.1em] px-8 py-4 rounded-full hover:bg-primary hover:text-on-primary hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(115,92,0,0.2)] transition-all duration-500 w-full md:w-auto text-center block bg-transparent">Tư Vấn Chuyên Gia</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REVIEWS ===== -->
+  <section class="py-section-gap bg-surface-container-low border-t border-outline-variant/30">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="mb-12 text-center slide-up stagger-1">
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-4">Khách Hàng Nói Gì?</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Hơn 500 gia đình tin tưởng chúng tôi chăm sóc thú cưng</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div class="glass-panel rounded-2xl p-6 slide-up stagger-1">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-4">"Mochi nhà mình được chăm sóc rất tốt! Nhân viên nhẹ nhàng, không gian sạch sẽ và thơm tho. Sẽ quay lại thường xuyên!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">T</div>
+            <div><div class="font-label-md text-on-surface">Thúy Anh</div><div class="text-xs text-on-surface-variant">Chủ bé Mochi – Golden</div></div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-2xl p-6 slide-up stagger-2">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-4">"Dịch vụ tiêm phòng ở đây rất chuyên nghiệp. Bác sĩ tận tâm giải thích từng loại vaccine và lịch tiêm tiếp theo."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-secondary-container/40 rounded-full flex items-center justify-center text-secondary font-bold">M</div>
+            <div><div class="font-label-md text-on-surface">Minh Khoa</div><div class="text-xs text-on-surface-variant">Chủ bé Bông – Corgi</div></div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-2xl p-6 slide-up stagger-3">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined star-filled text-lg">star</span><span class="material-symbols-outlined text-lg text-outline-variant">star</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-4">"Đặt lịch online tiện lắm, nhắn tin xác nhận nhanh. Grooming toàn diện cho mèo nhà mình trông như đi thi hoa hậu!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">L</div>
+            <div><div class="font-label-md text-on-surface">Linh Chi</div><div class="text-xs text-on-surface-variant">Chủ bé Cam – Maine Coon</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="w-full py-section-gap border-t border-outline-variant/50 bg-surface-container-low">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="flex flex-col space-y-6">
+      <a class="font-display-lg text-headline-md text-on-surface" href="#">PET LUXURY</a>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-xs">Nâng tầm chăm sóc thú cưng thành nghệ thuật. Những trải nghiệm tuyển chọn tinh tế nhất cho người bạn đồng hành đặc biệt của bạn.</p>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <h4 class="font-label-md text-label-md text-on-surface uppercase tracking-widest mb-2">Chính Sách</h4>
+      <a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md hover:underline" href="#">Chính Sách Bảo Mật</a>
+      <a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md hover:underline" href="#">Điều Khoản Dịch Vụ</a>
+      <a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md hover:underline" href="#">Vận Chuyển</a>
+      <a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md hover:underline" href="#">Đổi Trả</a>
+    </div>
+    <div class="flex flex-col space-y-4 md:col-span-2">
+      <h4 class="font-label-md text-label-md text-on-surface uppercase tracking-widest mb-2">Đăng Ký Nhận Tin</h4>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-2">Nhận thông tin ưu đãi độc quyền và dịch vụ mới nhất.</p>
+      <div class="flex w-full max-w-md border-b border-outline-variant focus-within:border-primary transition-colors pb-2">
+        <input class="bg-transparent border-none outline-none flex-grow font-body-md text-body-md text-on-surface placeholder-on-surface-variant/50 focus:ring-0 p-0" placeholder="Nhập email của bạn" type="email"/>
+        <button class="text-primary font-label-md text-label-md uppercase tracking-widest hover:opacity-70 transition-opacity">Đăng Ký</button>
+      </div>
+    </div>
+    <div class="col-span-1 md:col-span-4 mt-12 pt-8 border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center">
+      <p class="font-body-md text-body-md text-on-surface-variant text-sm">© 2025 PET LUXURY. All rights reserved.</p>
+      <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-4 md:mt-0">Designed in Saigon. Operated with Love. 🐾</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== SUCCESS MODAL ===== -->
+<div id="modal-overlay" class="fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+  <div class="bg-surface rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+    <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+      <span class="material-symbols-outlined text-primary text-5xl">check_circle</span>
+    </div>
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-3 text-2xl">Đặt Lịch Thành Công! 🎉</h3>
+    <p class="font-body-md text-on-surface-variant mb-2" id="modal-detail"></p>
+    <p id="modal-booking-id" class="hidden text-xs font-medium text-primary bg-primary/10 px-3 py-1.5 rounded-full mb-3 inline-block"></p>
+    <p class="font-body-md text-on-surface-variant mb-6">Vui lòng thanh toán để xác nhận lịch hẹn. Cảm ơn bạn đã tin tưởng PET LUXURY! 🐾</p>
+    <div class="flex flex-col gap-3">
+      <button onclick="goToPayment()" class="w-full bg-primary text-on-primary py-3 rounded-full font-label-md hover:bg-on-surface transition-colors flex items-center justify-center gap-2 shadow-lg">
+        <span class="material-symbols-outlined text-lg">payments</span> Thanh toán ngay
+      </button>
+      <button onclick="closeModal()" class="w-full border border-outline-variant text-on-surface-variant py-3 rounded-full font-label-md hover:bg-surface-container transition-colors">
+        Thanh toán sau
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toast" class="fixed bottom-6 right-6 bg-on-surface text-inverse-on-surface px-6 py-3 rounded-xl shadow-lg z-50 font-label-md flex items-center gap-2 max-w-sm">
+  <span class="material-symbols-outlined text-lg" id="toast-icon">info</span>
+  <span id="toast-text"></span>
+</div>
+
+<script>
+// ===== NAV =====
+
+// Mobile submenu toggle
+function toggleMobileMenu(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+  // Rotate chevron icon
+  const btn = el.previousElementSibling;
+  if (btn) {
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (icon) icon.style.transform = el.classList.contains('open') ? 'rotate(180deg)' : '';
+  }
+}
+
+// Nav scroll effect
+window.addEventListener('scroll', function() {
+  const nav = document.getElementById('main-nav');
+  if (!nav) return;
+  if (window.scrollY > 40) {
+    nav.style.background = 'rgba(252,249,248,0.92)';
+    nav.style.backdropFilter = 'blur(20px)';
+    nav.style.borderBottomColor = 'rgba(208,197,175,0.4)';
+    nav.style.boxShadow = '0 2px 20px rgba(17,17,17,0.06)';
+  } else {
+    nav.style.background = '';
+    nav.style.boxShadow = '';
+    nav.style.borderBottomColor = 'transparent';
+  }
+});
+
+// ── Auth / Nav (đồng bộ với index.html) ──────────────────────
+const STAFF_ROLES = ['Admin','Manager','Employee'];
+
+function renderNav() {
+  const token = localStorage.getItem('token');
+  const userData = JSON.parse(localStorage.getItem('user') || 'null');
+  const btnLogin = document.getElementById('btn-login');
+  const btnLoginMobile = document.getElementById('btn-login-mobile');
+  const avatarWrapper = document.getElementById('avatar-wrapper');
+  const avatarCircle = document.getElementById('avatar-circle');
+  const avatarName = document.getElementById('avatar-name');
+  const dropUser = document.getElementById('dropdown-username');
+  const dropRole = document.getElementById('dropdown-role');
+  const navDash = document.getElementById('nav-dashboard');
+  const dropDash = document.getElementById('dropdown-dashboard');
+  const mobDash = document.getElementById('mobile-dashboard');
+
+  if (token && userData) {
+    if (btnLogin) btnLogin.style.display = 'none';
+    if (btnLoginMobile) btnLoginMobile.style.display = 'none';
+    if (avatarWrapper) { avatarWrapper.style.display = 'flex'; avatarWrapper.style.alignItems = 'center'; }
+    const name = userData.fullName || userData.username || userData.name || 'U';
+    if (avatarCircle) avatarCircle.textContent = name.charAt(0).toUpperCase();
+    if (avatarName) avatarName.textContent = name.length > 16 ? name.slice(0,14)+'…' : name;
+    if (dropUser) dropUser.textContent = userData.username || userData.email || name;
+    if (dropRole) dropRole.textContent = userData.role ? 'Vai trò: '+userData.role : '';
+    // Prefill booking form từ thông tin tài khoản đăng nhập
+    const inpName  = document.getElementById('inp-name');
+    const inpPhone = document.getElementById('inp-phone');
+    const inpEmail = document.getElementById('inp-email');
+    if (inpName  && !inpName.value)  inpName.value  = userData.fullName || userData.name || '';
+    if (inpPhone && !inpPhone.value) inpPhone.value = userData.phone || '';
+    if (inpEmail && !inpEmail.value) inpEmail.value = userData.email || '';
+    const role = userData.role || '';
+    if (STAFF_ROLES.includes(role)) {
+      if (navDash) { navDash.classList.remove('hidden'); navDash.style.display = 'inline-flex'; }
+      if (dropDash) { dropDash.classList.remove('hidden'); dropDash.style.display = 'flex'; }
+      if (mobDash) { mobDash.classList.remove('hidden'); mobDash.style.display = 'flex'; }
+    }
+  } else {
+    if (btnLogin) btnLogin.style.display = 'inline-flex';
+    if (btnLoginMobile) btnLoginMobile.style.display = 'inline-flex';
+    if (avatarWrapper) avatarWrapper.style.display = 'none';
+  }
+}
+
+// Avatar dropdown toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const avatarBtn = document.getElementById('avatar-btn');
+  const dropdownEl = document.getElementById('avatar-dropdown');
+  const chevronEl = document.getElementById('avatar-chevron');
+  let dropOpen = false;
+  function openDrop() { dropOpen=true; if(dropdownEl){dropdownEl.classList.remove('av-hidden'); dropdownEl.classList.add('av-visible');} if(chevronEl) chevronEl.style.transform='rotate(180deg)'; }
+  function closeDrop() { dropOpen=false; if(dropdownEl){dropdownEl.classList.remove('av-visible'); dropdownEl.classList.add('av-hidden');} if(chevronEl) chevronEl.style.transform='rotate(0deg)'; }
+  if (avatarBtn) avatarBtn.addEventListener('click', e => { e.stopPropagation(); dropOpen ? closeDrop() : openDrop(); });
+  document.addEventListener('click', e => { const aw = document.getElementById('avatar-wrapper'); if (aw && !aw.contains(e.target)) closeDrop(); });
+
+  // Logout
+  const btnLogout = document.getElementById('btn-logout');
+  if (btnLogout) {
+    btnLogout.addEventListener('click', function() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      closeDrop();
+      window.location.href = 'login.html';
+    });
+  }
+
+  renderNav();
+  updateNavbarCartBadge();
+});
+
+function updateNavbarCartBadge() {
+  try {
+    const savedCart = localStorage.getItem('petshop_cart');
+    if (savedCart) {
+      const cart = JSON.parse(savedCart);
+      const count = Object.values(cart).reduce((a, b) => a + b, 0);
+      const badge = document.getElementById('cartBadge');
+      if (badge) {
+        if (count > 0) {
+          badge.textContent = count;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    }
+  } catch(e) {}
+}
+
+// ===== CONFIG =====
+const API = 'http://localhost:8080/api';
+
+// Mock services khi không có API
+const MOCK_SERVICES = [
+  { id: 1, serviceName: 'Full Grooming Toàn Diện', price: 450000, durationMinutes: 90, description: 'Tắm, sấy, cắt tỉa lông, vệ sinh tai, cắt móng – trọn gói chăm sóc cao cấp.', isActive: true },
+  { id: 2, serviceName: 'Tắm Spa & Massage', price: 280000, durationMinutes: 60, description: 'Tắm nước ấm thảo dược kết hợp massage thư giãn.', isActive: true },
+  { id: 3, serviceName: 'Cắt Tỉa Lông Chuyên Sâu', price: 320000, durationMinutes: 75, description: 'Tạo kiểu theo yêu cầu bởi groomer chuyên nghiệp.', isActive: true },
+  { id: 4, serviceName: 'Chăm Sóc Răng Miệng', price: 150000, durationMinutes: 30, description: 'Vệ sinh răng, làm sạch cao răng chuyên nghiệp.', isActive: true },
+  { id: 5, serviceName: 'Khám Sức Khỏe Định Kỳ', price: 200000, durationMinutes: 45, description: 'Khám tổng quát, tư vấn dinh dưỡng và sức khỏe.', isActive: true },
+];
+
+const VI_DAYS = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+const BUSINESS_HOURS = { open: 9, close: 18 }; // 9:00 – 18:00
+const TIME_SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
+
+let apiServices = [];
+let selectedDate = null;
+let selectedDateISO = null;
+let selectedTime = null;
+let selectedServiceId = null;
+
+// ─── HELPER: Local ISO date ───
+function formatLocalDateISO(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+// ─── HELPER: Current hour/minute (Vietnam time via Intl or fallback) ───
+function getNowVietnam() {
+  try {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    });
+    const parts = formatter.formatToParts(now);
+    const get = (t) => parts.find(p => p.type === t)?.value;
+    return {
+      year: parseInt(get('year')),
+      month: parseInt(get('month')),
+      day: parseInt(get('day')),
+      hour: parseInt(get('hour')),
+      minute: parseInt(get('minute')),
+      isoDate: `${get('year')}-${get('month')}-${get('day')}`
+    };
+  } catch(e) {
+    const now = new Date();
+    return {
+      year: now.getFullYear(),
+      month: now.getMonth() + 1,
+      day: now.getDate(),
+      hour: now.getHours(),
+      minute: now.getMinutes(),
+      isoDate: formatLocalDateISO(now)
+    };
+  }
+}
+
+// ─── SERVICE ICON ───
+function serviceIcon(name) {
+  const n = (name || '').toLowerCase();
+  if (n.includes('grooming') && (n.includes('toàn') || n.includes('full'))) return { icon:'content_cut', bg:'bg-primary/10', color:'text-primary', filled:true };
+  if (n.includes('grooming') || n.includes('tắm') || n.includes('spa')) return { icon:'water_drop', bg:'bg-secondary-container/30', color:'text-secondary', filled:true };
+  if (n.includes('móng') || n.includes('nail')) return { icon:'pets', bg:'bg-surface-variant', color:'text-on-surface-variant', filled:false };
+  if (n.includes('răng') || n.includes('dental')) return { icon:'dentistry', bg:'bg-tertiary/10', color:'text-tertiary', filled:false };
+  if (n.includes('sức khỏe') || n.includes('khám')) return { icon:'stethoscope', bg:'bg-secondary-container/30', color:'text-secondary', filled:false };
+  if (n.includes('tiêm') || n.includes('vaccine')) return { icon:'vaccines', bg:'bg-primary/10', color:'text-primary', filled:false };
+  if (n.includes('massage')) return { icon:'spa', bg:'bg-tertiary/10', color:'text-tertiary', filled:false };
+  return { icon:'medical_services', bg:'bg-surface-variant', color:'text-on-surface-variant', filled:false };
+}
+
+// ─── RENDER SERVICES GRID ───
+function renderServicesGrid(services) {
+  const grid = document.getElementById('services-grid');
+  if (!services.length) {
+    grid.innerHTML = `<div class="md:col-span-12 text-center py-16 text-on-surface-variant font-body-md">Hiện chưa có dịch vụ nào.</div>`;
+    return;
+  }
+  let html = '';
+  services.forEach((svc, idx) => {
+    const id = svc.id || svc.serviceId;
+    const name = svc.serviceName || svc.name || 'Dịch vụ';
+    const price = Number(svc.price) || 0;
+    const duration = svc.durationMinutes || '–';
+    const desc = svc.description || '';
+    const { icon, bg, color, filled } = serviceIcon(name);
+    const isFirst = idx === 0;
+    const colSpan = isFirst ? 'md:col-span-8' : 'md:col-span-4';
+    const cardId = `card-svc-${id}`;
+
+    if (isFirst) {
+      html += `
+      <div onclick="selectServiceCard(${id})" id="${cardId}"
+        class="service-card ${colSpan} bg-surface-container-lowest rounded-2xl p-8 shadow-[0_4px_20px_rgba(17,17,17,0.06)] relative overflow-hidden group cursor-pointer transition-all duration-200 hover:shadow-lg border-2 border-transparent">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-20 -mt-20 transition-transform group-hover:scale-110 duration-700"></div>
+        <div class="relative z-10 flex flex-col h-full justify-between">
+          <div>
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-12 h-12 ${bg} rounded-xl flex items-center justify-center ${color}">
+                <span class="material-symbols-outlined ${filled?'filled':''}">${icon}</span>
+              </div>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-md text-xs">
+                <span class="material-symbols-outlined text-xs">star</span> Phổ biến nhất
+              </span>
+            </div>
+            <h3 class="font-headline-md text-on-surface mb-3 text-2xl">${name}</h3>
+            ${desc ? `<p class="font-body-md text-on-surface-variant mb-4 max-w-lg">${desc}</p>` : ''}
+          </div>
+          <div class="flex items-end justify-between mt-8">
+            <div>
+              <span class="text-xs text-on-surface-variant uppercase tracking-wider block mb-1">Từ</span>
+              <span class="font-headline-md text-primary text-2xl">${price.toLocaleString('vi-VN')}₫</span>
+              <span class="text-sm text-on-surface-variant ml-2">· ${duration} phút</span>
+            </div>
+            <a onclick="event.stopPropagation(); document.getElementById('dat-lich').scrollIntoView({behavior:'smooth'}); selectBookingServiceById(${id})"
+              class="inline-flex items-center gap-1 bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md hover:bg-on-surface transition-colors cursor-pointer">
+              Đặt Lịch <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>`;
+    } else {
+      html += `
+      <div onclick="selectServiceCard(${id})" id="${cardId}"
+        class="service-card ${colSpan} bg-surface-container-lowest rounded-2xl p-8 shadow-[0_4px_20px_rgba(17,17,17,0.06)] flex flex-col justify-between cursor-pointer transition-all duration-200 hover:shadow-lg border-2 border-transparent">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 ${bg} rounded-xl flex items-center justify-center ${color} shrink-0">
+            <span class="material-symbols-outlined ${filled?'filled':''}">${icon}</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-headline-md text-on-surface mb-2 text-xl">${name}</h3>
+            ${desc ? `<p class="font-body-md text-on-surface-variant mb-3 text-sm">${desc}</p>` : ''}
+            <div class="flex items-center gap-2 text-sm text-on-surface-variant mb-2">
+              <span class="material-symbols-outlined text-sm">schedule</span> ${duration} phút
+            </div>
+            <span class="font-headline-md text-primary block mt-3">${price.toLocaleString('vi-VN')}₫</span>
+            <a onclick="event.stopPropagation(); document.getElementById('dat-lich').scrollIntoView({behavior:'smooth'}); selectBookingServiceById(${id})"
+              class="mt-3 text-primary font-label-md hover:text-on-surface transition-colors flex items-center gap-1 cursor-pointer text-sm">
+              Đặt <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>`;
+    }
+  });
+  grid.innerHTML = html;
+}
+
+// ─── RENDER BOOKING SERVICE LIST ───
+function renderBookingServiceList(services) {
+  const list = document.getElementById('booking-service-list');
+  if (!services.length) {
+    list.innerHTML = `<div class="sm:col-span-2 text-center py-4 text-on-surface-variant text-sm">Không có dịch vụ nào.</div>`;
+    return;
+  }
+  list.innerHTML = services.map(svc => {
+    const id = svc.id || svc.serviceId;
+    const name = svc.serviceName || svc.name || 'Dịch vụ';
+    const price = Number(svc.price) || 0;
+    const duration = svc.durationMinutes || '–';
+    return `
+    <label class="booking-service-radio relative flex items-center p-4 border border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors">
+      <input type="radio" name="booking-service" value="${id}" class="w-5 h-5 text-primary border-outline focus:ring-primary mr-3" onchange="onServiceChange()"/>
+      <div>
+        <div class="font-body-md text-on-surface font-medium">${name}</div>
+        <div class="text-xs text-on-surface-variant mt-0.5">${price.toLocaleString('vi-VN')}₫ · ${duration} phút</div>
+      </div>
+    </label>`;
+  }).join('');
+}
+
+// ─── LOAD SERVICES ───
+async function loadServices() {
+  try {
+    const r = await fetch(`${API}/services?active=true`, { signal: AbortSignal.timeout(4000) });
+    if (!r.ok) throw new Error();
+    const data = await r.json();
+    const raw = Array.isArray(data) ? data : (data.content || data.data || []);
+    apiServices = raw.map(s => ({
+      ...s, id: s.serviceId || s.id,
+      serviceName: s.serviceName || s.name || 'Dịch vụ',
+      price: Number(s.price) || 0,
+      durationMinutes: s.durationMinutes || s.duration || 0,
+    })).filter(s => s.isActive !== false);
+  } catch(e) {
+    // Dùng mock data khi không kết nối được API
+    apiServices = MOCK_SERVICES;
+  }
+  renderServicesGrid(apiServices);
+  renderBookingServiceList(apiServices);
+}
+
+// ─── SELECT SERVICE CARD ───
+function selectServiceCard(id) {
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById(`card-svc-${id}`);
+  if (card) card.classList.add('selected');
+}
+
+function selectBookingServiceById(id) {
+  const radio = document.querySelector(`input[name="booking-service"][value="${id}"]`);
+  if (radio) { radio.checked = true; selectedServiceId = id; updateSummary(); }
+}
+
+function onServiceChange() {
+  const checked = document.querySelector('input[name="booking-service"]:checked');
+  if (checked) { selectedServiceId = Number(checked.value); updateSummary(); clearError('err-service', 'inp-service-group'); }
+}
+
+// ─── DATE PICKER ───
+function buildDatePicker() {
+  const container = document.getElementById('date-picker');
+  container.innerHTML = '';
+  const vn = getNowVietnam();
+  const today = new Date(vn.year, vn.month - 1, vn.day);
+
+  for (let i = 0; i < 10; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+
+    // Bỏ qua Chủ Nhật (shop chỉ T2-T7)
+    if (d.getDay() === 0) continue;
+
+    const dayName = VI_DAYS[d.getDay()];
+    const dateNum = d.getDate();
+    const isToday = i === 0;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.dataset.dateDisplay = d.toLocaleDateString('vi-VN');
+    btn.dataset.dateISO = formatLocalDateISO(d);
+    btn.dataset.isToday = isToday ? '1' : '0';
+    btn.className = 'date-btn snap-start focus:outline-none';
+    btn.innerHTML = `
+      <span class="text-xs font-semibold text-on-surface-variant mb-1" style="font-family:Inter,sans-serif;">${isToday ? 'HÔM NAY' : dayName}</span>
+      <span class="text-2xl font-bold text-on-surface" style="font-family:'Playfair Display',serif;">${dateNum}</span>
+      <span class="text-xs text-on-surface-variant mt-1" style="font-family:Inter,sans-serif;">${(d.getMonth()+1)}/${d.getFullYear()}</span>`;
+    btn.onclick = () => { selectDate(btn); };
+    container.appendChild(btn);
+  }
+}
+
+function selectDate(btn) {
+  document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedDate    = btn.dataset.dateDisplay;
+  selectedDateISO = btn.dataset.dateISO;
+  selectedTime    = null; // reset time when date changes
+  clearError('err-date', null);
+  buildTimePicker(btn.dataset.isToday === '1');
+  updateSummary();
+}
+
+// ─── TIME PICKER ───
+// Giờ làm việc: 09:00 – 18:00, bước 1h/1.5h
+// Nếu hôm nay → ẩn giờ đã qua (cộng buffer 30 phút)
+function buildTimePicker(isToday) {
+  const container = document.getElementById('time-picker');
+  container.innerHTML = '';
+
+  const vn = getNowVietnam();
+  // Thêm 30 phút buffer: nếu bây giờ là 16:17 thì 16:00 đã qua, 17:00 còn hiệu lực
+  const nowMinutes = isToday ? (vn.hour * 60 + vn.minute + 30) : 0;
+
+  TIME_SLOTS.forEach(slot => {
+    const [h, m] = slot.split(':').map(Number);
+    const slotMinutes = h * 60 + m;
+    const isPast = isToday && slotMinutes <= nowMinutes;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = slot;
+    btn.className = 'time-btn';
+    if (isPast) {
+      btn.disabled = true;
+      btn.title = 'Giờ này đã qua';
+      btn.style.textDecoration = 'line-through';
+    } else {
+      btn.onclick = () => selectTime(btn);
+    }
+    container.appendChild(btn);
+  });
+
+  // Kiểm tra nếu tất cả đều disabled
+  const availableCount = TIME_SLOTS.filter(slot => {
+    const [h, m] = slot.split(':').map(Number);
+    return !isToday || (h * 60 + m) > nowMinutes;
+  }).length;
+
+  if (availableCount === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-4 text-on-surface-variant text-sm flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">schedule_send</span>
+        Hết giờ hôm nay. Vui lòng chọn ngày khác.
+      </div>`;
+  }
+}
+
+function selectTime(btn) {
+  document.querySelectorAll('.time-btn:not([disabled])').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedTime = btn.textContent.trim();
+  clearError('err-time', null);
+  updateSummary();
+}
+
+// ─── SUMMARY ───
+function updateSummary() {
+  const checked = document.querySelector('input[name="booking-service"]:checked');
+  if (checked) selectedServiceId = Number(checked.value);
+
+  const hasSomething = selectedServiceId || selectedDate || selectedTime;
+  const summary = document.getElementById('order-summary');
+
+  if (!hasSomething) { summary.classList.add('hidden'); return; }
+  summary.classList.remove('hidden');
+
+  if (selectedServiceId) {
+    const svc = apiServices.find(s => s.id === selectedServiceId || s.id === Number(selectedServiceId));
+    if (svc) {
+      document.getElementById('summary-service').textContent = svc.serviceName + ' · ' + (svc.durationMinutes || '–') + ' phút';
+      document.getElementById('summary-price').textContent = svc.price.toLocaleString('vi-VN') + '₫';
+    }
+  }
+  document.getElementById('summary-date').textContent = selectedDate || '–';
+  document.getElementById('summary-time').textContent = selectedTime || '–';
+}
+
+// ─── VALIDATION HELPERS ───
+function showFieldError(errId, inputId) {
+  const errEl = document.getElementById(errId);
+  if (errEl) { errEl.classList.add('show'); }
+  if (inputId) {
+    const el = document.getElementById(inputId);
+    if (el) el.classList.add('field-error');
+  }
+}
+
+function clearError(errId, inputId) {
+  const errEl = document.getElementById(errId);
+  if (errEl) errEl.classList.remove('show');
+  if (inputId) {
+    const el = document.getElementById(inputId);
+    if (el) el.classList.remove('field-error');
+  }
+}
+
+function validatePhone(phone) {
+  return /^(0|\+84)[0-9]{9}$/.test(phone.replace(/\s/g,''));
+}
+
+function validateEmail(email) {
+  return !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// ─── TOAST ───
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = msg;
+  document.getElementById('toast-icon').textContent = isError ? 'error' : 'check_circle';
+  toast.style.background = isError ? '#ba1a1a' : '';
+  toast.style.color = isError ? '#fff' : '';
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 3800);
+}
+
+// ─── SUBMIT BOOKING ───
+async function submitBooking() {
+  const name  = document.getElementById('inp-name').value.trim();
+  const phone = document.getElementById('inp-phone').value.trim();
+  const email = document.getElementById('inp-email').value.trim();
+  const pet   = document.getElementById('inp-pet').value.trim();
+  const notes = document.getElementById('inp-notes').value.trim();
+  const checked = document.querySelector('input[name="booking-service"]:checked');
+
+  // Clear previous errors
+  ['err-name','err-phone','err-email','err-pet','err-service','err-date','err-time'].forEach(id => {
+    document.getElementById(id)?.classList.remove('show');
+  });
+  ['inp-name','inp-phone','inp-email','inp-pet'].forEach(id => {
+    document.getElementById(id)?.classList.remove('field-error');
+  });
+
+  let hasError = false;
+
+  if (!name) { showFieldError('err-name','inp-name'); hasError=true; }
+  if (!phone || !validatePhone(phone)) { showFieldError('err-phone','inp-phone'); hasError=true; }
+  if (!validateEmail(email)) { showFieldError('err-email','inp-email'); hasError=true; }
+  if (!pet) { showFieldError('err-pet','inp-pet'); hasError=true; }
+  if (!checked) { showFieldError('err-service',null); hasError=true; }
+  if (!selectedDate) { showFieldError('err-date',null); hasError=true; }
+  if (!selectedTime) { showFieldError('err-time',null); hasError=true; }
+
+  if (hasError) {
+    // Cuộn đến lỗi đầu tiên
+    const firstErr = document.querySelector('.error-msg.show');
+    if (firstErr) firstErr.scrollIntoView({ behavior:'smooth', block:'center' });
+    showToast('Vui lòng kiểm tra lại thông tin đặt lịch.', true);
+    return;
+  }
+
+  const serviceId = Number(checked.value);
+  const svc = apiServices.find(s => s.id === serviceId);
+
+  const btn = document.getElementById('submit-btn');
+  const originalHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span style="display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;"></span> Đang xử lý...`;
+
+  try {
+    // Lấy customerId từ tài khoản đăng nhập nếu có
+    const _loggedUser = JSON.parse(localStorage.getItem('user') || 'null');
+    let customerId = _loggedUser ? (_loggedUser.customerId || _loggedUser.id || null) : null;
+    let petId = null;
+
+    try {
+      // Nếu chưa có customerId (chưa đăng nhập hoặc user chưa có customer record), tìm/tạo theo SĐT
+      if (!customerId) customerId = await findOrCreateCustomer(name, phone);
+      if (pet) petId = await findOrCreatePet(customerId, pet);
+    } catch(e) {
+      // Nếu API fail, vẫn tiếp tục với local booking
+      console.warn('Không kết nối được API khách hàng:', e);
+    }
+
+    const bookingTime = selectedTime.length === 5 ? selectedTime + ':00' : selectedTime;
+    const body = {
+      customerId: customerId || null,
+      petId:       petId || null,
+      serviceId,
+      bookingDate: selectedDateISO,
+      bookingTime,
+      notes: notes || null,
+    };
+
+    let bookingId = null;
+    try {
+      const r = await fetch(`${API}/bookings`, {
+        method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body),
+        signal: AbortSignal.timeout(5000)
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.message || `Lỗi server (${r.status})`);
+      bookingId = data.id || data.data?.id;
+
+      const paymentCtx = {
+        type:'booking', bookingId, customerId, customerName: (_loggedUser && (_loggedUser.fullName || _loggedUser.name)) || name, phone,
+        date:selectedDate, time:selectedTime,
+        totalAmount: svc ? svc.price : 0,
+        items: svc ? [{name:svc.serviceName, qty:1, price:svc.price}] : [],
+        petName:pet||null, notes:notes||null,
+      };
+      sessionStorage.setItem('payment_context', JSON.stringify(paymentCtx));
+    } catch(e) {
+      // Fake booking ID nếu server chưa sẵn sàng
+      bookingId = Date.now() % 10000;
+    }
+
+    // Hiển thị modal thành công
+    const petInfo = pet ? ' · ' + pet : '';
+    const svcName = svc ? svc.serviceName : 'Dịch vụ';
+    document.getElementById('modal-detail').textContent = `${name}${petInfo} · ${svcName} · ${selectedDate} lúc ${selectedTime}`;
+
+    if (bookingId) {
+      const idEl = document.getElementById('modal-booking-id');
+      idEl.textContent = `Mã lịch hẹn: #LH${String(bookingId).padStart(4,'0')}`;
+      idEl.classList.remove('hidden');
+    }
+
+    document.getElementById('modal-overlay').classList.add('open');
+
+  } catch(err) {
+    console.error(err);
+    showToast('❌ ' + (err.message || 'Lỗi kết nối. Vui lòng thử lại.'), true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+  }
+}
+
+// ─── CUSTOMER API ───
+async function findOrCreateCustomer(fullName, phone) {
+  const r = await fetch(`${API}/customers`, { signal: AbortSignal.timeout(4000) });
+  const data = await r.json();
+  const list = Array.isArray(data) ? data : (data.data || []);
+  const existing = list.find(c => (c.phone||'').replace(/\s/g,'') === phone.replace(/\s/g,''));
+  if (existing) return existing.id;
+  const cr = await fetch(`${API}/customers`, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ fullName, phone })
+  });
+  if (!cr.ok) throw new Error('Không thể tạo khách hàng');
+  const newCust = await cr.json();
+  return newCust.id || newCust.data?.id;
+}
+
+// ─── PET API ───
+async function findOrCreatePet(customerId, petInput) {
+  if (!petInput) return null;
+  const parts = petInput.split(/[–\-·]/);
+  const petName = parts[0].trim();
+  const breedRaw = parts[1] ? parts[1].trim() : '';
+  try {
+    const pr = await fetch(`${API}/pets/customer/${customerId}`, { signal: AbortSignal.timeout(3000) });
+    const pdata = await pr.json();
+    const pets = Array.isArray(pdata) ? pdata : (pdata.data || []);
+    const found = pets.find(p => (p.name||'').toLowerCase() === petName.toLowerCase());
+    if (found) return found.id;
+  } catch(e) {}
+  const npr = await fetch(`${API}/pets`, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ customerId, name:petName, species:breedRaw||'Chó/Mèo', breed:breedRaw||null })
+  });
+  if (!npr.ok) throw new Error('Không thể tạo thú cưng');
+  const newPet = await npr.json();
+  return newPet.id || newPet.data?.id;
+}
+
+// ─── MODAL ───
+function goToPayment() { window.location.href = 'payments_use.html'; }
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  ['inp-name','inp-phone','inp-email','inp-pet','inp-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('input[name="booking-service"]').forEach(r => r.checked = false);
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('order-summary').classList.add('hidden');
+  document.getElementById('modal-booking-id').classList.add('hidden');
+  selectedDate = null; selectedDateISO = null; selectedTime = null; selectedServiceId = null;
+  buildTimePicker(false);
+}
+
+// ─── REAL-TIME INPUT VALIDATION ───
+document.addEventListener('DOMContentLoaded', function() {
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.slide-up').forEach(el => observer.observe(el));
+
+  // Live validation
+  document.getElementById('inp-name').addEventListener('input', function() {
+    if (this.value.trim()) { clearError('err-name','inp-name'); }
+  });
+  document.getElementById('inp-phone').addEventListener('input', function() {
+    if (validatePhone(this.value)) { clearError('err-phone','inp-phone'); }
+  });
+  document.getElementById('inp-email').addEventListener('input', function() {
+    if (validateEmail(this.value)) { clearError('err-email','inp-email'); }
+  });
+  document.getElementById('inp-pet').addEventListener('input', function() {
+    if (this.value.trim()) { clearError('err-pet','inp-pet'); }
+  });
+
+  // Build date picker & time picker
+  buildDatePicker();
+  // Mặc định hiện time picker cho ngày hôm nay (ẩn giờ đã qua)
+  buildTimePicker(true);
+
+  // Load services
+  loadServices();
+
+  // Hiển thị giờ hiện tại ở một nơi nhỏ để tham khảo (chỉ debug, có thể bỏ)
+  const vn = getNowVietnam();
+  console.log(`🕐 Giờ hiện tại (VN): ${vn.hour}:${String(vn.minute).padStart(2,'0')} – ${vn.isoDate}`);
+});
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>

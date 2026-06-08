@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý Đơn hàng - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-low": "#f6ffbe","secondary-fixed": "#d9e2ff","surface-container-high": "#defc00",
+          "on-secondary": "#ffffff","error-container": "#fa746f","error-dim": "#67040d",
+          "on-secondary-fixed": "#003b8a","surface-variant": "#d9f600","inverse-on-surface": "#92a700",
+          "tertiary-container": "#5289ef","primary-fixed": "#58ff5e","secondary": "#3161ba",
+          "inverse-surface": "#0c1000","surface-bright": "#fcffdc","on-tertiary-fixed-variant": "#001435",
+          "on-surface": "#333c00","error": "#af3d3b","surface-tint": "#007517",
+          "primary-dim": "#006713","surface-container-highest": "#d9f600","on-primary": "#ffffff",
+          "background": "#fcffdc","primary-fixed-dim": "#47f051","surface-dim": "#d3f000",
+          "on-primary-fixed-variant": "#006914","tertiary": "#1f61c4","on-error": "#ffffff",
+          "secondary-fixed-dim": "#c4d4ff","on-error-container": "#6e0a12","on-tertiary-fixed": "#000000",
+          "on-surface-variant": "#5d6b00","inverse-primary": "#58ff5e","primary": "#007517",
+          "secondary-dim": "#2155ad","on-background": "#333c00","surface": "#fcffdc",
+          "surface-container-lowest": "#ffffff","on-primary-container": "#005e11","on-secondary-container": "#174ea6",
+          "primary-container": "#58ff5e","tertiary-fixed": "#5289ef","on-tertiary-container": "#000311",
+          "on-primary-fixed": "#00490b","secondary-container": "#d9e2ff","outline-variant": "#adc500",
+          "on-tertiary": "#ffffff","tertiary-dim": "#0054b7","surface-container": "#e9ff6f",
+          "on-secondary-fixed-variant": "#2658b0","tertiary-fixed-dim": "#437ce1","outline": "#788900"
+        },
+        borderRadius: { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+        spacing: { "gutter": "16px","xl": "32px","md": "16px","sm": "8px","base": "8px","xs": "4px","margin": "24px","lg": "24px" },
+        fontFamily: { "headline-lg": ["Inter"],"body-md": ["Inter"],"label-md": ["Inter"],"headline-md": ["Inter"] },
+        fontSize: {
+          "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+          "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+          "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+        }
+      }
+    }
+  }
+</script>
+<style>*, *::before, *::after { box-sizing: border-box; } body { margin: 0; font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-background min-h-screen flex">
+
+<!-- SideNavBar -->
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="flex-1 flex flex-col ml-64 min-w-0 bg-background">
+  <!-- TopNavBar -->
+  <header class="bg-white w-full h-16 border-b border-slate-200 sticky top-0 z-30 flex items-center justify-between px-6">
+    <span class="text-xl font-black  tracking-tight">Quản lý Đơn hàng</span>
+    <div class="flex items-center gap-4 text-slate-500">
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Canvas -->
+  <main class="flex-1 p-margin overflow-y-auto flex flex-col gap-xl">
+    <!-- Toast -->
+    <div id="toast" class="hidden fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-white text-sm font-medium"></div>
+
+    <!-- Toolbar -->
+    <section class="flex flex-col lg:flex-row lg:items-center justify-between gap-md">
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap items-center gap-sm bg-surface-container-lowest p-xs rounded-lg border border-outline-variant shadow-sm w-fit">
+        <button onclick="filterStatus('')" id="tab-all" class="px-4 py-2 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-label-md text-label-md transition-colors">Tất cả</button>
+        <button onclick="filterStatus('Pending')" id="tab-Pending" class="px-4 py-2 rounded-DEFAULT bg-transparent text-on-surface hover:bg-surface-container-low font-label-md text-label-md transition-colors">Chờ xử lý</button>
+        <button onclick="filterStatus('Delivered')" id="tab-Delivered" class="px-4 py-2 rounded-DEFAULT bg-transparent text-on-surface hover:bg-surface-container-low font-label-md text-label-md transition-colors">Hoàn thành</button>
+        <button onclick="filterStatus('Cancelled')" id="tab-Cancelled" class="px-4 py-2 rounded-DEFAULT bg-transparent text-on-surface hover:bg-surface-container-low font-label-md text-label-md transition-colors">Đã hủy</button>
+      </div>
+      <!-- Actions -->
+      <div class="flex items-center gap-md">
+        <div class="relative w-64">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+          <input id="searchInput" oninput="filterTable()" class="w-full pl-10 pr-4 py-2 rounded-lg border border-outline bg-surface-container-lowest text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-on-surface-variant transition-colors text-sm" placeholder="Tìm mã đơn, khách hàng..." type="text"/>
+        </div>
+        <button onclick="openCreateModal()" class="flex items-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md shadow-sm hover:bg-primary-dim transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">add</span>Tạo đơn hàng mới
+        </button>
+      </div>
+    </section>
+
+    <!-- Loading -->
+    <div id="loading" class="flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
+      <span class="ml-3 text-on-surface-variant">Đang tải đơn hàng...</span>
+    </div>
+
+    <!-- Table -->
+    <section id="tableSection" class="hidden bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm overflow-hidden flex-1">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[920px]">
+          <thead>
+            <tr class="bg-surface-container-low border-b border-outline-variant">
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase">Mã đơn</th>
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase">Khách hàng</th>
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase">Tổng tiền</th>
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase">Trạng thái</th>
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase">Thanh toán</th>
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase">Ngày tạo</th>
+              <th class="p-md font-label-md text-label-md text-on-surface-variant uppercase text-center">Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="divide-y divide-outline-variant"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="hidden text-center py-16 text-on-surface-variant">
+        <span class="material-symbols-outlined text-5xl">shopping_cart</span>
+        <p class="mt-2">Chưa có đơn hàng nào</p>
+      </div>
+      <div class="p-md border-t border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+        <span id="pageInfo" class="text-sm text-on-surface-variant">Đang tải...</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══ CREATE ORDER MODAL ═══ -->
+<div id="createModal" class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-2xl border border-outline-variant overflow-hidden flex flex-col max-h-[92vh]">
+
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+      <h3 class="text-lg font-semibold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">add_shopping_cart</span>Tạo đơn hàng mới
+      </h3>
+      <button onclick="closeCreateModal()" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- ── LEFT: Chọn sản phẩm/dịch vụ ── -->
+      <div class="w-[55%] border-r border-outline-variant flex flex-col">
+        <!-- Tab toggle -->
+        <div class="flex border-b border-outline-variant bg-surface-container-low">
+          <button id="tabProduct" onclick="switchTab('product')"
+            class="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold text-primary border-b-2 border-primary bg-surface-container-lowest transition-colors">
+            <span class="material-symbols-outlined text-[18px]">inventory_2</span>Sản phẩm
+          </button>
+          <button id="tabService" onclick="switchTab('service')"
+            class="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">
+            <span class="material-symbols-outlined text-[18px]">medical_services</span>Dịch vụ
+          </button>
+        </div>
+
+        <!-- Search bar -->
+        <div class="px-3 py-2 border-b border-outline-variant/50">
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+            <input id="itemSearch" oninput="filterItems()" type="text" placeholder="Tìm kiếm..."
+              class="w-full pl-8 pr-3 py-1.5 rounded-lg border border-outline-variant bg-surface text-on-surface text-sm focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"/>
+          </div>
+        </div>
+
+        <!-- Product list -->
+        <div id="productList" class="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
+          <div class="text-center py-8 text-on-surface-variant text-sm">
+            <div class="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent mx-auto mb-2"></div>
+            Đang tải sản phẩm...
+          </div>
+        </div>
+
+        <!-- Service list -->
+        <div id="serviceList" class="hidden flex-1 overflow-y-auto p-2 flex flex-col gap-1">
+          <div class="text-center py-8 text-on-surface-variant text-sm">
+            <div class="animate-spin rounded-full h-6 w-6 border-2 border-tertiary border-t-transparent mx-auto mb-2"></div>
+            Đang tải dịch vụ...
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Thông tin đơn + giỏ hàng ── -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
+
+          <!-- Khách hàng -->
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-medium text-on-surface-variant">Khách hàng <span class="text-error">*</span></label>
+            <select id="cCustomer" class="w-full rounded-lg border border-outline bg-surface px-3 py-2 text-on-surface focus:ring-1 focus:ring-primary focus:border-primary text-sm">
+              <option value="">Chọn khách hàng...</option>
+            </select>
+          </div>
+
+          <!-- Giảm giá -->
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-medium text-on-surface-variant">Giảm giá (VNĐ)</label>
+            <input id="cDiscount" type="number" min="0" value="0"
+              class="w-full rounded-lg border border-outline bg-surface px-3 py-2 text-on-surface focus:ring-1 focus:ring-primary focus:border-primary text-sm"/>
+          </div>
+
+          <!-- Giỏ hàng -->
+          <div class="flex flex-col gap-1 flex-1">
+            <label class="text-xs font-medium text-on-surface-variant flex items-center justify-between">
+              <span>Giỏ hàng <span class="text-error">*</span></span>
+              <span id="cartCount" class="text-primary font-bold"></span>
+            </label>
+            <div class="border border-outline-variant rounded-lg bg-surface flex-1 flex flex-col min-h-[120px]">
+              <div id="itemsList" class="flex flex-col gap-1 p-2"></div>
+              <div id="itemsEmpty" class="flex-1 flex flex-col items-center justify-center py-6 text-on-surface-variant text-xs gap-1">
+                <span class="material-symbols-outlined text-3xl opacity-40">shopping_basket</span>
+                <span>Chưa có mặt hàng nào</span>
+                <span class="text-[10px]">← Chọn sản phẩm hoặc dịch vụ bên trái</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ghi chú -->
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-medium text-on-surface-variant">Ghi chú</label>
+            <textarea id="cNotes" rows="2"
+              class="w-full rounded-lg border border-outline bg-surface px-3 py-2 text-on-surface focus:ring-1 focus:ring-primary focus:border-primary text-sm resize-none"
+              placeholder="Nhập ghi chú nếu có..."></textarea>
+          </div>
+
+          <!-- Summary -->
+          <div id="orderSummary" class="hidden bg-surface-container p-3 rounded-lg border border-outline-variant text-sm">
+            <div class="flex justify-between mb-1"><span class="text-on-surface-variant">Tạm tính:</span><span id="sumSubtotal" class="font-medium">0 ₫</span></div>
+            <div class="flex justify-between mb-1"><span class="text-on-surface-variant">Giảm giá:</span><span id="sumDiscount" class="font-medium text-error">-0 ₫</span></div>
+            <div class="flex justify-between pt-2 border-t border-outline-variant mt-1">
+              <span class="font-semibold text-on-surface">Tổng:</span>
+              <span id="sumTotal" class="font-bold text-primary text-base">0 ₫</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer buttons -->
+        <div class="px-4 py-3 bg-surface-container-low border-t border-outline-variant flex justify-end gap-2">
+          <button onclick="closeCreateModal()" class="px-4 py-2 rounded-lg text-on-surface border border-outline hover:bg-surface transition-colors text-sm">Hủy</button>
+          <button onclick="createOrder()" id="createBtn" class="px-4 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-dim shadow-sm transition-colors text-sm font-semibold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>Tạo đơn
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ UPDATE STATUS MODAL ═══ -->
+<div id="statusModal" class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-md border border-outline-variant overflow-hidden">
+    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+      <h3 class="text-lg font-semibold text-on-surface">Cập nhật Trạng thái</h3>
+      <button onclick="closeStatusModal()" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="p-6 flex flex-col gap-md">
+      <div class="mb-2">
+        <p class="text-sm text-on-surface-variant">Đơn hàng: <strong id="sOrderId" class="text-on-surface"></strong></p>
+        <p class="text-sm text-on-surface-variant">Khách hàng: <strong id="sCustomer" class="text-on-surface"></strong></p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label class="font-label-md text-label-md text-on-surface-variant">Trạng thái mới</label>
+        <div class="grid grid-cols-2 gap-2" id="statusOptions"></div>
+      </div>
+    </div>
+    <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-end gap-3">
+      <button onclick="closeStatusModal()" class="px-5 py-2 rounded-lg text-on-surface border border-outline hover:bg-surface transition-colors text-sm">Đóng</button>
+      <button onclick="updateStatus()" class="px-5 py-2 rounded-lg bg-tertiary text-on-tertiary hover:bg-tertiary-dim shadow-sm transition-colors text-sm font-semibold">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DETAIL MODAL ═══ -->
+<div id="detailModal" class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-lg border border-outline-variant flex flex-col" style="max-height:90vh;overflow:hidden;">
+    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+      <h3 id="detailTitle" class="text-lg font-semibold text-on-surface">Chi tiết đơn hàng</h3>
+      <button onclick="closeDetailModal()" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div id="detailContent" class="p-6 flex flex-col gap-md text-sm" style="flex:1;overflow-y:auto;min-height:0;"></div>
+  </div>
+</div>
+
+<!-- ═══ PAYMENT MODAL ═══ -->
+<div id="payModal" class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[80] flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-[520px] overflow-hidden flex flex-col border border-outline-variant">
+    <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
+      <h3 class="text-lg font-semibold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">point_of_sale</span>Xác nhận thanh toán
+      </h3>
+      <button onclick="closePayModal()" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+
+    <div class="p-6 flex flex-col gap-md text-on-surface">
+      <div class="bg-surface-container p-4 rounded-lg border border-outline-variant">
+        <p class="text-sm text-on-surface-variant mb-1">Đơn hàng</p>
+        <p id="pOrderId" class="text-2xl font-bold text-tertiary">#ORD-—</p>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-outline-variant/40">
+        <span class="text-on-surface-variant">Khách hàng:</span>
+        <span id="pCustomer" class="font-medium text-right">—</span>
+      </div>
+      <div class="flex justify-between items-center py-2 border-b border-outline-variant/40">
+        <span class="text-on-surface-variant">Số tiền cần thu:</span>
+        <span id="pAmount" class="text-3xl font-black text-primary">—</span>
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-on-surface-variant mb-1">Số tiền thanh toán (VNĐ)</label>
+        <input id="pAmountInput" type="number" min="0" class="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none text-sm"/>
+      </div>
+
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-on-surface-variant">Phương thức thanh toán</span>
+        <div class="grid grid-cols-3 gap-md">
+          <label id="m-cash" onclick="selectMethod('Cash')" class="relative flex items-center justify-center p-md rounded-lg border-2 border-primary bg-primary-container/10 cursor-pointer transition-all">
+            <input type="radio" name="pay_method" value="Cash" checked class="sr-only"/>
+            <div class="method-content flex flex-col items-center gap-sm text-primary">
+              <span class="material-symbols-outlined text-[28px]">payments</span>
+              <span class="font-label-md text-label-md font-bold">Tiền mặt</span>
+            </div>
+            <span id="cashCheck" class="material-symbols-outlined absolute top-2 right-2 text-primary text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </label>
+          <label id="m-transfer" onclick="selectMethod('BankTransfer')" class="relative flex items-center justify-center p-md rounded-lg border border-outline-variant bg-surface hover:bg-surface-container cursor-pointer transition-all">
+            <input type="radio" name="pay_method" value="BankTransfer" class="sr-only"/>
+            <div class="method-content flex flex-col items-center gap-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[28px]">account_balance</span>
+              <span class="font-label-md text-label-md font-medium">Chuyển khoản</span>
+            </div>
+            <span id="transferCheck" class="material-symbols-outlined hidden absolute top-2 right-2 text-primary text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </label>
+          <label id="m-vnpay" onclick="selectMethod('QRCode')" class="relative flex items-center justify-center p-md rounded-lg border border-outline-variant bg-surface hover:bg-surface-container cursor-pointer transition-all">
+            <input type="radio" name="pay_method" value="QRCode" class="sr-only"/>
+            <div class="method-content flex flex-col items-center gap-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[28px]">qr_code_2</span>
+              <span class="font-label-md text-label-md font-medium">VNPay</span>
+            </div>
+            <span id="vnpayCheck" class="material-symbols-outlined hidden absolute top-2 right-2 text-primary text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </label>
+        </div>
+        <div id="transferNote" class="hidden">
+          <label class="block text-xs font-medium text-on-surface-variant mb-1">Mã giao dịch</label>
+          <input id="pTransRef" type="text" placeholder="VD: TXN123456" class="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:border-tertiary outline-none text-sm"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-end gap-3">
+      <button onclick="closePayModal()" class="px-5 py-2 rounded-lg text-on-surface border border-outline hover:bg-surface transition-colors text-sm">Hủy</button>
+      <button onclick="processPayment()" id="payBtn" class="px-5 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-dim shadow-sm transition-colors text-sm font-semibold flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+const BASE = 'http://localhost:8080/api';
+
+// ─── SẢN PHẨM LẤY TỪ API THẬT (/api/products) ──────────
+// KHÔNG dùng dữ liệu tĩnh nữa — gọi API để lấy đúng ProductID từ DB
+let productCache = []; // cache sau khi load xong
+
+let allOrders = [], services = [], customers = [], orderItems = [];
+let currentStatusId = null, currentTab = 'product';
+let currentPayOrderId = null, currentPayAmount = 0, selectedMethod = 'Cash';
+
+const STATUS_MAP = {
+  'Pending':    { label: 'Chờ xử lý',   cls: 'bg-surface-variant text-on-surface-variant' },
+  'Confirmed':  { label: 'Đã xác nhận', cls: 'bg-secondary-container text-on-secondary-container' },
+  'Processing': { label: 'Đang xử lý',  cls: 'bg-tertiary-container text-on-tertiary-container' },
+  'Shipped':    { label: 'Đang giao',   cls: 'bg-primary-fixed text-on-primary-fixed' },
+  'Delivered':  { label: 'Hoàn thành',  cls: 'bg-primary-container text-on-primary-container' },
+  'Cancelled':  { label: 'Đã hủy',      cls: 'bg-error-container text-on-error-container' },
+  'Refunded':   { label: 'Hoàn tiền',   cls: 'bg-surface-container-high text-on-surface-variant' }
+};
+
+const PAYMENT_METHOD_LABELS = {
+  Cash: 'Tiền mặt',
+  BankTransfer: 'Chuyển khoản',
+  QRCode: 'VNPay',
+  VNPay: 'VNPay'
+};
+
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+async function init() {
+  await Promise.all([loadData(), loadProducts(), loadServices(), loadCustomers()]);
+}
+
+// ─── LOAD PRODUCTS TỪ API THẬT (/api/products) ───────────
+// Không dùng dữ liệu tĩnh — lấy đúng ProductID từ DB
+async function loadProducts() {
+  try {
+    const res = await fetch(`${BASE}/products`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const list = Array.isArray(data) ? data : (data.content || data.data || []);
+    // Normalize field: Java entity dùng productName (không phải name)
+    // Product.java: @Column(name="ProductName") private String productName;
+    //               @Column(name="ProductID")   private Long id;
+    productCache = list.map(p => ({
+      id:            p.id,                          // Java field: id (mapped từ ProductID)
+      productName:   p.productName || '(Không tên)', // Java field: productName
+      price:         Number(p.price) || 0,
+      stockQuantity: p.stockQuantity ?? 0,
+      unit:          p.unit || '',
+      category:      p.categoryName || p.category || ''
+    }));
+    // ⚠️ Lưu ý: Product.java có bug getIsActive() return false cứng
+    // → Sau khi fix Java (xóa method đó), isActive sẽ đúng
+    // → Frontend KHÔNG lọc theo isActive để tránh ảnh hưởng bug cũ
+    console.log(`✅ Loaded ${productCache.length} products from API`);
+  } catch(e) {
+    productCache = [];
+    console.error('loadProducts error:', e);
+    showToast(`Không thể tải sản phẩm: ${e.message}`, 'error');
+  }
+}
+
+// ─── LOAD ORDERS ─────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch(`${BASE}/orders`);
+    const data = await res.json();
+    allOrders = Array.isArray(data) ? data : (data.data || []);
+    renderTable(allOrders);
+  } catch {
+    showToast('Không thể tải đơn hàng!', 'error');
+  } finally {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('tableSection').classList.remove('hidden');
+  }
+}
+
+// ─── LOAD SERVICES (từ API services.html) ────────────────
+async function loadServices() {
+  try {
+    const res = await fetch(`${BASE}/services?active=true`);
+    const data = await res.json();
+    const rawList = Array.isArray(data) ? data : (data.content || data.data || []);
+    // Normalize: backend có thể trả name hoặc serviceName
+    services = rawList.map(s => ({
+      ...s,
+      id:          s.serviceId || s.id,
+      serviceName: s.serviceName || s.name || '(Dịch vụ)',
+      price:       Number(s.price) || 0
+    }));
+  } catch {
+    services = []; // nếu API lỗi, fallback empty
+  }
+}
+
+// ─── LOAD CUSTOMERS ──────────────────────────────────────
+async function loadCustomers() {
+  try {
+    const res = await fetch(`${BASE}/customers`);
+    const data = await res.json();
+    customers = Array.isArray(data) ? data : (data.data || []);
+    const sel = document.getElementById('cCustomer');
+    sel.innerHTML = '<option value="">Chọn khách hàng...</option>' +
+      customers.map(c => `<option value="${c.customerId || c.id}">${c.fullName} - ${c.phone || ''}</option>`).join('');
+  } catch {}
+}
+
+function escapeJsString(value) {
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/\r/g, '\\r')
+    .replace(/\n/g, '\\n');
+}
+
+function isPaidOrder(order) {
+  return ['completed', 'paid', 'success', 'done']
+    .includes(String(order.paymentStatus || '').toLowerCase());
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER ORDER TABLE
+// ════════════════════════════════════════════════════════
+function renderTable(list) {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('pageInfo').textContent = `Hiển thị ${list.length} đơn hàng`;
+  if (!list.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  tbody.innerHTML = list.map(o => {
+    const st = STATUS_MAP[o.status] || { label: o.status, cls: 'bg-surface-container text-on-surface' };
+    const paid = isPaidOrder(o);
+    const paymentLabel = paid ? (PAYMENT_METHOD_LABELS[o.paymentMethod] || o.paymentMethod || 'Đã thanh toán') : 'Chờ thanh toán';
+    const canPay = !paid && !['Cancelled', 'Refunded'].includes(o.status);
+    const initials = (o.customerName || 'KH').split(' ').map(w => w[0]).slice(-2).join('').toUpperCase();
+    const date = o.orderDate ? new Date(o.orderDate).toLocaleString('vi-VN') : '—';
+    const safeCustomer = escapeJsString(o.customerName || '');
+    const amount = Number(o.finalAmount || 0);
+    return `
+      <tr class="hover:bg-surface transition-colors">
+        <td class="p-md font-label-md text-label-md text-on-surface font-semibold">#ORD-${o.orderId}</td>
+        <td class="p-md">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-xs">${initials}</div>
+            <div>
+              <div class="text-sm text-on-surface">${o.customerName || '—'}</div>
+              <div class="text-[11px] text-on-surface-variant">${o.customerPhone || ''}</div>
+            </div>
+          </div>
+        </td>
+        <td class="p-md text-sm text-on-surface">${Number(o.finalAmount).toLocaleString('vi-VN')} ₫</td>
+        <td class="p-md">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${st.cls} font-label-md text-[11px] whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-current opacity-70"></span>${st.label}
+          </span>
+        </td>
+        <td class="p-md">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${paid ? 'bg-primary-container text-on-primary-container' : 'bg-error-container text-on-error-container'} font-label-md text-[11px] whitespace-nowrap">
+            <span class="material-symbols-outlined text-[14px]">${paid ? 'check_circle' : 'pending_actions'}</span>${paymentLabel}
+          </span>
+        </td>
+        <td class="p-md text-sm text-on-surface-variant">${date}</td>
+        <td class="p-md">
+          <div class="flex items-center justify-center gap-2">
+            <button onclick="openDetail(${o.orderId})" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors" title="Xem chi tiết">
+              <span class="material-symbols-outlined text-[20px]">visibility</span>
+            </button>
+            <button onclick="openStatusModal(${o.orderId}, '${(o.customerName||'').replace(/'/g,"\\'")}', '${o.status}')" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-tertiary transition-colors" title="Cập nhật trạng thái">
+              <span class="material-symbols-outlined text-[20px]">edit</span>
+            </button>
+            ${canPay ? `
+            <button onclick="openPayModal(${o.orderId}, '${safeCustomer}', ${amount})" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-primary-container hover:text-primary transition-colors" title="Thanh toán">
+              <span class="material-symbols-outlined text-[20px]">payments</span>
+            </button>` : ''}
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+// ─── FILTER TABLE ────────────────────────────────────────
+let currentStatusFilter = '';
+function filterStatus(status) {
+  currentStatusFilter = status;
+  document.querySelectorAll('[id^="tab-"]').forEach(b => {
+    b.className = 'px-4 py-2 rounded-DEFAULT bg-transparent text-on-surface hover:bg-surface-container-low font-label-md text-label-md transition-colors';
+  });
+  const active = document.getElementById(status ? `tab-${status}` : 'tab-all');
+  if (active) active.className = 'px-4 py-2 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-label-md text-label-md transition-colors';
+  filterTable();
+}
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let list = allOrders;
+  if (currentStatusFilter) list = list.filter(o => o.status === currentStatusFilter);
+  if (q) list = list.filter(o => `#ord-${o.orderId}`.includes(q) || (o.customerName || '').toLowerCase().includes(q));
+  renderTable(list);
+}
+
+// ════════════════════════════════════════════════════════
+//  CREATE ORDER MODAL
+// ════════════════════════════════════════════════════════
+async function openCreateModal() {
+  orderItems = [];
+  document.getElementById('cCustomer').value = '';
+  document.getElementById('cDiscount').value = '0';
+  document.getElementById('cNotes').value = '';
+  document.getElementById('itemSearch').value = '';
+  renderCart();
+  document.getElementById('createModal').classList.remove('hidden');
+  // Hiển thị loading trong danh sách sản phẩm
+  document.getElementById('productList').innerHTML = '<div class="text-center py-8 text-on-surface-variant text-xs flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent mx-auto"></div><span>Đang tải sản phẩm...</span></div>';
+  // Load products + services song song rồi mới render tab
+  await Promise.all([loadProducts(), loadServices()]);
+  switchTab('product');
+}
+function closeCreateModal() { document.getElementById('createModal').classList.add('hidden'); }
+
+// ─── TAB SWITCH ──────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('itemSearch').value = '';
+
+  // Tab styles
+  const ACTIVE   = 'flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold border-b-2 transition-colors bg-surface-container-lowest';
+  const INACTIVE = 'flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors';
+
+  if (tab === 'product') {
+    document.getElementById('tabProduct').className = ACTIVE + ' text-primary border-primary';
+    document.getElementById('tabService').className = INACTIVE + ' border-b-2 border-transparent';
+    document.getElementById('productList').classList.remove('hidden');
+    document.getElementById('serviceList').classList.add('hidden');
+    renderProductList(productCache);
+  } else {
+    document.getElementById('tabService').className = ACTIVE + ' text-tertiary border-tertiary';
+    document.getElementById('tabProduct').className = INACTIVE + ' border-b-2 border-transparent';
+    document.getElementById('serviceList').classList.remove('hidden');
+    document.getElementById('productList').classList.add('hidden');
+    renderServiceList(services);
+  }
+}
+
+// ─── RENDER PRODUCT LIST ─────────────────────────────────
+function renderProductList(list) {
+  const el = document.getElementById('productList');
+  if (!list.length) {
+    el.innerHTML = '<div class="text-center py-8 text-on-surface-variant text-xs">Không tìm thấy sản phẩm</div>';
+    return;
+  }
+  el.innerHTML = list.map(p => {
+    const inCart = orderItems.find(i => i.type === 'product' && i.refId === p.id);
+    const isLow  = p.stockQuantity < 50;
+    return `
+      <div class="flex items-center gap-2 p-2 rounded-lg border ${inCart ? 'border-primary bg-primary-container/10' : 'border-outline-variant/50 hover:bg-surface-container-low'} transition-colors cursor-pointer group" onclick="addToCart('product', ${p.id}, '${p.productName.replace(/'/g,"\\'")}', ${p.price}, ${p.stockQuantity})">
+        <div class="w-8 h-8 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-[16px] text-on-secondary-container">inventory_2</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-semibold text-on-surface truncate">${p.productName}</p>
+          <p class="text-[10px] text-on-surface-variant">${p.price.toLocaleString('vi-VN')}đ · ${p.unit} · ${p.category}</p>
+        </div>
+        <div class="flex flex-col items-end gap-0.5 flex-shrink-0">
+          <span class="text-[10px] font-medium ${isLow ? 'text-error' : 'text-primary'}">${isLow ? '⚠️' : '✓'} ${p.stockQuantity}</span>
+          ${inCart
+            ? `<span class="text-[10px] bg-primary text-on-primary rounded px-1">x${inCart.quantity}</span>`
+            : `<span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-primary transition-colors">add_circle</span>`
+          }
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── RENDER SERVICE LIST ─────────────────────────────────
+function renderServiceList(list) {
+  const el = document.getElementById('serviceList');
+  if (!list.length) {
+    el.innerHTML = `
+      <div class="text-center py-8 text-on-surface-variant text-xs flex flex-col items-center gap-2">
+        <span class="material-symbols-outlined text-3xl opacity-40">medical_services</span>
+        <span>Không có dịch vụ nào</span>
+        <span class="text-[10px] opacity-60">(Cần kết nối API /services)</span>
+      </div>`;
+    return;
+  }
+  el.innerHTML = list.map(s => {
+    const inCart = orderItems.find(i => i.type === 'service' && i.refId === s.id);
+    const dur = s.durationMinutes ? `${s.durationMinutes} phút` : '';
+    return `
+      <div class="flex items-center gap-2 p-2 rounded-lg border ${inCart ? 'border-tertiary bg-tertiary-container/10' : 'border-outline-variant/50 hover:bg-surface-container-low'} transition-colors cursor-pointer group" onclick="addToCart('service', ${s.id}, '${(s.serviceName||'').replace(/'/g,"\\'")}', ${s.price}, 999)">
+        <div class="w-8 h-8 rounded-lg bg-tertiary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-[16px] text-on-tertiary-container">medical_services</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-semibold text-on-surface truncate">${s.serviceName}</p>
+          <p class="text-[10px] text-on-surface-variant">${Number(s.price).toLocaleString('vi-VN')}đ${dur ? ' · ' + dur : ''}</p>
+        </div>
+        <div class="flex flex-col items-end gap-0.5 flex-shrink-0">
+          ${inCart
+            ? `<span class="text-[10px] bg-tertiary text-on-tertiary rounded px-1">x${inCart.quantity}</span>`
+            : `<span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-tertiary transition-colors">add_circle</span>`
+          }
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── FILTER ITEMS (search) ───────────────────────────────
+function filterItems() {
+  const q = document.getElementById('itemSearch').value.toLowerCase();
+  if (currentTab === 'product') {
+    renderProductList(productCache.filter(p => p.productName.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
+  } else {
+    renderServiceList(services.filter(s => (s.serviceName || '').toLowerCase().includes(q)));
+  }
+}
+
+// ─── ADD TO CART ─────────────────────────────────────────
+function addToCart(type, refId, name, price, stock) {
+  const existing = orderItems.find(i => i.type === type && i.refId === refId);
+  if (existing) {
+    if (type === 'product' && existing.quantity >= stock) {
+      showToast(`Đã đạt số lượng tối đa trong kho (${stock})!`, 'error'); return;
+    }
+    existing.quantity++;
+  } else {
+    orderItems.push({ type, refId, name, price, quantity: 1 });
+  }
+  renderCart();
+  // re-render list to update cart badge
+  if (currentTab === 'product') {
+    const q = document.getElementById('itemSearch').value.toLowerCase();
+    renderProductList(productCache.filter(p => !q || p.productName.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
+  } else {
+    const q = document.getElementById('itemSearch').value.toLowerCase();
+    renderServiceList(services.filter(s => !q || (s.serviceName || '').toLowerCase().includes(q)));
+  }
+}
+
+// ─── CHANGE QUANTITY IN CART ─────────────────────────────
+function changeQty(idx, delta) {
+  orderItems[idx].quantity = Math.max(1, orderItems[idx].quantity + delta);
+  renderCart();
+  filterItems(); // refresh left panel badges
+}
+
+function removeItem(idx) {
+  orderItems.splice(idx, 1);
+  renderCart();
+  filterItems();
+}
+
+// ─── RENDER CART ─────────────────────────────────────────
+function renderCart() {
+  const el      = document.getElementById('itemsList');
+  const empty   = document.getElementById('itemsEmpty');
+  const summary = document.getElementById('orderSummary');
+  const count   = document.getElementById('cartCount');
+
+  count.textContent = orderItems.length ? `${orderItems.length} mặt hàng` : '';
+
+  if (!orderItems.length) {
+    el.innerHTML = '';
+    empty.classList.remove('hidden');
+    summary.classList.add('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  summary.classList.remove('hidden');
+
+  el.innerHTML = orderItems.map((item, i) => `
+    <div class="flex items-center gap-2 p-2 rounded-lg border ${item.type === 'service' ? 'border-tertiary/30 bg-tertiary-container/5' : 'border-outline-variant/50 bg-surface-container-lowest'} text-sm">
+      <div class="w-6 h-6 rounded flex items-center justify-center flex-shrink-0 ${item.type === 'service' ? 'bg-tertiary-container' : 'bg-secondary-container'}">
+        <span class="material-symbols-outlined text-[14px] ${item.type === 'service' ? 'text-on-tertiary-container' : 'text-on-secondary-container'}">${item.type === 'service' ? 'medical_services' : 'inventory_2'}</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-semibold text-on-surface truncate">${item.name}</p>
+        <p class="text-[10px] text-on-surface-variant">${item.price.toLocaleString('vi-VN')}đ × ${item.quantity} = <strong class="${item.type === 'service' ? 'text-tertiary' : 'text-primary'}">${(item.price * item.quantity).toLocaleString('vi-VN')}đ</strong></p>
+      </div>
+      <div class="flex items-center gap-1 flex-shrink-0">
+        <button onclick="changeQty(${i}, -1)" class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[12px]">remove</span>
+        </button>
+        <span class="w-6 text-center text-xs font-bold text-on-surface">${item.quantity}</span>
+        <button onclick="changeQty(${i}, 1)" class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[12px]">add</span>
+        </button>
+        <button onclick="removeItem(${i})" class="w-5 h-5 rounded flex items-center justify-center text-error hover:bg-error-container transition-colors ml-1">
+          <span class="material-symbols-outlined text-[14px]">close</span>
+        </button>
+      </div>
+    </div>`).join('');
+
+  // Summary
+  const subtotal = orderItems.reduce((s, i) => s + i.price * i.quantity, 0);
+  const discount = parseFloat(document.getElementById('cDiscount').value) || 0;
+  const productTotal = orderItems.filter(i => i.type === 'product').reduce((s, i) => s + i.price * i.quantity, 0);
+  const serviceTotal = orderItems.filter(i => i.type === 'service').reduce((s, i) => s + i.price * i.quantity, 0);
+
+  document.getElementById('sumSubtotal').innerHTML =
+    `${subtotal.toLocaleString('vi-VN')} ₫ <span class="text-[10px] text-on-surface-variant">(SP: ${productTotal.toLocaleString('vi-VN')} + DV: ${serviceTotal.toLocaleString('vi-VN')})</span>`;
+  document.getElementById('sumDiscount').textContent = '-' + discount.toLocaleString('vi-VN') + ' ₫';
+  document.getElementById('sumTotal').textContent = Math.max(0, subtotal - discount).toLocaleString('vi-VN') + ' ₫';
+}
+
+document.getElementById('cDiscount').addEventListener('input', renderCart);
+
+// ─── CREATE ORDER ────────────────────────────────────────
+async function createOrder() {
+  const customerId = document.getElementById('cCustomer').value;
+  if (!customerId) { showToast('Vui lòng chọn khách hàng!', 'error'); return; }
+  if (!orderItems.length) { showToast('Vui lòng thêm ít nhất 1 mặt hàng!', 'error'); return; }
+
+  const btn = document.getElementById('createBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span>Đang tạo...';
+
+  const productItems = orderItems.filter(i => i.type === 'product');
+  const serviceItems = orderItems.filter(i => i.type === 'service');
+
+  // Ghi dịch vụ vào notes để luôn hiển thị trong chi tiết đơn
+  const serviceNote = serviceItems.length
+    ? '[Dịch vụ] ' + serviceItems.map(s => s.name + ' x' + s.quantity + ' (' + Number(s.price*s.quantity).toLocaleString('vi-VN') + 'đ)').join(', ')
+    : '';
+  const userNotes = document.getElementById('cNotes').value.trim();
+  const combinedNotes = [userNotes, serviceNote].filter(Boolean).join(' | ');
+
+  const serviceAmount = serviceItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+  const body = {
+    customerId:     parseInt(customerId),
+    discountAmount: parseFloat(document.getElementById('cDiscount').value) || 0,
+    serviceAmount:  serviceAmount,
+    notes:          combinedNotes || null,
+    items:          productItems.map(i => ({ productId: i.refId, quantity: i.quantity })),
+    serviceItems:   serviceItems.map(i => ({ serviceId: i.refId, quantity: i.quantity, unitPrice: i.price }))
+  };
+
+  try {
+    const res = await fetch(`${BASE}/orders`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.message || 'Lỗi server'); }
+    showToast('Tạo đơn hàng thành công!', 'success');
+    closeCreateModal();
+    loadData();
+  } catch(e) {
+    showToast(e.message || 'Có lỗi xảy ra!', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>Tạo đơn';
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  UPDATE STATUS MODAL
+// ════════════════════════════════════════════════════════
+function openStatusModal(id, name, status) {
+  currentStatusId = id;
+  document.getElementById('sOrderId').textContent = `#ORD-${id}`;
+  document.getElementById('sCustomer').textContent = name;
+  const opts = document.getElementById('statusOptions');
+  opts.innerHTML = Object.entries(STATUS_MAP).map(([k, v]) => `
+    <label class="flex items-center gap-3 p-3 rounded-lg border ${k === status ? 'border-primary bg-surface-container-low' : 'border-outline-variant hover:bg-surface'} cursor-pointer transition-colors">
+      <input type="radio" name="newStatus" value="${k}" class="text-primary h-4 w-4" ${k === status ? 'checked' : ''}/>
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs ${v.cls}">${v.label}</span>
+    </label>`).join('');
+  document.getElementById('statusModal').classList.remove('hidden');
+}
+function closeStatusModal() { document.getElementById('statusModal').classList.add('hidden'); currentStatusId = null; }
+
+async function updateStatus() {
+  const sel = document.querySelector('input[name="newStatus"]:checked');
+  if (!sel) return;
+  try {
+    const res = await fetch(`${BASE}/orders/${currentStatusId}/status`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: sel.value })
+    });
+    if (!res.ok) throw new Error();
+    showToast('Cập nhật trạng thái thành công!', 'success');
+    closeStatusModal(); loadData();
+  } catch {
+    showToast('Cập nhật thất bại!', 'error');
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  PAYMENT MODAL
+// ════════════════════════════════════════════════════════
+function openPayModal(orderId, customer, amount) {
+  currentPayOrderId = Number(orderId);
+  currentPayAmount = Number(amount) || 0;
+  document.getElementById('pOrderId').textContent = `#ORD-${orderId}`;
+  document.getElementById('pCustomer').textContent = customer || '—';
+  document.getElementById('pAmount').textContent = currentPayAmount.toLocaleString('vi-VN') + ' ₫';
+  document.getElementById('pAmountInput').value = currentPayAmount;
+  document.getElementById('pTransRef').value = '';
+  selectMethod('Cash');
+  document.getElementById('payModal').classList.remove('hidden');
+}
+
+function closePayModal() {
+  document.getElementById('payModal').classList.add('hidden');
+  currentPayOrderId = null;
+  currentPayAmount = 0;
+}
+
+function selectMethod(method) {
+  selectedMethod = method;
+  const cashEl = document.getElementById('m-cash');
+  const transferEl = document.getElementById('m-transfer');
+  const vnpayEl = document.getElementById('m-vnpay');
+  const cashContent = cashEl.querySelector('.method-content');
+  const transferContent = transferEl.querySelector('.method-content');
+  const vnpayContent = vnpayEl.querySelector('.method-content');
+  const transNote = document.getElementById('transferNote');
+  const inactive = 'relative flex items-center justify-center p-md rounded-lg border border-outline-variant bg-surface hover:bg-surface-container cursor-pointer transition-all';
+  const active = 'relative flex items-center justify-center p-md rounded-lg border-2 border-primary bg-primary-container/10 cursor-pointer transition-all';
+
+  cashEl.className = inactive;
+  transferEl.className = inactive;
+  vnpayEl.className = inactive;
+  cashContent.className = 'method-content flex flex-col items-center gap-sm text-on-surface-variant';
+  transferContent.className = 'method-content flex flex-col items-center gap-sm text-on-surface-variant';
+  vnpayContent.className = 'method-content flex flex-col items-center gap-sm text-on-surface-variant';
+  document.getElementById('cashCheck').classList.add('hidden');
+  document.getElementById('transferCheck').classList.add('hidden');
+  document.getElementById('vnpayCheck').classList.add('hidden');
+  transNote.classList.add('hidden');
+
+  if (method === 'Cash') {
+    cashEl.className = active;
+    cashContent.className = 'method-content flex flex-col items-center gap-sm text-primary';
+    document.getElementById('cashCheck').classList.remove('hidden');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán';
+  } else if (method === 'BankTransfer') {
+    transferEl.className = active;
+    transferContent.className = 'method-content flex flex-col items-center gap-sm text-primary';
+    document.getElementById('transferCheck').classList.remove('hidden');
+    transNote.classList.remove('hidden');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán';
+  } else {
+    vnpayEl.className = active;
+    vnpayContent.className = 'method-content flex flex-col items-center gap-sm text-primary';
+    document.getElementById('vnpayCheck').classList.remove('hidden');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined text-[18px]">open_in_new</span>Thanh toán VNPay';
+  }
+}
+
+function previewInvoice(paymentId) {
+  window.open(`${BASE}/invoices/${paymentId}/preview`, '_blank');
+}
+
+async function processPayment() {
+  const amount = Number(document.getElementById('pAmountInput').value);
+  if (!currentPayOrderId) { showToast('Không tìm thấy đơn hàng cần thanh toán!', 'error'); return; }
+  if (!amount || amount <= 0) { showToast('Số tiền không hợp lệ!', 'error'); return; }
+  if (amount !== currentPayAmount) {
+    showToast('Số tiền thanh toán phải khớp với tổng đơn hàng!', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>Đang xử lý...';
+
+  const body = {
+    orderId: currentPayOrderId,
+    amount,
+    paymentMethod: selectedMethod,
+    transactionRef: document.getElementById('pTransRef').value.trim() || null,
+    notes: null,
+    frontendReturnUrl: window.location.href.split('?')[0]
+  };
+
+  try {
+    const endpoint = selectedMethod === 'QRCode' ? `${BASE}/payments/vnpay/create` : `${BASE}/payments/process`;
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.message || 'Thanh toán thất bại');
+    }
+    const result = await res.json();
+    if (selectedMethod === 'QRCode') {
+      if (!result.paymentUrl) throw new Error('Không nhận được URL thanh toán VNPay');
+      localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+      window.location.href = result.paymentUrl;
+      return;
+    }
+    showToast(result.message || 'Thanh toán thành công!', 'success');
+    closePayModal();
+    await loadData();
+    localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+
+    if (result.paymentId) {
+      setTimeout(() => {
+        if (confirm('Thanh toán thành công! Bạn có muốn xem hóa đơn ngay không?')) {
+          previewInvoice(result.paymentId);
+        }
+      }, 300);
+    }
+  } catch(e) {
+    showToast(e.message || 'Thanh toán thất bại!', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán';
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  DETAIL MODAL
+// ════════════════════════════════════════════════════════
+async function openDetail(id) {
+  document.getElementById('detailTitle').textContent = `Chi tiết đơn #ORD-${id}`;
+  document.getElementById('detailContent').innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div></div>';
+  document.getElementById('detailModal').classList.remove('hidden');
+  try {
+    const res = await fetch(`${BASE}/orders/${id}`);
+    const o = await res.json();
+    const st = STATUS_MAP[o.status] || { label: o.status, cls: '' };
+    const paid = isPaidOrder(o);
+    const payMethod = paid ? (PAYMENT_METHOD_LABELS[o.paymentMethod] || o.paymentMethod || 'Đã thanh toán') : 'Chờ thanh toán';
+
+    // ── Normalize product items: backend có thể trả về nhiều tên field khác nhau ──
+    const rawItems = o.items || o.orderItems || o.orderDetails || o.products || [];
+    const productItems = rawItems.map(it => ({
+      name:      it.productName || it.name || it.itemName || '(Sản phẩm)',
+      quantity:  it.quantity || 1,
+      unitPrice: Number(it.unitPrice || it.price || it.salePrice || 0),
+      subtotal:  Number(it.subtotal || it.total || ((it.unitPrice || it.price || 0) * (it.quantity || 1)))
+    }));
+
+    // ── Parse service items từ notes ──
+    let serviceItemsFromNotes = [];
+    let displayNotes = o.notes || '';
+    if (displayNotes) {
+      // Format 1 (tạo đơn thủ công): "[Dịch vụ] Tên x1 (300.000đ), Tên2 x1 (150.000đ)"
+      const svcMatch = displayNotes.match(/\[Dịch vụ\]\s*([^|]+)/);
+      if (svcMatch) {
+        const svcStr = svcMatch[1].trim();
+        serviceItemsFromNotes = svcStr.split(',').map(s => s.trim()).filter(Boolean).map(s => {
+          const m = s.match(/^(.+?)\s+x(\d+)\s*\((.+?)\)$/);
+          if (m) return { name: m[1].trim(), quantity: parseInt(m[2]), priceStr: m[3] };
+          return { name: s, quantity: 1, priceStr: '' };
+        });
+        displayNotes = displayNotes.replace(/\s*\|\s*\[Dịch vụ\][^|]*/g, '')
+                                   .replace(/\[Dịch vụ\][^|]*/g, '').trim()
+                                   .replace(/^\|\s*/, '').replace(/\s*\|$/, '').trim();
+      }
+      // Format 2 (từ booking): "[BOOKING #24] Dịch vụ: Grooming toàn diện | Thú cưng: ... | Lịch: ..."
+      const bookingSvcMatch = displayNotes.match(/Dịch vụ:\s*([^|]+)/);
+      if (bookingSvcMatch && serviceItemsFromNotes.length === 0) {
+        const svcName = bookingSvcMatch[1].trim();
+        serviceItemsFromNotes = [{ name: svcName, quantity: 1, priceStr: '' }];
+      }
+    }
+
+    // ── Backend trả serviceItems (ưu tiên) hoặc fallback parse từ notes ──
+    const backendServices = o.serviceItems || [];
+    // Chỉ dùng serviceItemsFromNotes nếu backend chưa trả serviceItems
+    const displayServices = backendServices.length > 0 ? backendServices : serviceItemsFromNotes;
+
+    const hasProducts  = productItems.length > 0;
+    const hasServices  = displayServices.length > 0;
+    const hasAnyItems  = hasProducts || hasServices;
+
+    document.getElementById('detailContent').innerHTML = `
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-surface-container p-3 rounded-lg"><p class="text-xs text-on-surface-variant">Mã đơn</p><p class="font-bold text-tertiary">#ORD-${o.orderId}</p></div>
+        <div class="bg-surface-container p-3 rounded-lg"><p class="text-xs text-on-surface-variant">Trạng thái</p><span class="inline-flex px-2 py-0.5 rounded-full text-xs ${st.cls}">${st.label}</span></div>
+      </div>
+      <div class="border border-outline-variant rounded-lg p-4 flex items-center justify-between gap-3">
+        <div>
+          <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">Thanh toán</p>
+          <p class="text-sm text-on-surface mt-1">${paid ? 'Đơn hàng đã được ghi nhận thanh toán' : 'Đơn hàng chưa ghi nhận thanh toán'}</p>
+        </div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${paid ? 'bg-primary-container text-on-primary-container' : 'bg-error-container text-on-error-container'} text-xs font-medium whitespace-nowrap">
+          <span class="material-symbols-outlined text-[14px]">${paid ? 'check_circle' : 'pending_actions'}</span>${payMethod}
+        </span>
+      </div>
+      <div class="border border-outline-variant rounded-lg p-4 flex flex-col gap-2">
+        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">Thông tin khách hàng</p>
+        <p class="text-sm"><span class="text-on-surface-variant">Tên:</span> <strong>${o.customerName}</strong></p>
+        <p class="text-sm"><span class="text-on-surface-variant">SĐT:</span> ${o.customerPhone || '—'}</p>
+        <p class="text-sm"><span class="text-on-surface-variant">Mã KH:</span> ${o.customerCode || '—'}</p>
+      </div>
+      <div class="border border-outline-variant rounded-lg" style="overflow:visible;">
+        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide px-4 py-2 bg-surface-container-low rounded-t-lg">Sản phẩm / Dịch vụ</p>
+        ${hasProducts ? productItems.map(it => `
+          <div class="px-4 py-2 border-t border-outline-variant/30 flex justify-between text-sm items-start">
+            <div class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-[14px] text-secondary mt-0.5">inventory_2</span>
+              <div><p class="font-medium text-on-surface">${it.name}</p><p class="text-xs text-on-surface-variant">x${it.quantity} × ${it.unitPrice.toLocaleString('vi-VN')}đ</p></div>
+            </div>
+            <p class="font-semibold text-primary whitespace-nowrap">${it.subtotal.toLocaleString('vi-VN')}đ</p>
+          </div>`).join('') : ''}
+        ${displayServices.map(sv => {
+          const svName  = sv.serviceName || sv.name || '(Dịch vụ)';
+          const svQty   = sv.quantity || 1;
+          const svPrice = Number(sv.unitPrice || sv.price || 0);
+          const svTotal = Number(sv.subtotal || sv.total || (svPrice * svQty));
+          const svPriceStr = sv.priceStr || '';
+          return `
+          <div class="px-4 py-2 border-t border-outline-variant/30 flex justify-between text-sm items-start">
+            <div class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-[14px] text-tertiary mt-0.5">medical_services</span>
+              <div>
+                <p class="font-medium text-on-surface">${svName}</p>
+                <p class="text-xs text-on-surface-variant">x${svQty}${svPrice ? ' × ' + svPrice.toLocaleString('vi-VN') + 'đ' : (svPriceStr ? ' · ' + svPriceStr : '')}</p>
+              </div>
+            </div>
+            <p class="font-semibold text-tertiary whitespace-nowrap">${svTotal ? svTotal.toLocaleString('vi-VN') + 'đ' : svPriceStr}</p>
+          </div>`;
+        }).join('')}
+        ${!hasAnyItems ? '<p class="px-4 py-2 text-sm text-on-surface-variant italic">Không có mặt hàng</p>' : ''}
+        ${displayNotes ? `<div class="px-4 py-2 border-t border-outline-variant/30 text-xs text-on-surface-variant"><span class="font-medium">Ghi chú:</span> ${displayNotes}</div>` : ''}
+      </div>
+      <div class="border border-outline-variant rounded-lg p-4 flex flex-col gap-2">
+        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Tạm tính:</span><span>${Number(o.totalAmount).toLocaleString('vi-VN')} ₫</span></div>
+        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Giảm giá:</span><span class="text-error">-${Number(o.discountAmount || 0).toLocaleString('vi-VN')} ₫</span></div>
+        <div class="flex justify-between font-bold text-base border-t border-outline-variant pt-2 mt-1"><span>Tổng thanh toán:</span><span class="text-primary">${Number(o.finalAmount).toLocaleString('vi-VN')} ₫</span></div>
+      </div>`;
+  } catch {
+    document.getElementById('detailContent').innerHTML = '<p class="text-error text-center">Không thể tải chi tiết đơn hàng</p>';
+  }
+}
+function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
+
+// ════════════════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════════════════
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-white text-sm font-medium ${type === 'error' ? 'bg-error' : 'bg-primary'}`;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 3000);
+}
+
+function logout() { window.location.href = 'login.html'; }
+
+function handleVnPayReturnParams() {
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get('vnpayStatus');
+  if (!status) return;
+
+  if (status === 'success') {
+    const orderId = params.get('orderId');
+    showToast(`Thanh toán VNPay thành công${orderId ? ` cho #ORD-${orderId}` : ''}!`, 'success');
+    localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+  } else {
+    const code = params.get('responseCode');
+    showToast(`Thanh toán VNPay thất bại${code ? ` (mã ${code})` : ''}!`, 'error');
+  }
+
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+['createModal', 'statusModal', 'detailModal', 'payModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    if (e.target.id !== id) return;
+    if (id === 'payModal') closePayModal();
+    else document.getElementById(id).classList.add('hidden');
+  });
+});
+
+handleVnPayReturnParams();
+init();
+
+// ✅ Auto-refresh orders mỗi 60 giây
+setInterval(() => loadData(), 60_000);
+
+// ✅ Refresh khi quay lại tab (sau khi booking/payment xong)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    const flag = localStorage.getItem('dashboard_needs_refresh');
+    if (flag) {
+      localStorage.removeItem('dashboard_needs_refresh');
+      loadData();
+    }
+  }
+});
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>

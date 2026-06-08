@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thanh toán - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-lowest": "#ffffff","error-dim": "#67040d","tertiary": "#1f61c4",
+          "on-surface-variant": "#5d6b00","on-error": "#ffffff","surface-dim": "#d3f000",
+          "on-primary-fixed-variant": "#006914","on-error-container": "#6e0a12","error": "#af3d3b",
+          "surface-container-low": "#f6ffbe","on-tertiary": "#ffffff","on-primary-fixed": "#00490b",
+          "on-primary-container": "#005e11","surface-variant": "#d9f600","on-secondary-fixed": "#003b8a",
+          "on-primary": "#ffffff","on-surface": "#333c00","on-tertiary-fixed-variant": "#001435",
+          "primary-container": "#58ff5e","on-tertiary-fixed": "#000000","on-secondary-container": "#174ea6",
+          "inverse-surface": "#0c1000","primary": "#007517","inverse-primary": "#58ff5e",
+          "surface": "#fcffdc","secondary-fixed": "#d9e2ff","background": "#fcffdc",
+          "secondary-fixed-dim": "#c4d4ff","surface-tint": "#007517","surface-container": "#e9ff6f",
+          "outline-variant": "#adc500","surface-bright": "#fcffdc","outline": "#788900",
+          "surface-container-high": "#defc00","on-secondary-fixed-variant": "#2658b0","on-background": "#333c00",
+          "tertiary-dim": "#0054b7","primary-fixed-dim": "#47f051","secondary-dim": "#2155ad",
+          "error-container": "#fa746f","surface-container-highest": "#d9f600","on-tertiary-container": "#000311",
+          "inverse-on-surface": "#92a700","tertiary-fixed": "#5289ef","tertiary-fixed-dim": "#437ce1",
+          "tertiary-container": "#5289ef","primary-fixed": "#58ff5e","on-secondary": "#ffffff",
+          "primary-dim": "#006713","secondary": "#3161ba","secondary-container": "#d9e2ff"
+        },
+        borderRadius: { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+        spacing: { "md": "16px","xl": "32px","sm": "8px","base": "8px","lg": "24px","xs": "4px","margin": "24px","gutter": "16px" },
+        fontFamily: { "body-md": ["Inter"],"headline-md": ["Inter"],"headline-lg": ["Inter"],"label-md": ["Inter"] },
+        fontSize: {
+          "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+          "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+          "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}]
+        }
+      }
+    }
+  }
+</script>
+<style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-surface-container-lowest text-on-background antialiased min-h-screen flex">
+
+<!-- SideNavBar -->
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen">
+  <!-- TopNavBar -->
+  <header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-8 z-40 bg-white border-b border-slate-200">
+    <div class="flex items-center gap-md">
+      <h2 class="text-xl font-black tracking-tight text-slate-900">Thanh toán</h2>
+    </div>
+    
+    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:flex items-center">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+      <input id="searchInput" oninput="filterTable()" class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-blue-500 outline-none w-64 placeholder-slate-400 text-slate-600" placeholder="Tìm đơn hàng..." type="text"/>
+    </div>
+
+    <div class="flex items-center gap-md">
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Canvas -->
+  <main class="flex-1 pt-24 px-margin pb-margin flex flex-col gap-lg bg-background">
+    <!-- Toast -->
+    <div id="toast" class="hidden fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-white text-sm font-medium"></div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+      <div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline/10 flex items-center gap-md">
+        <div class="w-12 h-12 rounded-xl bg-error-container flex items-center justify-center"><span class="material-symbols-outlined text-on-error-container">pending_actions</span></div>
+        <div><p class="text-xs text-on-surface-variant">Chờ thanh toán</p><p id="statPending" class="text-xl font-bold text-on-surface">—</p></div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline/10 flex items-center gap-md">
+        <div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container">check_circle</span></div>
+        <div><p class="text-xs text-on-surface-variant">Đã thanh toán</p><p id="statPaid" class="text-xl font-bold text-on-surface">—</p></div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline/10 flex items-center gap-md">
+        <div class="w-12 h-12 rounded-xl bg-tertiary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-tertiary-container">account_balance_wallet</span></div>
+        <div><p class="text-xs text-on-surface-variant">Tổng thu hôm nay</p><p id="statTotal" class="text-xl font-bold text-on-surface">—</p></div>
+      </div>
+    </div>
+
+    <!-- Search Section -->
+    <section class="bg-surface-container rounded-xl p-md flex flex-col sm:flex-row items-end sm:items-center justify-between gap-md shadow-sm border border-outline/10">
+      <div class="w-full sm:w-auto flex-1 max-w-md">
+        <label class="block font-label-md text-label-md text-on-surface-variant mb-xs">Tìm kiếm đơn hàng theo ID</label>
+        <div class="flex gap-sm">
+          <div class="relative flex-1">
+            <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">receipt_long</span>
+            <input id="orderIdInput" class="w-full pl-xl pr-md py-[10px] rounded-lg border border-outline-variant bg-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none text-sm text-on-surface transition-colors" placeholder="Nhập mã đơn hàng (ID)..." type="number"/>
+          </div>
+          <button onclick="searchOrder()" class="px-lg py-[10px] rounded-lg bg-primary text-on-primary font-label-md text-label-md flex items-center gap-xs hover:bg-primary-dim transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">search</span>Tìm kiếm
+          </button>
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="loadData()" class="px-md py-[10px] rounded-lg border border-outline-variant text-on-surface text-sm hover:bg-surface-container transition-colors flex items-center gap-xs">
+          <span class="material-symbols-outlined text-[18px]">refresh</span>Tải lại
+        </button>
+        <button onclick="clearClientPayments()" class="px-md py-[10px] rounded-lg border border-outline-variant text-on-surface-variant text-sm hover:bg-error-container/20 hover:text-error hover:border-error/30 transition-colors flex items-center gap-xs" title="Xóa dữ liệu thanh toán online đã lưu">
+          <span class="material-symbols-outlined text-[18px]">cleaning_services</span>Xóa cache
+        </button>
+      </div>
+    </section>
+
+    <!-- Loading -->
+    <div id="loading" class="flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
+      <span class="ml-3 text-on-surface-variant">Đang tải đơn hàng...</span>
+    </div>
+
+    <!-- Table -->
+    <section id="tableSection" class="hidden bg-surface rounded-xl shadow-sm border border-outline/10 overflow-hidden flex flex-col flex-1">
+      <div class="px-lg py-md border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low">
+        <h3 class="font-headline-md text-headline-md text-on-surface">Bảng thanh toán</h3>
+        <span id="tableCount" class="text-sm text-on-surface-variant"></span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-surface-container-lowest border-b border-outline-variant/30 font-label-md text-label-md text-on-surface-variant">
+              <th class="py-md px-lg font-medium">Mã đơn</th>
+              <th class="py-md px-lg font-medium">Khách hàng</th>
+              <th class="py-md px-lg font-medium">Tổng tiền</th>
+              <th class="py-md px-lg font-medium">Thanh toán</th>
+              <th class="py-md px-lg font-medium">Trạng thái đơn</th>
+              <th class="py-md px-lg font-medium">Ngày tạo</th>
+              <th class="py-md px-lg font-medium text-right">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant/20"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="hidden text-center py-16 text-on-surface-variant">
+        <span class="material-symbols-outlined text-5xl">payments</span>
+        <p class="mt-2">Không có đơn hàng nào</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══ PAYMENT MODAL ═══ -->
+<div id="payModal" class="hidden fixed inset-0 bg-on-tertiary-container/40 backdrop-blur-sm z-50 flex items-center justify-center p-margin">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-[480px] overflow-hidden flex flex-col border border-outline-variant/20">
+    <div class="p-lg border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-sm">
+        <span class="material-symbols-outlined text-primary">point_of_sale</span>Xác nhận thanh toán
+      </h3>
+      <button onclick="closePayModal()" class="text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="p-lg flex flex-col gap-lg font-body-md text-body-md text-on-surface">
+      <div class="bg-surface-container p-md rounded-lg border border-outline-variant/30">
+        <p class="text-on-surface-variant mb-xs text-sm">Đơn hàng</p>
+        <p id="pOrderId" class="font-headline-md text-headline-md text-tertiary">#ORD-—</p>
+      </div>
+      <div class="flex justify-between items-center py-sm border-b border-outline-variant/20">
+        <span class="text-on-surface-variant">Khách hàng:</span>
+        <span id="pCustomer" class="font-medium">—</span>
+      </div>
+      <div class="flex justify-between items-center py-sm border-b border-outline-variant/20">
+        <span class="text-on-surface-variant">Số tiền cần thu:</span>
+        <span id="pAmount" class="font-headline-lg text-headline-lg text-primary">—</span>
+      </div>
+      <!-- Amount override -->
+      <div>
+        <label class="block text-xs font-medium text-on-surface-variant mb-1">Số tiền thanh toán (VNĐ)</label>
+        <input id="pAmountInput" type="number" class="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none text-sm"/>
+      </div>
+      <!-- Method -->
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-on-surface-variant">Phương thức thanh toán</span>
+        <div class="grid grid-cols-3 gap-md">
+          <label id="m-cash" onclick="selectMethod('Cash')" class="relative flex items-center justify-center p-md rounded-lg border-2 border-primary bg-primary-container/10 cursor-pointer transition-all">
+            <input type="radio" name="pay_method" value="Cash" checked class="sr-only"/>
+            <div class="method-content flex flex-col items-center gap-sm text-primary">
+              <span class="material-symbols-outlined text-[28px]">payments</span>
+              <span class="font-label-md text-label-md font-bold">Tiền mặt</span>
+            </div>
+            <span id="cashCheck" class="material-symbols-outlined absolute top-2 right-2 text-primary text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </label>
+          <label id="m-transfer" onclick="selectMethod('BankTransfer')" class="relative flex items-center justify-center p-md rounded-lg border border-outline-variant bg-surface hover:bg-surface-container cursor-pointer transition-all">
+            <input type="radio" name="pay_method" value="BankTransfer" class="sr-only"/>
+            <div class="method-content flex flex-col items-center gap-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[28px]">account_balance</span>
+              <span class="font-label-md text-label-md font-medium">Chuyển khoản</span>
+            </div>
+            <span id="transferCheck" class="material-symbols-outlined hidden absolute top-2 right-2 text-primary text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </label>
+          <label id="m-vnpay" onclick="selectMethod('QRCode')" class="relative flex items-center justify-center p-md rounded-lg border border-outline-variant bg-surface hover:bg-surface-container cursor-pointer transition-all">
+            <input type="radio" name="pay_method" value="QRCode" class="sr-only"/>
+            <div class="method-content flex flex-col items-center gap-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[28px]">qr_code_2</span>
+              <span class="font-label-md text-label-md font-medium">VNPay</span>
+            </div>
+            <span id="vnpayCheck" class="material-symbols-outlined hidden absolute top-2 right-2 text-primary text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </label>
+        </div>
+        <div id="transferNote" class="hidden">
+          <label class="block text-xs font-medium text-on-surface-variant mb-1">Mã giao dịch</label>
+          <input id="pTransRef" type="text" placeholder="VD: TXN123456" class="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:border-tertiary outline-none text-sm"/>
+        </div>
+      </div>
+    </div>
+    <div class="p-lg border-t border-outline-variant/30 bg-surface flex justify-end gap-md">
+      <button onclick="closePayModal()" class="px-lg py-[10px] rounded-lg border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors">Hủy</button>
+      <button onclick="processPayment()" id="payBtn" class="px-lg py-[10px] rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-dim transition-colors shadow-sm flex items-center gap-sm">
+        <span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VIEW PAYMENT MODAL ═══ -->
+<div id="viewModal" class="hidden fixed inset-0 bg-on-tertiary-container/40 backdrop-blur-sm z-50 flex items-center justify-center p-margin">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-[480px] overflow-hidden flex flex-col border border-outline-variant/20 max-h-[80vh]">
+    <div class="p-lg border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-sm">
+        <span class="material-symbols-outlined text-tertiary">receipt_long</span>Lịch sử thanh toán
+      </h3>
+      <button onclick="closeViewModal()" class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div id="viewContent" class="p-lg flex-1 overflow-y-auto flex flex-col gap-md text-sm"></div>
+  </div>
+</div>
+
+<script>
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+const BASE = 'http://localhost:8080/api';
+let allOrders = [], selectedMethod = 'Cash', currentPayOrderId = null, currentPayAmount = 0;
+// Lưu clientPaid data theo index an toàn, tránh lỗi escape trong onclick attribute
+const clientPayMap = {};
+
+// ─── INIT ─────────────────────────────────────────────────
+async function loadData() {
+  document.getElementById('loading').classList.remove('hidden');
+  document.getElementById('tableSection').classList.add('hidden');
+  try {
+    const res = await fetch(`${BASE}/orders`);
+    const data = await res.json();
+    let orders = Array.isArray(data) ? data : (data.data || []);
+
+    // ── Merge thanh toán từ client (localStorage) ──
+    try {
+      const localPaid = JSON.parse(localStorage.getItem('petshop_completed_payments') || '[]');
+      if (localPaid.length) {
+        // Cập nhật trạng thái các đơn đã thanh toán từ client
+        orders = orders.map(o => {
+          const match = localPaid.find(r => String(r.orderId) === String(o.orderId));
+          if (match) return { ...o, paymentStatus: 'paid', _clientPaid: match };
+          return o;
+        });
+        // Thêm các đơn chỉ tồn tại ở client (booking/demo không có trong API)
+        localPaid.forEach(r => {
+          const exists = orders.find(o => String(o.orderId) === String(r.orderId));
+          if (!exists) {
+            orders.push({
+              orderId:      r.orderId,
+              customerName: r.customerName || 'Khách hàng',
+              finalAmount:  r.finalAmount || r.amount || 0,
+              paymentStatus:'paid',
+              status:       r.status || 'Confirmed',
+              orderDate:    r.paidAt || r.orderDate || new Date().toISOString(),
+              _clientPaid:  r,
+              _clientOnly:  true,
+            });
+          }
+        });
+        // Sắp xếp mới nhất lên đầu
+        orders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+      }
+    } catch(e) { /* bỏ qua lỗi đọc localStorage */ }
+
+    allOrders = orders;
+    renderTable(allOrders);
+    updateStats(allOrders);
+  } catch {
+    showToast('Không thể kết nối server!', 'error');
+  } finally {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('tableSection').classList.remove('hidden');
+  }
+}
+
+// ─── STATS ────────────────────────────────────────────────
+function updateStats(list) {
+  const isPaidFn = o => ['paid', 'completed', 'success', 'done'].includes((o.paymentStatus || '').toLowerCase());
+  const today = new Date().toDateString();
+  const pending = list.filter(o => !isPaidFn(o)).length;
+  const paid = list.filter(o => isPaidFn(o)).length;
+  // Dùng paidAt (ưu tiên) hoặc orderDate để khớp với dashboard
+  const total = list.filter(o => {
+    if (!isPaidFn(o)) return false;
+    const dateStr = o._clientPaid?.paidAt || o.paidAt || o.orderDate;
+    return dateStr && new Date(dateStr).toDateString() === today;
+  }).reduce((s, o) => s + (Number(o._clientPaid?.amount || o.finalAmount) || 0), 0);
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statPaid').textContent = paid;
+  document.getElementById('statTotal').textContent = Number(total).toLocaleString('vi-VN') + ' ₫';
+}
+
+// ─── RENDER TABLE ─────────────────────────────────────────
+function renderTable(list) {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('tableCount').textContent = `${list.length} đơn hàng`;
+  if (!list.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  // Xóa map cũ rồi lưu lại
+  Object.keys(clientPayMap).forEach(k => delete clientPayMap[k]);
+  tbody.innerHTML = list.map((o, idx) => {
+    const isPaid = ['paid', 'completed', 'success', 'done'].includes((o.paymentStatus || '').toLowerCase());
+    const isCancelled = o.status === 'Cancelled';
+    const date = o.orderDate ? new Date(o.orderDate).toLocaleString('vi-VN') : '—';
+    const statusCls = {
+      'Pending': 'bg-error-container text-on-error-container',
+      'Confirmed': 'bg-secondary-container text-on-secondary-container',
+      'Processing': 'bg-tertiary-container text-on-tertiary-container',
+      'Delivered': 'bg-primary-container text-on-primary-container',
+      'Cancelled': 'bg-surface-container text-on-surface-variant',
+    };
+    const orderStClass = statusCls[o.status] || 'bg-surface-container text-on-surface-variant';
+    const clientBadge = o._clientPaid
+      ? `<span class="ml-1 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-md text-[10px]"><span class="material-symbols-outlined text-[10px]">language</span>Online</span>`
+      : '';
+
+    // Lưu clientPaid vào map theo index, tránh lỗi escape trong onclick
+    let clientKey = 'null';
+    if (o._clientPaid) {
+      const mapKey = `order_${idx}`;
+      clientPayMap[mapKey] = o._clientPaid;
+      clientKey = `'${mapKey}'`;
+    }
+
+    // orderId để gọi API: nếu là _clientOnly thì dùng orderId gốc từ _clientPaid (có thể là txnRef),
+    // còn không thì dùng o.orderId (số nguyên từ API)
+    const apiOrderId = o._clientOnly
+      ? (o._clientPaid?.orderId ?? o.orderId)
+      : o.orderId;
+
+    return `
+      <tr class="hover:bg-surface-container-lowest transition-colors ${o._clientPaid ? 'ring-1 ring-inset ring-primary/20' : ''}">
+        <td class="py-md px-lg font-medium text-tertiary">#ORD-${o.orderId}${clientBadge}</td>
+        <td class="py-md px-lg">${o.customerName || '—'}</td>
+        <td class="py-md px-lg font-medium">${Number(o.finalAmount).toLocaleString('vi-VN')}đ</td>
+        <td class="py-md px-lg">
+          ${isPaid
+            ? `<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md"><span class="material-symbols-outlined text-[14px]">check_circle</span>Đã thanh toán</span>`
+            : `<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-error-container text-on-error-container font-label-md text-label-md"><span class="material-symbols-outlined text-[14px]">pending_actions</span>Chờ thanh toán</span>`
+          }
+        </td>
+        <td class="py-md px-lg">
+          <span class="inline-flex items-center gap-xs px-sm py-xs rounded-full ${orderStClass} font-label-md text-label-md">${o.status}</span>
+        </td>
+        <td class="py-md px-lg text-on-surface-variant text-sm">${date}</td>
+        <td class="py-md px-lg text-right flex items-center justify-end gap-sm">
+          ${!isPaid && !isCancelled
+            ? `<button onclick="openPayModal('${String(o.orderId).replace(/'/g, "\\'")}', '${(o.customerName||'').replace(/'/g,"\\'")}', ${o.finalAmount})" class="px-md py-sm rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md hover:bg-secondary-fixed-dim transition-colors text-xs">Thanh toán</button>`
+            : ''
+          }
+          <button onclick="viewPayments('${String(apiOrderId).replace(/'/g, "\\'")}', ${clientKey})" class="p-sm text-tertiary hover:bg-tertiary-container rounded-lg transition-colors"><span class="material-symbols-outlined">visibility</span></button>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+// ─── FILTER ───────────────────────────────────────────────
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  renderTable(allOrders.filter(o => `ord-${o.orderId}`.includes(q) || (o.customerName||'').toLowerCase().includes(q)));
+}
+
+async function searchOrder() {
+  const id = document.getElementById('orderIdInput').value.trim();
+  if (!id) { loadData(); return; }
+  document.getElementById('loading').classList.remove('hidden');
+  document.getElementById('tableSection').classList.add('hidden');
+  try {
+    const res = await fetch(`${BASE}/orders/${id}`);
+    if (!res.ok) { showToast('Không tìm thấy đơn hàng!', 'error'); loadData(); return; }
+    const o = await res.json();
+    allOrders = [o];
+    renderTable(allOrders);
+  } catch {
+    showToast('Lỗi tìm kiếm!', 'error');
+  } finally {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('tableSection').classList.remove('hidden');
+  }
+}
+
+// ─── PAY MODAL ────────────────────────────────────────────
+function openPayModal(orderId, customer, amount) {
+  currentPayOrderId = orderId; currentPayAmount = amount;
+  document.getElementById('pOrderId').textContent = `#ORD-${orderId}`;
+  document.getElementById('pCustomer').textContent = customer;
+  document.getElementById('pAmount').textContent = Number(amount).toLocaleString('vi-VN') + 'đ';
+  document.getElementById('pAmountInput').value = amount;
+  document.getElementById('pTransRef').value = '';
+  selectMethod('Cash');
+  document.getElementById('payModal').classList.remove('hidden');
+}
+function closePayModal() { document.getElementById('payModal').classList.add('hidden'); }
+
+function selectMethod(method) {
+  selectedMethod = method;
+  const cashEl = document.getElementById('m-cash');
+  const transferEl = document.getElementById('m-transfer');
+  const vnpayEl = document.getElementById('m-vnpay');
+  const cashContent = cashEl.querySelector('.method-content');
+  const transferContent = transferEl.querySelector('.method-content');
+  const vnpayContent = vnpayEl.querySelector('.method-content');
+  const transNote = document.getElementById('transferNote');
+  const inactive = 'relative flex items-center justify-center p-md rounded-lg border border-outline-variant bg-surface hover:bg-surface-container cursor-pointer transition-all';
+  const active = 'relative flex items-center justify-center p-md rounded-lg border-2 border-primary bg-primary-container/10 cursor-pointer transition-all';
+
+  cashEl.className = inactive;
+  transferEl.className = inactive;
+  vnpayEl.className = inactive;
+  cashContent.className = 'method-content flex flex-col items-center gap-sm text-on-surface-variant';
+  transferContent.className = 'method-content flex flex-col items-center gap-sm text-on-surface-variant';
+  vnpayContent.className = 'method-content flex flex-col items-center gap-sm text-on-surface-variant';
+  document.getElementById('cashCheck').classList.add('hidden');
+  document.getElementById('transferCheck').classList.add('hidden');
+  document.getElementById('vnpayCheck').classList.add('hidden');
+  transNote.classList.add('hidden');
+
+  if (method === 'Cash') {
+    cashEl.className = active;
+    cashContent.className = 'method-content flex flex-col items-center gap-sm text-primary';
+    document.getElementById('cashCheck').classList.remove('hidden');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán';
+  } else if (method === 'BankTransfer') {
+    transferEl.className = active;
+    transferContent.className = 'method-content flex flex-col items-center gap-sm text-primary';
+    document.getElementById('transferCheck').classList.remove('hidden');
+    transNote.classList.remove('hidden');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>Xác nhận thanh toán';
+  } else {
+    vnpayEl.className = active;
+    vnpayContent.className = 'method-content flex flex-col items-center gap-sm text-primary';
+    document.getElementById('vnpayCheck').classList.remove('hidden');
+    document.getElementById('payBtn').innerHTML = '<span class="material-symbols-outlined text-[18px]">open_in_new</span>Thanh toán VNPay';
+  }
+}
+
+// ─── INVOICE ──────────────────────────────────────────────
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function encodeInvoiceData(data) {
+  return encodeURIComponent(JSON.stringify(data || {}));
+}
+
+function decodeInvoiceData(encoded) {
+  try {
+    return encoded ? JSON.parse(decodeURIComponent(encoded)) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function fmtMoney(value) {
+  return Number(value || 0).toLocaleString('vi-VN') + 'đ';
+}
+
+function getInvoiceNumber(data) {
+  if (data.paymentId) return `PAY-${data.paymentId}`;
+  if (data.txnId) return data.txnId;
+  if (data.orderId) return `ORDER-${data.orderId}`;
+  return `PAY-${Date.now()}`;
+}
+
+function normalizeInvoiceData(data) {
+  const paymentDate = data.paymentDate || data.paidAt || data.orderDate || new Date().toISOString();
+  const paymentStatus = String(data.paymentStatus || '').toLowerCase();
+  const completedStatuses = ['paid', 'completed', 'success', 'done'];
+  const status = data.status === 'Completed' || data.status === 'Failed'
+    ? data.status
+    : (completedStatuses.includes(paymentStatus) ? 'Completed' : (data.status || 'Completed'));
+  return {
+    invoiceNo: getInvoiceNumber(data),
+    orderId: data.orderId || '—',
+    customerName: data.customerName || 'Khách hàng',
+    phone: data.phone || '',
+    status,
+    amount: Number(data.amount || data.finalAmount || 0),
+    paymentMethod: data.paymentMethod || '—',
+    transactionRef: data.transactionRef || data.txnId || '—',
+    paymentDate,
+    items: Array.isArray(data.items) ? data.items : [],
+  };
+}
+
+function addInvoicePreviewRow(doc, parent, label, value) {
+  const box = doc.createElement('div');
+  box.style.border = '1px solid #e5e7d8';
+  box.style.borderRadius = '10px';
+  box.style.padding = '12px';
+  const labelEl = doc.createElement('div');
+  labelEl.style.fontSize = '12px';
+  labelEl.style.color = '#667085';
+  labelEl.textContent = label;
+  const valueEl = doc.createElement('div');
+  valueEl.style.fontWeight = '700';
+  valueEl.style.marginTop = '4px';
+  valueEl.textContent = value;
+  box.append(labelEl, valueEl);
+  parent.appendChild(box);
+}
+
+function renderInvoicePreview(win, data) {
+  const inv = normalizeInvoiceData(data);
+  const doc = win.document;
+  doc.title = `HÓA ĐƠN ${inv.invoiceNo}`;
+  doc.body.innerHTML = '';
+  doc.body.style.fontFamily = 'Arial, sans-serif';
+  doc.body.style.background = '#f6f8ef';
+  doc.body.style.margin = '0';
+  doc.body.style.padding = '32px';
+  doc.body.style.color = '#18230f';
+
+  const invoice = doc.createElement('section');
+  invoice.style.maxWidth = '760px';
+  invoice.style.margin = 'auto';
+  invoice.style.background = '#fff';
+  invoice.style.border = '1px solid #dfe7c7';
+  invoice.style.borderRadius = '12px';
+  invoice.style.padding = '32px';
+
+  const title = doc.createElement('h1');
+  title.textContent = 'Paw & Bloom';
+  title.style.margin = '0 0 4px';
+  title.style.color = '#006e01';
+  const subtitle = doc.createElement('div');
+  subtitle.textContent = 'Hóa đơn thanh toán';
+  subtitle.style.color = '#667085';
+  invoice.append(title, subtitle);
+
+  const grid = doc.createElement('div');
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = '1fr 1fr';
+  grid.style.gap = '12px';
+  grid.style.margin = '24px 0';
+  addInvoicePreviewRow(doc, grid, 'Mã hóa đơn', `#${inv.invoiceNo}`);
+  addInvoicePreviewRow(doc, grid, 'Trạng thái', inv.status);
+  addInvoicePreviewRow(doc, grid, 'Mã đơn hàng', `#${inv.orderId}`);
+  addInvoicePreviewRow(doc, grid, 'Ngày thanh toán', new Date(inv.paymentDate).toLocaleString('vi-VN'));
+  addInvoicePreviewRow(doc, grid, 'Khách hàng', `${inv.customerName}${inv.phone ? ' - ' + inv.phone : ''}`);
+  addInvoicePreviewRow(doc, grid, 'Phương thức', inv.paymentMethod);
+  addInvoicePreviewRow(doc, grid, 'Mã giao dịch', inv.transactionRef);
+  invoice.appendChild(grid);
+
+  if (inv.items.length) {
+    const table = doc.createElement('table');
+    table.style.width = '100%';
+    table.style.borderCollapse = 'collapse';
+    table.style.marginTop = '18px';
+    table.innerHTML = '<thead><tr><th>Mục</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody></tbody>';
+    table.querySelectorAll('th').forEach(th => {
+      th.style.background = '#f5fced';
+      th.style.borderBottom = '1px solid #e5e7d8';
+      th.style.padding = '10px';
+      th.style.textAlign = 'left';
+    });
+    const tbody = table.querySelector('tbody');
+    inv.items.forEach(item => {
+      const qty = Number(item.qty || item.quantity || 1);
+      const price = Number(item.price || 0);
+      const row = doc.createElement('tr');
+      [item.name || item.productName || 'Mục thanh toán', qty, fmtMoney(price), fmtMoney(price * qty)].forEach((value, idx) => {
+        const cell = doc.createElement('td');
+        cell.textContent = value;
+        cell.style.borderBottom = '1px solid #e5e7d8';
+        cell.style.padding = '10px';
+        if (idx > 1) cell.style.textAlign = 'right';
+        row.appendChild(cell);
+      });
+      tbody.appendChild(row);
+    });
+    invoice.appendChild(table);
+  }
+
+  const total = doc.createElement('div');
+  total.style.display = 'flex';
+  total.style.justifyContent = 'space-between';
+  total.style.alignItems = 'center';
+  total.style.marginTop = '24px';
+  total.style.paddingTop = '18px';
+  total.style.borderTop = '2px solid #006e01';
+  total.style.fontSize = '22px';
+  total.style.fontWeight = '800';
+  total.style.color = '#006e01';
+  total.innerHTML = `<span>Tổng thanh toán</span><span>${fmtMoney(inv.amount)}</span>`;
+  invoice.appendChild(total);
+  doc.body.appendChild(invoice);
+}
+
+function previewInvoice(paymentId, encodedData = null) {
+  const data = decodeInvoiceData(encodedData);
+  if (!data) {
+    window.open(`${BASE}/invoices/${paymentId}/preview`, '_blank');
+    return;
+  }
+  const win = window.open('', '_blank');
+  if (win) renderInvoicePreview(win, data);
+}
+
+function stripVietnamese(value) {
+  return String(value ?? '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^\x20-\x7E]/g, '');
+}
+
+function escapePdfText(value) {
+  return stripVietnamese(value).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+}
+
+function pdfLine(text, x, y, size = 11, font = 'F1') {
+  return `BT /${font} ${size} Tf ${x} ${y} Td (${escapePdfText(text)}) Tj ET\n`;
+}
+
+function createInvoicePdfBlob(data) {
+  const inv = normalizeInvoiceData(data);
+  const lines = [
+    { text: 'Paw & Bloom', x: 50, y: 790, size: 24, font: 'F2' },
+    { text: 'HOA DON THANH TOAN', x: 50, y: 760, size: 16, font: 'F2' },
+    { text: `Ma hoa don: #${inv.invoiceNo}`, x: 50, y: 720 },
+    { text: `Ma don hang: #${inv.orderId}`, x: 50, y: 700 },
+    { text: `Trang thai: ${inv.status}`, x: 50, y: 680 },
+    { text: `Khach hang: ${inv.customerName}${inv.phone ? ' - ' + inv.phone : ''}`, x: 50, y: 660 },
+    { text: `Phuong thuc: ${inv.paymentMethod}`, x: 50, y: 640 },
+    { text: `Ma giao dich: ${inv.transactionRef}`, x: 50, y: 620 },
+    { text: `Ngay thanh toan: ${new Date(inv.paymentDate).toLocaleString('vi-VN')}`, x: 50, y: 600 },
+  ];
+
+  let y = 560;
+  if (inv.items.length) {
+    lines.push({ text: 'Chi tiet', x: 50, y, size: 13, font: 'F2' });
+    y -= 22;
+    inv.items.slice(0, 16).forEach(item => {
+      const qty = Number(item.qty || item.quantity || 1);
+      const price = Number(item.price || 0);
+      const name = item.name || item.productName || 'Muc thanh toan';
+      lines.push({ text: `${name} x${qty} - ${fmtMoney(price * qty)}`, x: 62, y });
+      y -= 18;
+    });
+  }
+  lines.push({ text: `Tong thanh toan: ${fmtMoney(inv.amount)}`, x: 50, y: Math.max(y - 20, 90), size: 16, font: 'F2' });
+  lines.push({ text: 'Cam on quy khach da su dung dich vu Paw & Bloom.', x: 50, y: 60, size: 10 });
+
+  let content = '0.7 w 50 745 m 545 745 l S\n';
+  lines.forEach(line => {
+    content += pdfLine(line.text, line.x, line.y, line.size, line.font);
+  });
+
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>',
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>',
+    `<< /Length ${content.length} >>\nstream\n${content}endstream`,
+  ];
+
+  let pdf = '%PDF-1.4\n';
+  const offsets = [0];
+  objects.forEach((obj, index) => {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${obj}\nendobj\n`;
+  });
+  const xrefAt = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach(offset => {
+    pdf += `${String(offset).padStart(10, '0')} 00000 n \n`;
+  });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefAt}\n%%EOF`;
+  return new Blob([pdf], { type: 'application/pdf' });
+}
+
+function downloadBlob(blob, fileName) {
+  const a = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadInvoice(paymentId, encodedData = null) {
+  const data = decodeInvoiceData(encodedData);
+  if (!data) {
+    window.open(`${BASE}/invoices/${paymentId}/preview`, '_blank');
+    return;
+  }
+  const inv = normalizeInvoiceData(data);
+  downloadBlob(createInvoicePdfBlob(inv), `hoa-don-${inv.invoiceNo}.pdf`);
+  showToast('Đã tạo file PDF hóa đơn', 'success');
+}
+
+// ─── PROCESS PAYMENT ──────────────────────────────────────
+async function processPayment() {
+  const amount = parseFloat(document.getElementById('pAmountInput').value);
+  if (!amount || amount <= 0) { showToast('Số tiền không hợp lệ!', 'error'); return; }
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>Đang xử lý...';
+  const body = {
+    orderId: currentPayOrderId,
+    amount,
+    paymentMethod: selectedMethod,
+    transactionRef: document.getElementById('pTransRef').value || null,
+    notes: null,
+    frontendReturnUrl: window.location.href.split('?')[0]
+  };
+  try {
+    const endpoint = selectedMethod === 'QRCode' ? `${BASE}/payments/vnpay/create` : `${BASE}/payments/process`;
+    const res = await fetch(endpoint, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.message || 'Lỗi server'); }
+    const result = await res.json();
+    if (selectedMethod === 'QRCode') {
+      if (!result.paymentUrl) throw new Error('Không nhận được URL thanh toán VNPay');
+      localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+      window.location.href = result.paymentUrl;
+      return;
+    }
+    showToast(result.message || 'Thanh toán thành công!', 'success');
+    closePayModal();
+    loadData();
+    // ✅ Đánh dấu để dashboard refresh khi quay lại
+    localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+    // Mở hóa đơn nếu có paymentId trả về
+    if (result.paymentId) {
+      setTimeout(() => {
+        if (confirm('Thanh toán thành công! Bạn có muốn xem hóa đơn ngay không?')) {
+          previewInvoice(result.paymentId);
+        }
+      }, 400);
+    }
+  } catch(e) {
+    showToast(e.message || 'Thanh toán thất bại!', 'error');
+  } finally {
+    btn.disabled = false;
+    selectMethod(selectedMethod);
+  }
+}
+
+// ─── VIEW PAYMENTS ────────────────────────────────────────
+async function viewPayments(orderId, clientMapKey) {
+  document.getElementById('viewContent').innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div></div>';
+  document.getElementById('viewModal').classList.remove('hidden');
+
+  // Lấy clientData từ map (an toàn, không cần parse JSON từ onclick)
+  let clientData = clientMapKey ? (clientPayMap[clientMapKey] || null) : null;
+
+  // Fallback: tìm trong localStorage nếu chưa có
+  if (!clientData) {
+    try {
+      const localPaid = JSON.parse(localStorage.getItem('petshop_completed_payments') || '[]');
+      const found = localPaid.find(r =>
+        String(r.orderId) === String(orderId) ||
+        String(r.txnId) === String(orderId) ||
+        String(r.orderId).replace(/^ORD-?/i, '') === String(orderId).replace(/^ORD-?/i, '')
+      );
+      if (found) clientData = found;
+    } catch(e) {}
+  }
+
+  // Nếu đã có clientData và orderId không phải số nguyên (đơn clientOnly),
+  // không cần gọi API (sẽ lỗi 400), hiển thị luôn từ clientData
+  const isNumericOrderId = /^\d+$/.test(String(orderId));
+  if (!isNumericOrderId && clientData) {
+    renderClientPayment(clientData);
+    return;
+  }
+
+  try {
+    // Chỉ gọi API nếu orderId là số nguyên hợp lệ
+    if (!isNumericOrderId) {
+      throw new Error('orderId không hợp lệ cho API');
+    }
+    const res = await fetch(`${BASE}/payments/order/${orderId}`);
+    const list = await res.json();
+
+    // Nếu API có dữ liệu, hiển thị bình thường
+    if (list && list.length) {
+      document.getElementById('viewContent').innerHTML = list.map(p => {
+        const invoicePayload = encodeInvoiceData({ ...p, orderId });
+        return `
+        <div class="border border-outline-variant rounded-lg p-4 flex flex-col gap-2">
+          <div class="flex justify-between items-center">
+            <span class="font-semibold text-on-surface">#PAY-${p.paymentId}</span>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs ${p.status === 'Completed' ? 'bg-primary-container text-on-primary-container' : 'bg-error-container text-on-error-container'}">${p.status}</span>
+          </div>
+          <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Số tiền:</span><span class="font-bold text-primary">${Number(p.amount).toLocaleString('vi-VN')}đ</span></div>
+          <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Phương thức:</span><span>${p.paymentMethod}</span></div>
+          ${p.transactionRef ? `<div class="flex justify-between text-sm"><span class="text-on-surface-variant">Mã GD:</span><span class="font-mono">${p.transactionRef}</span></div>` : ''}
+          ${p.paymentDate ? `<div class="flex justify-between text-sm"><span class="text-on-surface-variant">Ngày:</span><span>${new Date(p.paymentDate).toLocaleString('vi-VN')}</span></div>` : ''}
+          ${p.status === 'Completed' ? `
+          <div class="flex gap-2 pt-1 border-t border-outline-variant/30 mt-1">
+            <button onclick="previewInvoice(${p.paymentId}, '${invoicePayload}')"
+              class="flex-1 flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container text-xs font-medium hover:bg-primary/20 transition-colors">
+              <span class="material-symbols-outlined text-[14px]">receipt_long</span>Xem hóa đơn
+            </button>
+            <button onclick="downloadInvoice(${p.paymentId}, '${invoicePayload}')"
+              class="flex-1 flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-secondary-container text-on-secondary-container text-xs font-medium hover:bg-secondary/20 transition-colors">
+              <span class="material-symbols-outlined text-[14px]">download</span>Tải PDF
+            </button>
+          </div>` : ''}
+        </div>`;
+      }).join('');
+      return;
+    }
+
+    // Không có dữ liệu từ API — dùng dữ liệu client nếu có
+    if (clientData) {
+      renderClientPayment(clientData);
+    } else {
+      document.getElementById('viewContent').innerHTML = `<div class="text-center py-8 text-on-surface-variant"><span class="material-symbols-outlined text-4xl">receipt</span><p class="mt-2">Chưa có lịch sử thanh toán</p></div>`;
+    }
+  } catch {
+    // API lỗi → fallback client data
+    if (clientData) {
+      renderClientPayment(clientData);
+    } else {
+      document.getElementById('viewContent').innerHTML = `<p class="text-error text-center text-sm">Không thể tải lịch sử thanh toán</p>`;
+    }
+  }
+}
+
+function renderClientPayment(r) {
+  const invoicePayload = encodeInvoiceData(r);
+  const itemsHtml = (r.items || []).map(i =>
+    `<div class="flex justify-between text-xs py-0.5"><span class="text-on-surface-variant">${i.name} x${i.qty}</span><span class="font-medium">${Number(i.price * i.qty).toLocaleString('vi-VN')}đ</span></div>`
+  ).join('');
+  document.getElementById('viewContent').innerHTML = `
+    <div class="border border-primary/30 rounded-lg p-4 flex flex-col gap-2 bg-primary-container/5">
+      <div class="flex justify-between items-center">
+        <span class="font-semibold text-on-surface flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px] text-tertiary">language</span>
+          Thanh toán Online
+        </span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-primary-container text-on-primary-container">
+          <span class="material-symbols-outlined text-[12px]">check_circle</span>Thành công
+        </span>
+      </div>
+      <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Mã giao dịch:</span><span class="font-mono text-xs">${r.txnId || '—'}</span></div>
+      <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Số tiền:</span><span class="font-bold text-primary">${Number(r.amount || r.finalAmount || 0).toLocaleString('vi-VN')}đ</span></div>
+      <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Phương thức:</span><span>${r.paymentMethod || '—'}</span></div>
+      ${r.customerName ? `<div class="flex justify-between text-sm"><span class="text-on-surface-variant">Khách hàng:</span><span>${r.customerName}${r.phone ? ' · ' + r.phone : ''}</span></div>` : ''}
+      ${r.type === 'booking' && r.date ? `<div class="flex justify-between text-sm"><span class="text-on-surface-variant">Lịch hẹn:</span><span>${r.date} lúc ${r.time}</span></div>` : ''}
+      ${r.paidAt ? `<div class="flex justify-between text-sm"><span class="text-on-surface-variant">Thời gian:</span><span>${new Date(r.paidAt).toLocaleString('vi-VN')}</span></div>` : ''}
+      ${itemsHtml ? `<div class="border-t border-outline-variant/30 pt-2 mt-1">${itemsHtml}</div>` : ''}
+      <div class="flex gap-2 pt-1 border-t border-outline-variant/30 mt-1">
+        <button onclick="previewInvoice(null, '${invoicePayload}')"
+          class="flex-1 flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container text-xs font-medium hover:bg-primary/20 transition-colors">
+          <span class="material-symbols-outlined text-[14px]">receipt_long</span>Xem hóa đơn
+        </button>
+        <button onclick="downloadInvoice(null, '${invoicePayload}')"
+          class="flex-1 flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-secondary-container text-on-secondary-container text-xs font-medium hover:bg-secondary/20 transition-colors">
+          <span class="material-symbols-outlined text-[14px]">download</span>Tải PDF
+        </button>
+      </div>
+    </div>`;
+}
+function closeViewModal() { document.getElementById('viewModal').classList.add('hidden'); }
+
+// ─── TOAST ────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-white text-sm font-medium ${type === 'error' ? 'bg-error' : 'bg-primary'}`;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 3000);
+}
+
+function clearClientPayments() {
+  if (!confirm('Xóa toàn bộ dữ liệu thanh toán online đã lưu cục bộ?')) return;
+  localStorage.removeItem('petshop_completed_payments');
+  showToast('Đã xóa cache thanh toán online', 'success');
+  loadData();
+}
+
+function handleVnPayReturnParams() {
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get('vnpayStatus');
+  if (!status) return;
+
+  if (status === 'success') {
+    const orderId = params.get('orderId');
+    showToast(`Thanh toán VNPay thành công${orderId ? ` cho #ORD-${orderId}` : ''}!`, 'success');
+    localStorage.setItem('dashboard_needs_refresh', Date.now().toString());
+  } else {
+    const code = params.get('responseCode');
+    showToast(`Thanh toán VNPay thất bại${code ? ` (mã ${code})` : ''}!`, 'error');
+  }
+
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+['payModal','viewModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => { if(e.target.id === id) document.getElementById(id).classList.add('hidden'); });
+});
+
+handleVnPayReturnParams();
+loadData();
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>

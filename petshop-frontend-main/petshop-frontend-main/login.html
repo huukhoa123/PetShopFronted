@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng Nhập - PET LUXURY</title>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green-900: #0b361d;
+    --green-800: #14532d;
+    --green-700: #166534;
+    --green-600: #006b1b;
+    --green-500: #16a34a;
+    --green-400: #4ade80;
+    --green-200: #bbf7d0;
+    --green-100: #dcfce7;
+    --green-50:  #f0fdf4;
+    --cream:     #faf8f5;
+    --gold:      #d4af37;
+    --gold-light:#f5e9a6;
+    --white:     #ffffff;
+    --text-dark: #0b361d;
+    --text-mid:  #3b5e47;
+    --text-soft: #6b8c77;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    overflow-x: hidden;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    display: none;
+    position: relative;
+    width: 45%;
+    background: var(--green-900);
+    overflow: hidden;
+  }
+  @media (min-width: 900px) { .left-panel { display: flex; flex-direction: column; justify-content: flex-end; } }
+
+  .left-panel img.bg-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+    filter: saturate(0.6);
+  }
+
+  .left-panel::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(11,54,29,0.3) 0%, rgba(11,54,29,0.85) 100%);
+  }
+
+  .left-content {
+    position: relative; z-index: 2;
+    padding: 3rem;
+  }
+
+  .left-content .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  .left-content .tagline span {
+    color: var(--gold);
+  }
+
+  .left-content p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 320px;
+    margin-bottom: 2.5rem;
+  }
+
+  .left-dots {
+    display: flex; gap: 8px;
+  }
+  .left-dots span {
+    width: 28px; height: 3px; border-radius: 99px;
+    background: rgba(255,255,255,0.2);
+  }
+  .left-dots span:first-child { background: var(--gold); width: 48px; }
+
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    background: var(--cream);
+    position: relative;
+  }
+
+  /* subtle texture */
+  .right-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(var(--green-200) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .form-card {
+    width: 100%; max-width: 420px;
+    position: relative; z-index: 1;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LOGO */
+  .logo-area {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .logo-ring {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    padding: 4px;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 0 6px rgba(212,175,55,0.08);
+    transition: transform 0.5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .logo-ring:hover { transform: rotate(10deg) scale(1.08); }
+
+  .logo-ring img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--green-600);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .brand-sub {
+    font-size: 0.78rem;
+    color: var(--text-soft);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* FORM */
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-subtitle {
+    text-align: center;
+    color: var(--text-soft);
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--green-200);
+  }
+  .divider-leaf {
+    font-size: 1rem;
+    opacity: 0.5;
+  }
+
+  .field-group {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .field-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    padding-left: 4px;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--text-soft);
+    pointer-events: none;
+    transition: color 0.2s;
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' 0, 'wght' 300;
+  }
+
+  .field-group:focus-within .input-icon { color: var(--green-600); }
+
+  input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    background: var(--white);
+    border: 1.5px solid var(--green-200);
+    border-radius: 12px;
+    padding: 14px 14px 14px 44px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  }
+  input:focus {
+    border-color: var(--green-600);
+    box-shadow: 0 0 0 4px rgba(0,107,27,0.08);
+    background: #fff;
+  }
+  input::placeholder { color: #afc8b8; }
+
+  .btn-toggle-pass {
+    position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: var(--text-soft);
+    display: flex; align-items: center;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .btn-toggle-pass:hover { color: var(--green-600); }
+  .btn-toggle-pass .material-symbols-outlined {
+    font-size: 20px;
+    font-variation-settings: 'FILL' 0, 'wght' 300;
+  }
+
+  .forgot-link {
+    text-align: right;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .forgot-link a {
+    font-size: 0.83rem;
+    color: var(--green-600);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .forgot-link a:hover { color: var(--gold); }
+
+  #err-box {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-500) 100%);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,107,27,0.25);
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+    margin-bottom: 1.75rem;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,107,27,0.3); }
+  .btn-submit:active { transform: translateY(0) scale(0.98); }
+  .btn-submit:disabled { opacity: 0.65; transform: none; cursor: not-allowed; }
+  .btn-submit .material-symbols-outlined { font-size: 20px; font-variation-settings: 'FILL' 0; }
+
+  .register-prompt {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-soft);
+  }
+  .register-prompt a {
+    color: var(--green-600);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 4px;
+    transition: color 0.2s;
+  }
+  .register-prompt a:hover { color: var(--gold); }
+
+  .bottom-ornament {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-top: 2.5rem;
+    opacity: 0.3;
+  }
+  .bottom-ornament span { font-size: 1rem; }
+  .bottom-ornament hr { flex: 1; max-width: 40px; border: none; border-top: 1px solid var(--green-600); }
+</style>
+</head>
+<body>
+
+<!-- LEFT DECORATIVE PANEL -->
+<div class="left-panel">
+  <img class="bg-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnhwR2me-IQkUuDBA5xBw95NPXTCuk6qprs9X1iusyBivqT-PjkMsaLh_KlX_wAGzlwQZp_RliMTkZiae0HMBAvHehklVKvi3hQjDTinB3MHltMnFqTXmd-IxyJuJlXU4fxkVBOwK9du_Uk2q9oPbQqLfCN9aUGNKy3vkvI2_CZeR8dnvrvwGN2XTmAtGq3B57zwz0wabHBJoPJXsZj2L5-PBC0Ip1UKk3TA5u8tPGJUOucqaU0eMMAgarHQfZoxrbc6pbjnuT_zE" alt="Pets">
+  <div class="left-content">
+    <p class="tagline">Nơi mỗi thú cưng<br>được yêu thương <span>đẳng cấp</span></p>
+    <p>Dịch vụ chăm sóc cao cấp — từ spa, grooming đến dinh dưỡng, tất cả dành riêng cho người bạn nhỏ của bạn.</p>
+    <div class="left-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT FORM PANEL -->
+<div class="right-panel">
+  <div class="form-card">
+
+    <!-- Logo từ index.html -->
+    <div class="logo-area">
+      <div class="logo-ring">
+        <img src="favicon.png" alt="PET LUXURY Logo">
+      </div>
+      <span class="brand-name">Pet Luxury</span>
+      <span class="brand-sub">Chăm Sóc Thú Cưng Đẳng Cấp</span>
+    </div>
+
+    <h2 class="form-title">Chào mừng trở lại</h2>
+    <p class="form-subtitle">Đăng nhập để tiếp tục hành trình cùng thú cưng</p>
+
+    <div class="divider"><span class="divider-leaf">🌿</span></div>
+
+    <div id="err-box"></div>
+
+    <div class="field-group">
+      <label class="field-label" for="username">Tên đăng nhập</label>
+      <div class="input-wrap">
+        <span class="input-icon material-symbols-outlined">person</span>
+        <input id="username" type="text" placeholder="Nhập tên đăng nhập" autocomplete="username"/>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="password">Mật khẩu</label>
+      <div class="input-wrap">
+        <span class="input-icon material-symbols-outlined">lock</span>
+        <input id="password" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password"/>
+        <button class="btn-toggle-pass" type="button" id="toggle-pass" aria-label="Hiện/ẩn mật khẩu">
+          <span class="material-symbols-outlined">visibility</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="forgot-link">
+      <a href="forgot-password.html">Quên mật khẩu?</a>
+    </div>
+
+    <button class="btn-submit" id="btn-login" type="button">
+      Đăng nhập
+      <span class="material-symbols-outlined">login</span>
+    </button>
+
+    <p class="register-prompt">
+      Chưa có tài khoản?
+      <a href="register.html">Đăng ký ngay</a>
+    </p>
+
+    <div class="bottom-ornament">
+      <hr/><span>🌱</span><hr/>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:8080';
+
+if (localStorage.getItem('token')) {
+  window.location.href = 'dashboard.html';
+}
+
+const loginBtn = document.getElementById('btn-login');
+const toggleBtn = document.getElementById('toggle-pass');
+
+// Toggle password visibility
+toggleBtn.addEventListener('click', () => {
+  const input = document.getElementById('password');
+  const icon = toggleBtn.querySelector('span');
+  if (input.type === 'password') {
+    input.type = 'text'; icon.textContent = 'visibility_off';
+  } else {
+    input.type = 'password'; icon.textContent = 'visibility';
+  }
+});
+
+// Login handler
+loginBtn.addEventListener('click', async () => {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  if (!username || !password) { showError('Vui lòng nhập đầy đủ thông tin!'); return; }
+
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></span> Đang đăng nhập...';
+
+  try {
+    const res = await fetch(`${API}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      localStorage.setItem('token', json.data.token);
+      localStorage.setItem('user', JSON.stringify(json.data));
+      const role = json.data.role;
+      if (role === 'Admin' || role === 'Manager' || role === 'Employee') {
+        localStorage.setItem('open_dashboard', 'true');
+      }
+      window.location.href = 'index.html';
+    } else {
+      showError(json.message || 'Sai tên đăng nhập hoặc mật khẩu!');
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = 'Đăng nhập <span class="material-symbols-outlined">login</span>';
+    }
+  } catch (e) {
+    showError('Không kết nối được server!');
+    loginBtn.disabled = false;
+    loginBtn.innerHTML = 'Đăng nhập <span class="material-symbols-outlined">login</span>';
+  }
+});
+
+// Enter key
+['username', 'password'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') loginBtn.click();
+  });
+  document.getElementById(id).addEventListener('input', () => {
+    document.getElementById('err-box').style.display = 'none';
+  });
+});
+
+function showError(msg) {
+  const box = document.getElementById('err-box');
+  box.textContent = '❌ ' + msg;
+  box.style.display = 'block';
+}
+</script>
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+<script src="i18n.js"></script>
+</body>
+</html>

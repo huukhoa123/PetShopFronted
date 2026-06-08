@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng Ký - PET LUXURY</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green-900: #0b361d;
+    --green-700: #166534;
+    --green-600: #006b1b;
+    --green-500: #16a34a;
+    --green-200: #bbf7d0;
+    --green-100: #dcfce7;
+    --green-50:  #f0fdf4;
+    --cream:     #faf8f5;
+    --gold:      #d4af37;
+    --white:     #ffffff;
+    --text-dark: #0b361d;
+    --text-mid:  #3b5e47;
+    --text-soft: #6b8c77;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    overflow-x: hidden;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    display: none;
+    position: relative;
+    width: 42%;
+    background: var(--green-900);
+    overflow: hidden;
+  }
+  @media (min-width: 960px) { .left-panel { display: flex; flex-direction: column; justify-content: flex-end; } }
+
+  .left-panel img.bg-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    filter: saturate(0.5);
+  }
+
+  .left-panel::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(11,54,29,0.2) 0%, rgba(11,54,29,0.9) 100%);
+  }
+
+  .left-content {
+    position: relative; z-index: 2;
+    padding: 3rem;
+  }
+
+  .left-content .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .left-content .tagline span { color: var(--gold); }
+
+  .left-content p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 300px;
+    margin-bottom: 2rem;
+  }
+
+  .features-list {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+  .feature-item {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+  }
+  .feature-item .material-symbols-outlined {
+    font-size: 18px; color: var(--gold);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--cream);
+    position: relative;
+    overflow-y: auto;
+  }
+
+  .right-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(var(--green-200) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .form-card {
+    width: 100%; max-width: 500px;
+    position: relative; z-index: 1;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    padding: 0.5rem 0;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LOGO */
+  .logo-area {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 2rem;
+  }
+
+  .logo-ring {
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    padding: 3px;
+    box-shadow: 0 0 0 5px rgba(212,175,55,0.08);
+    flex-shrink: 0;
+    transition: transform 0.5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .logo-ring:hover { transform: rotate(10deg) scale(1.1); }
+  .logo-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+  .logo-text .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--green-600);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1;
+  }
+  .logo-text .brand-sub {
+    font-size: 0.72rem;
+    color: var(--text-soft);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .page-header { margin-bottom: 1.75rem; }
+  .page-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.35rem;
+  }
+  .page-header p {
+    color: var(--text-soft);
+    font-size: 0.88rem;
+  }
+
+  .section-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--green-200);
+  }
+  .section-divider span { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-soft); white-space: nowrap; }
+
+  .fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0;
+  }
+  @media (max-width: 520px) { .fields-row { grid-template-columns: 1fr; } }
+
+  .field-group {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .field-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    padding-left: 4px;
+  }
+
+  .input-wrap { position: relative; }
+
+  .input-icon {
+    position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+    font-size: 17px;
+    color: var(--text-soft);
+    pointer-events: none;
+    transition: color 0.2s;
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' 0, 'wght' 300;
+  }
+  .field-group:focus-within .input-icon { color: var(--green-600); }
+
+  input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    background: var(--white);
+    border: 1.5px solid var(--green-200);
+    border-radius: 10px;
+    padding: 13px 44px 13px 42px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  input:focus {
+    border-color: var(--green-600);
+    box-shadow: 0 0 0 4px rgba(0,107,27,0.08);
+  }
+  input::placeholder { color: #b0c9bb; }
+
+  .btn-toggle-pass {
+    position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: var(--text-mid);
+    display: flex; align-items: center;
+    transition: color 0.2s; padding: 4px; z-index: 2;
+  }
+  .btn-toggle-pass:hover { color: var(--green-600); }
+  .btn-toggle-pass .material-symbols-outlined { font-size: 20px; font-variation-settings: 'FILL' 0, 'wght' 400; }
+
+  .terms-wrap {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 1.5rem;
+    padding: 14px;
+    background: var(--white);
+    border: 1.5px solid var(--green-200);
+    border-radius: 10px;
+  }
+  .terms-wrap input[type="checkbox"] {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--green-200);
+    border-radius: 5px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 0;
+    accent-color: var(--green-600);
+  }
+  .terms-text {
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+  .terms-text a { color: var(--green-600); font-weight: 500; text-decoration: none; }
+  .terms-text a:hover { color: var(--gold); }
+
+  #err-box {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-500) 100%);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,107,27,0.25);
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+    margin-bottom: 1.5rem;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,107,27,0.3); }
+  .btn-submit:active { transform: translateY(0) scale(0.98); }
+  .btn-submit:disabled { opacity: 0.65; transform: none; cursor: not-allowed; }
+  .btn-submit .material-symbols-outlined { font-size: 20px; }
+
+  .login-prompt {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-soft);
+  }
+  .login-prompt a {
+    color: var(--green-600); font-weight: 600;
+    text-decoration: none; margin-left: 4px;
+    transition: color 0.2s;
+  }
+  .login-prompt a:hover { color: var(--gold); }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="left-panel">
+  <img class="bg-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnhwR2me-IQkUuDBA5xBw95NPXTCuk6qprs9X1iusyBivqT-PjkMsaLh_KlX_wAGzlwQZp_RliMTkZiae0HMBAvHehklVKvi3hQjDTinB3MHltMnFqTXmd-IxyJuJlXU4fxkVBOwK9du_Uk2q9oPbQqLfCN9aUGNKy3vkvI2_CZeR8dnvrvwGN2XTmAtGq3B57zwz0wabHBJoPJXsZj2L5-PBC0Ip1UKk3TA5u8tPGJUOucqaU0eMMAgarHQfZoxrbc6pbjnuT_zE" alt="Pets">
+  <div class="left-content">
+    <p class="tagline">Gia nhập cộng đồng<br>yêu thú cưng <span>cao cấp</span></p>
+    <p>Hàng nghìn gia đình đã tin tưởng PET LUXURY chăm sóc người bạn nhỏ của mình.</p>
+    <div class="features-list">
+      <div class="feature-item">
+        <span class="material-symbols-outlined">verified</span>
+        Dịch vụ được chứng nhận chất lượng cao
+      </div>
+      <div class="feature-item">
+        <span class="material-symbols-outlined">local_shipping</span>
+        Giao hàng tận nơi toàn TP.HCM
+      </div>
+      <div class="feature-item">
+        <span class="material-symbols-outlined">support_agent</span>
+        Hỗ trợ 24/7 tận tâm
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="right-panel">
+  <div class="form-card">
+
+    <div class="logo-area">
+      <div class="logo-ring">
+        <img src="favicon.png" alt="PET LUXURY Logo">
+      </div>
+      <div class="logo-text">
+        <span class="brand-name">Pet Luxury</span>
+        <span class="brand-sub">Chăm Sóc Thú Cưng Đẳng Cấp</span>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h2>Tạo tài khoản mới</h2>
+      <p>Điền thông tin để bắt đầu hành trình cùng thú cưng của bạn</p>
+    </div>
+
+    <div id="err-box"></div>
+
+    <div class="section-divider"><span>Thông tin cá nhân</span></div>
+
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label" for="fullname">Họ và tên</label>
+        <div class="input-wrap">
+          <span class="input-icon material-symbols-outlined">badge</span>
+          <input id="fullname" type="text" placeholder="Nguyễn Văn A" autocomplete="name"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="username">Tên đăng nhập</label>
+        <div class="input-wrap">
+          <span class="input-icon material-symbols-outlined">person</span>
+          <input id="username" type="text" placeholder="Tối thiểu 3 ký tự" autocomplete="username"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="email">Email</label>
+      <div class="input-wrap">
+        <span class="input-icon material-symbols-outlined">mail</span>
+        <input id="email" type="email" placeholder="yeuthucung@gmail.com" autocomplete="email"/>
+      </div>
+    </div>
+
+    <div class="section-divider"><span>Bảo mật tài khoản</span></div>
+
+    <div class="fields-row">
+      <div class="field-group">
+        <label class="field-label" for="password">Mật khẩu</label>
+        <div class="input-wrap">
+          <span class="input-icon material-symbols-outlined">lock</span>
+          <input id="password" type="password" placeholder="Tối thiểu 6 ký tự"/>
+          <button class="btn-toggle-pass" id="toggle-pass1" type="button">
+            <span class="material-symbols-outlined">visibility</span>
+          </button>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="confirm_password">Xác nhận</label>
+        <div class="input-wrap">
+          <span class="input-icon material-symbols-outlined">lock_reset</span>
+          <input id="confirm_password" type="password" placeholder="Nhập lại mật khẩu"/>
+          <button class="btn-toggle-pass" id="toggle-pass2" type="button">
+            <span class="material-symbols-outlined">visibility</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="terms-wrap">
+      <input type="checkbox" id="terms"/>
+      <p class="terms-text">
+        Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của PET LUXURY. Tôi xác nhận đã đọc và hiểu các điều khoản này.
+      </p>
+    </div>
+
+    <button class="btn-submit" id="btn-register" type="button">
+      Đăng ký tài khoản
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+
+    <p class="login-prompt">
+      Đã có tài khoản?
+      <a href="login.html">Đăng nhập ngay</a>
+    </p>
+
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:8080';
+
+// Toggle password
+function togglePass(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const icon = btn.querySelector('.material-symbols-outlined');
+  if (input.type === 'password') { input.type = 'text'; icon.textContent = 'visibility_off'; }
+  else { input.type = 'password'; icon.textContent = 'visibility'; }
+}
+document.getElementById('toggle-pass1').addEventListener('click', function() { togglePass('password', this); });
+document.getElementById('toggle-pass2').addEventListener('click', function() { togglePass('confirm_password', this); });
+
+// Register
+document.getElementById('btn-register').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-register');
+  const fullname = document.getElementById('fullname').value.trim();
+  const username = document.getElementById('username').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const confirm = document.getElementById('confirm_password').value.trim();
+  const terms = document.getElementById('terms').checked;
+
+  if (!fullname) { showError('Vui lòng nhập họ và tên!'); return; }
+  if (!username || username.length < 3) { showError('Tên đăng nhập phải có ít nhất 3 ký tự!'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Email không hợp lệ!'); return; }
+  if (!password || password.length < 6) { showError('Mật khẩu phải có ít nhất 6 ký tự!'); return; }
+  if (password !== confirm) { showError('Mật khẩu nhập lại không khớp!'); return; }
+  if (!terms) { showError('Vui lòng đồng ý với điều khoản dịch vụ!'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></span> Đang đăng ký...';
+
+  try {
+    const res = await fetch(`${API}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName: fullname, username, email, password })
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      btn.style.background = 'linear-gradient(135deg, #15803d, #22c55e)';
+      btn.innerHTML = '✅ Đăng ký thành công! Đang chuyển hướng...';
+      setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+    } else {
+      showError(json.message || 'Đăng ký thất bại, vui lòng thử lại!');
+      btn.disabled = false;
+      btn.innerHTML = 'Đăng ký tài khoản <span class="material-symbols-outlined">arrow_forward</span>';
+    }
+  } catch (e) {
+    showError('Không kết nối được server!');
+    btn.disabled = false;
+    btn.innerHTML = 'Đăng ký tài khoản <span class="material-symbols-outlined">arrow_forward</span>';
+  }
+});
+
+// Hide error on input
+['fullname','username','email','password','confirm_password'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    document.getElementById('err-box').style.display = 'none';
+  });
+});
+
+function showError(msg) {
+  const box = document.getElementById('err-box');
+  box.textContent = '❌ ' + msg;
+  box.style.display = 'block';
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+<script src="i18n.js"></script>
+</body>
+</html>

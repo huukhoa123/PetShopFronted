@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thú cưng - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme:{ extend:{
+      colors:{
+        "on-secondary-container":"#174ea6","on-primary-fixed-variant":"#006914","on-primary-container":"#005e11",
+        "surface-container":"#e9ff6f","on-tertiary-container":"#000311","primary-fixed-dim":"#47f051",
+        "primary-container":"#58ff5e","on-error-container":"#6e0a12","on-tertiary-fixed":"#000000",
+        "error-container":"#fa746f","secondary":"#3161ba","outline":"#788900","on-surface":"#333c00",
+        "on-background":"#333c00","surface-variant":"#d9f600","on-secondary-fixed":"#003b8a",
+        "background":"#fcffdc","error":"#af3d3b","inverse-primary":"#58ff5e","on-primary":"#ffffff",
+        "on-surface-variant":"#5d6b00","on-error":"#ffffff","secondary-fixed":"#d9e2ff",
+        "secondary-dim":"#2155ad","inverse-surface":"#0c1000","tertiary-dim":"#0054b7",
+        "error-dim":"#67040d","on-tertiary-fixed-variant":"#001435","secondary-container":"#d9e2ff",
+        "on-tertiary":"#ffffff","primary-dim":"#006713","secondary-fixed-dim":"#c4d4ff",
+        "tertiary-container":"#5289ef","tertiary":"#1f61c4","surface-container-high":"#defc00",
+        "on-primary-fixed":"#00490b","inverse-on-surface":"#92a700","surface-dim":"#d3f000",
+        "surface-container-highest":"#d9f600","surface-container-low":"#f6ffbe","primary-fixed":"#58ff5e",
+        "surface-tint":"#007517","surface-bright":"#fcffdc","on-secondary-fixed-variant":"#2658b0",
+        "tertiary-fixed":"#5289ef","tertiary-fixed-dim":"#437ce1","surface":"#fcffdc",
+        "on-secondary":"#ffffff","surface-container-lowest":"#ffffff","outline-variant":"#adc500","primary":"#007517"
+      },
+      borderRadius:{"DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px"},
+      fontFamily:{sans:["Inter","sans-serif"]}
+    }}
+  }
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;padding:0;font-family:'Inter',sans-serif}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+  
+  .modal-bd{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+  #toast{position:fixed;bottom:24px;right:24px;z-index:999;display:none}
+  .t-box{padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  .t-ok{background:#007517;color:#fff} .t-err{background:#af3d3b;color:#fff}
+  #loadOvl{position:fixed;inset:0;background:rgba(252,255,220,.65);z-index:200;display:none;align-items:center;justify-content:center}
+  .spin{width:36px;height:36px;border:3px solid #adc500;border-top-color:#007517;border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .trow .acts{opacity:0;transition:opacity .15s} .trow:hover .acts{opacity:1}
+  /* species badge */
+  .sp-dog{background:#d9e2ff;color:#174ea6} .sp-cat{background:#5289ef22;color:#1f61c4}
+  .sp-other{background:#defc00;color:#333c00}
+  /* skeleton */
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .skeleton{animation:pulse 1.5s ease-in-out infinite;background:#e5e7eb;border-radius:4px}
+</style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="ml-60 flex-1 flex flex-col min-h-screen">
+
+  <!-- TOPBAR -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-8 py-4">
+    <div class="text-lg font-bold text-slate-900">Quản lý Thú cưng</div>
+    <div class="flex items-center gap-4 text-slate-500">
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="flex-1 p-6 flex gap-5 overflow-hidden" style="height:calc(100vh - 65px)">
+
+    <!-- ── LEFT PANEL: filter + stats ── -->
+    <div class="w-72 flex-shrink-0 flex flex-col gap-4 overflow-y-auto">
+
+      <!-- Customer filter card -->
+      <div class="bg-surface-container rounded-xl p-4 border border-outline-variant shadow-sm">
+        <h3 class="font-bold text-on-surface text-sm mb-3 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-primary">manage_search</span>Lọc theo Khách hàng
+        </h3>
+        <div class="flex flex-col gap-2">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Mã KH</label>
+          <div class="flex gap-2">
+            <input id="filterCustomerId" type="text" placeholder="VD: KH001"
+              class="flex-1 px-3 py-2 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface"/>
+            <button onclick="loadByCustomer()" class="bg-primary text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-primary-dim transition-colors">
+              <span class="material-symbols-outlined text-[18px]">search</span>
+            </button>
+          </div>
+          <button onclick="loadAll()" class="mt-1 w-full py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high text-xs font-medium transition-colors flex items-center justify-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">clear_all</span>Xem tất cả
+          </button>
+        </div>
+
+        <!-- Customer info mini card -->
+        <div id="customerMini" class="hidden mt-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant">
+          <div class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider mb-1">Đang xem KH</div>
+          <div class="font-bold text-on-surface text-sm" id="customerMiniName">—</div>
+          <div class="text-xs text-on-surface-variant" id="customerMiniCode">—</div>
+        </div>
+      </div>
+
+      <!-- Species filter -->
+      <div class="bg-surface-container rounded-xl p-4 border border-outline-variant shadow-sm">
+        <h3 class="font-bold text-on-surface text-sm mb-3 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-secondary">filter_list</span>Lọc theo loài
+        </h3>
+        <div class="flex flex-col gap-1">
+          <button onclick="filterSpecies('all')" id="sp-all" class="sp-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-secondary-container text-on-secondary-container">
+            🐾 Tất cả loài
+          </button>
+          <button onclick="filterSpecies('Chó')" id="sp-dog" class="sp-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-100">
+            🐶 Chó
+          </button>
+          <button onclick="filterSpecies('Mèo')" id="sp-cat" class="sp-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-100">
+            🐱 Mèo
+          </button>
+          <button onclick="filterSpecies('other')" id="sp-other" class="sp-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-100">
+            🐰 Khác
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats mini -->
+      <div class="bg-surface-container rounded-xl p-4 border border-outline-variant shadow-sm">
+        <h3 class="font-bold text-on-surface text-sm mb-3 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-tertiary">bar_chart_4_bars</span>Thống kê
+        </h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="bg-surface-container-lowest rounded-lg p-2 text-center">
+            <div class="text-xl font-black text-on-surface" id="statAll">0</div>
+            <div class="text-[10px] text-on-surface-variant">Tổng</div>
+          </div>
+          <div class="bg-secondary-container/40 rounded-lg p-2 text-center">
+            <div class="text-xl font-black text-secondary" id="statDog">0</div>
+            <div class="text-[10px] text-on-surface-variant">Chó</div>
+          </div>
+          <div class="bg-tertiary-container/20 rounded-lg p-2 text-center">
+            <div class="text-xl font-black text-tertiary" id="statCat">0</div>
+            <div class="text-[10px] text-on-surface-variant">Mèo</div>
+          </div>
+          <div class="bg-surface-container-high/60 rounded-lg p-2 text-center">
+            <div class="text-xl font-black text-on-surface" id="statOther">0</div>
+            <div class="text-[10px] text-on-surface-variant">Khác</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT PANEL: toolbar + table ── -->
+    <div class="flex-1 flex flex-col gap-4 overflow-hidden min-w-0">
+
+      <!-- Toolbar -->
+      <div class="flex items-center justify-between bg-surface-container rounded-xl px-4 py-3 border border-outline-variant flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+            <input id="searchInput" oninput="applyFilter()" type="text" placeholder="Tìm tên thú cưng, giống..." class="pl-9 pr-4 py-2 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary outline-none text-sm text-on-surface w-56 transition-all"/>
+          </div>
+          <span class="text-xs text-on-surface-variant bg-surface-container-lowest px-3 py-1.5 rounded-full border border-outline-variant font-medium" id="countBadge">0 thú cưng</span>
+        </div>
+        <button onclick="openCreate()" class="bg-primary text-white font-semibold text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-dim transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">add</span>Thêm thú cưng
+        </button>
+      </div>
+
+      <!-- Table card -->
+      <div class="flex-1 bg-surface-container rounded-xl border border-outline-variant overflow-hidden shadow-sm flex flex-col min-h-0">
+        <div class="overflow-y-auto flex-1">
+          <table class="w-full text-left border-collapse min-w-[700px]">
+            <thead class="sticky top-0 z-10">
+              <tr class="bg-surface-variant text-on-surface border-b border-outline-variant">
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">ID</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">Tên thú</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">Loài</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">Giống</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">Ngày sinh</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">Cân nặng</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider">Chủ sở hữu</th>
+                <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-right">Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody" class="text-sm text-on-surface divide-y divide-outline-variant/50">
+              <tr><td colspan="8" class="py-16 text-center text-slate-300 text-sm">Nhập mã KH hoặc nhấn "Xem tất cả" để bắt đầu</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="hidden flex-1 flex flex-col items-center justify-center py-16 text-center">
+          <div class="w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-3xl text-on-surface-variant">sentiment_dissatisfied</span>
+          </div>
+          <h3 class="font-bold text-on-surface mb-2">Chưa có thú cưng nào</h3>
+          <p class="text-sm text-on-surface-variant mb-4">Khách hàng này chưa đăng ký thú cưng nào.</p>
+          <button onclick="openCreate()" class="bg-primary text-white text-sm font-semibold px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-dim transition-colors">
+            <span class="material-symbols-outlined text-[18px]">add</span>Thêm thú cưng đầu tiên
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL THÊM / SỬA ══════════ -->
+<div id="formModal" class="modal-bd hidden">
+  <div class="bg-surface-container w-full max-w-xl rounded-xl shadow-2xl border border-outline-variant flex flex-col max-h-[90vh]">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-5 border-b border-outline-variant bg-surface-variant/40 rounded-t-xl">
+      <h2 class="font-bold text-xl text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">edit_document</span>
+        <span id="modalTitle">Thêm thú cưng</span>
+      </h2>
+      <button onclick="closeModal()" class="text-on-surface-variant hover:text-error transition-colors p-1 rounded-full hover:bg-error-container">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="p-5 overflow-y-auto flex-1 flex flex-col gap-4">
+      <input type="hidden" id="editId"/>
+
+      <!-- Error banner -->
+      <div id="modalError" class="hidden bg-error-container text-on-error-container p-3 rounded-lg flex items-center gap-2 border border-error/20 text-sm font-semibold">
+        <span class="material-symbols-outlined text-error text-[18px]">error</span>
+        <span id="modalErrorMsg"></span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Tên thú cưng <span class="text-error">*</span></label>
+          <input id="f_name" type="text" placeholder="Milo, Luna..." class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface transition-all"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Loài <span class="text-error">*</span></label>
+          <select id="f_species" class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm text-on-surface">
+            <option value="">-- Chọn loài --</option>
+            <option value="Chó">🐶 Chó</option>
+            <option value="Mèo">🐱 Mèo</option>
+            <option value="Thỏ">🐰 Thỏ</option>
+            <option value="Hamster">🐹 Hamster</option>
+            <option value="Chim">🐦 Chim</option>
+            <option value="Khác">🐾 Khác</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Giống</label>
+          <input id="f_breed" type="text" placeholder="Golden Retriever, British..." class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface transition-all"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Giới tính</label>
+          <select id="f_gender" class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm text-on-surface">
+            <option value="">-- Chọn --</option>
+            <option value="Đực">♂ Đực</option>
+            <option value="Cái">♀ Cái</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Ngày sinh</label>
+          <input id="f_birthDate" type="date" class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Cân nặng (kg)</label>
+          <input id="f_weight" type="number" step="0.1" min="0" placeholder="4.5" class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Màu lông</label>
+          <input id="f_color" type="text" placeholder="Vàng, Đen trắng..." class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Mã KH (Chủ) <span class="text-error">*</span></label>
+          <div class="flex gap-2">
+            <input id="f_customerId" type="text" placeholder="VD: KH001" class="flex-1 px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface"/>
+            <button onclick="verifyCustomer()" class="bg-secondary text-white px-3 rounded-lg text-xs font-semibold hover:bg-secondary-dim transition-colors">
+              <span class="material-symbols-outlined text-[18px]">verified_user</span>
+            </button>
+          </div>
+          <div id="customerVerified" class="hidden text-xs text-primary font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">check_circle</span><span id="customerVerifiedName"></span>
+          </div>
+        </div>
+        <div class="col-span-2 flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Ghi chú sức khỏe</label>
+          <textarea id="f_healthNotes" rows="3" placeholder="Tiêm phòng, bệnh lý, chế độ ăn..." class="px-3 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-on-surface resize-none"></textarea>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="p-5 border-t border-outline-variant bg-surface-variant/30 rounded-b-xl flex justify-end gap-3">
+      <button onclick="closeModal()" class="px-5 py-2 border border-outline text-on-surface rounded-lg text-sm font-medium hover:bg-surface-variant transition-colors">Hủy</button>
+      <button onclick="submitForm()" id="submitBtn" class="px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-dim transition-colors flex items-center gap-2 shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">save</span>Lưu thông tin
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ LOADING / TOAST ══════════ -->
+<div id="loadOvl"><div class="spin"></div></div>
+<div id="toast"><div id="tBox" class="t-box t-ok"><span class="material-symbols-outlined text-[18px]">check_circle</span><span id="tMsg"></span></div></div>
+
+<script>
+const API   = 'http://localhost:8080/api';
+const TOKEN = localStorage.getItem('token');
+if (!TOKEN) location.href = 'login.html';
+
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+// ── STATE ──
+let allPets     = [];   // pets từ API (theo customer hoặc tất cả)
+let filtered    = [];   // sau filter loài + search
+let currentMode = 'all'; // 'all' | 'customer'
+let currentCid  = null;
+let currentSpecies = 'all';
+let customers   = {};   // cache {id: customer}
+
+// ── HELPERS ──
+const H = () => ({'Content-Type':'application/json','Authorization':`Bearer ${TOKEN}`});
+const loading = on => document.getElementById('loadOvl').style.display = on ? 'flex' : 'none';
+
+function toast(msg, type='ok'){
+  document.getElementById('tMsg').textContent = msg;
+  document.getElementById('tBox').className = `t-box t-${type}`;
+  document.getElementById('toast').style.display = 'block';
+  setTimeout(()=>document.getElementById('toast').style.display='none', 3200);
+}
+
+function logout(){
+  if(!confirm('Đăng xuất?')) return;
+  localStorage.clear(); location.href='login.html';
+}
+
+function speciesBadge(sp){
+  const map = { 'Chó':['sp-dog','🐶 Chó'], 'Mèo':['sp-cat','🐱 Mèo'] };
+  const [cls,lbl] = map[sp]||['sp-other',`🐾 ${sp||'Khác'}`];
+  return `<span class="${cls} px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 w-fit">${lbl}</span>`;
+}
+
+function fmtDate(str){ if(!str) return '—'; try{ return new Date(str).toLocaleDateString('vi-VN'); }catch{ return str; } }
+function customerCode(c){
+  const code = String(c?.customerCode || '');
+  return /^KH\d{3,}$/i.test(code) ? code.toUpperCase() : `KH${String(c?.id || 0).padStart(3, '0')}`;
+}
+function customerIdFromCode(value){
+  const raw = String(value || '').trim().toUpperCase();
+  if (!raw) return null;
+  if (/^\d+$/.test(raw)) return Number(raw);
+  const kh = raw.match(/^KH0*(\d+)$/);
+  if (kh) return Number(kh[1]);
+  const found = Object.values(customers).find(c => customerCode(c) === raw);
+  return found ? Number(found.id) : null;
+}
+
+// ── LOAD ALL CUSTOMERS (để tra cứu tên) ──
+async function cacheCustomers(){
+  try {
+    const r = await fetch(`${API}/customers`, { headers:H() });
+    const j = await r.json();
+    (j.data||j||[]).forEach(c => {
+      c.customerCode = customerCode(c);
+      customers[c.id] = c;
+    });
+  } catch(e){}
+}
+
+// ── LOAD ALL PETS (gọi từng customer) ──
+async function loadAll(){
+  currentMode = 'all'; currentCid = null; currentSpecies = 'all';
+  document.getElementById('customerMini').classList.add('hidden');
+  resetSpBtns('all');
+  loading(true);
+  try {
+    await cacheCustomers();
+    // Backend chỉ có /pets/customer/{id}, không có /pets
+    // → gọi tuần tự cho từng customer đã cache
+    const ids = Object.keys(customers);
+    if(!ids.length){
+      allPets = [];
+      renderTable();
+      updateStats();
+      return;
+    }
+    const results = await Promise.allSettled(
+      ids.map(id => fetch(`${API}/pets/customer/${id}`, {headers:H()}).then(r=>r.json()))
+    );
+    allPets = [];
+    results.forEach(r => { if(r.status==='fulfilled'){ const d=r.value.data||r.value||[]; allPets.push(...(Array.isArray(d)?d:[])); } });
+    applyFilter();
+    updateStats();
+  } catch(e){ toast('Không tải được danh sách thú cưng!','err'); }
+  finally { loading(false); }
+}
+
+// ── LOAD BY CUSTOMER ──
+async function loadByCustomer(){
+  await cacheCustomers();
+  const cid = customerIdFromCode(document.getElementById('filterCustomerId').value);
+  if(!cid){ toast('Vui lòng nhập mã KH hợp lệ, ví dụ KH001!','err'); return; }
+  currentMode='customer'; currentCid=cid; currentSpecies='all';
+  resetSpBtns('all');
+  loading(true);
+  try {
+    const r = await fetch(`${API}/pets/customer/${cid}`, { headers:H() });
+    const j = await r.json();
+    if(!r.ok) throw new Error(j.message||`Không tìm thấy mã KH ${document.getElementById('filterCustomerId').value}`);
+    allPets = j.data||j||[];
+
+    // Show customer mini card
+    const c = customers[cid];
+    if(c){
+      document.getElementById('customerMiniName').textContent = c.fullName||'—';
+      document.getElementById('customerMiniCode').textContent = customerCode(c);
+      document.getElementById('customerMini').classList.remove('hidden');
+    }
+    applyFilter();
+    updateStats();
+  } catch(e){ toast(e.message,'err'); }
+  finally { loading(false); }
+}
+
+// ── SPECIES FILTER ──
+function filterSpecies(sp){
+  currentSpecies = sp;
+  resetSpBtns(sp);
+  applyFilter();
+}
+
+function resetSpBtns(active){
+  document.querySelectorAll('.sp-btn').forEach(b=>{
+    b.className = 'sp-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-100';
+  });
+  const map={all:'sp-all',dog:'sp-dog',cat:'sp-cat',other:'sp-other','Chó':'sp-dog','Mèo':'sp-cat'};
+  const id = map[active]||'sp-all';
+  const el = document.getElementById(id);
+  if(el) el.className='sp-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-secondary-container text-on-secondary-container';
+}
+
+// ── APPLY FILTER (species + search) ──
+function applyFilter(){
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  filtered = allPets.filter(p => {
+    const matchSp = currentSpecies==='all' ? true
+      : currentSpecies==='other' ? !['Chó','Mèo'].includes(p.species)
+      : p.species===currentSpecies;
+    const matchQ = !q
+      || (p.name||'').toLowerCase().includes(q)
+      || (p.breed||'').toLowerCase().includes(q)
+      || (p.species||'').toLowerCase().includes(q);
+    return matchSp && matchQ;
+  });
+  renderTable();
+}
+
+function updateStats(){
+  document.getElementById('statAll').textContent   = allPets.length;
+  document.getElementById('statDog').textContent   = allPets.filter(p=>p.species==='Chó').length;
+  document.getElementById('statCat').textContent   = allPets.filter(p=>p.species==='Mèo').length;
+  document.getElementById('statOther').textContent = allPets.filter(p=>!['Chó','Mèo'].includes(p.species)).length;
+}
+
+// ── RENDER TABLE ──
+function renderTable(){
+  document.getElementById('countBadge').textContent = `${filtered.length} thú cưng`;
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+
+  if(!filtered.length){
+    tbody.innerHTML = '';
+    empty.classList.remove('hidden');
+    empty.classList.add('flex');
+    return;
+  }
+  empty.classList.add('hidden');
+  empty.classList.remove('flex');
+
+  tbody.innerHTML = filtered.map(p => {
+    const owner = customers[p.customerId];
+    const ownerName = owner ? owner.fullName : `ID: ${p.customerId||'—'}`;
+    const ownerCode = owner ? customerCode(owner) : (p.customerId ? `KH${String(p.customerId).padStart(3, '0')}` : '');
+    return `
+    <tr class="trow hover:bg-surface-container/50 transition-colors">
+      <td class="py-3 px-4 font-mono text-xs text-on-surface-variant">#${p.id}</td>
+      <td class="py-3 px-4">
+        <div class="font-semibold text-on-surface">${p.name||'—'}</div>
+        <div class="text-[11px] text-on-surface-variant">${p.color||''} ${p.gender?`· ${p.gender}`:''}</div>
+      </td>
+      <td class="py-3 px-4">${speciesBadge(p.species)}</td>
+      <td class="py-3 px-4 text-sm text-on-surface-variant">${p.breed||'—'}</td>
+      <td class="py-3 px-4 text-sm text-on-surface-variant">${fmtDate(p.birthDate)}</td>
+      <td class="py-3 px-4 text-sm text-on-surface-variant">${p.weight!=null?p.weight+' kg':'—'}</td>
+      <td class="py-3 px-4">
+        <div class="text-sm font-medium text-on-surface">${ownerName}</div>
+        <div class="text-[11px] text-on-surface-variant font-mono">${ownerCode}</div>
+      </td>
+      <td class="py-3 px-4">
+        <div class="acts flex items-center justify-end gap-1">
+          <button onclick="openEdit(${p.id})" class="p-1.5 text-primary hover:bg-primary-container rounded-md transition-colors" title="Sửa">
+            <span class="material-symbols-outlined text-[18px]">edit</span>
+          </button>
+          <button onclick="deleteItem(${p.id},'${(p.name||'').replace(/'/g,"\\'")}')" class="p-1.5 text-error hover:bg-error-container rounded-md transition-colors" title="Xóa">
+            <span class="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── VERIFY CUSTOMER ──
+async function verifyCustomer(){
+  await cacheCustomers();
+  const cid = customerIdFromCode(document.getElementById('f_customerId').value);
+  if(!cid){ toast('Nhập mã KH trước, ví dụ KH001!','err'); return; }
+  try {
+    const r = await fetch(`${API}/customers/${cid}`, {headers:H()});
+    const j = await r.json();
+    if(!r.ok) throw new Error(j.message||'Không tìm thấy');
+    const c = j.data||j;
+    document.getElementById('customerVerifiedName').textContent = `✓ ${customerCode(c)} - ${c.fullName}`;
+    document.getElementById('customerVerified').classList.remove('hidden');
+    document.getElementById('modalError').classList.add('hidden');
+  } catch(e){
+    document.getElementById('modalErrorMsg').textContent = `Mã KH ${document.getElementById('f_customerId').value} không tồn tại!`;
+    document.getElementById('modalError').classList.remove('hidden');
+    document.getElementById('customerVerified').classList.add('hidden');
+  }
+}
+
+// ── MODAL ──
+function openCreate(){
+  document.getElementById('modalTitle').textContent = 'Thêm thú cưng mới';
+  document.getElementById('editId').value = '';
+  ['name','breed','color','healthNotes'].forEach(f=>{ const el=document.getElementById('f_'+f); if(el) el.value=''; });
+  document.getElementById('f_species').value  = '';
+  document.getElementById('f_gender').value   = '';
+  document.getElementById('f_birthDate').value= '';
+  document.getElementById('f_weight').value   = '';
+  // Pre-fill customerId if filtering by customer
+  document.getElementById('f_customerId').value = currentCid ? `KH${String(currentCid).padStart(3, '0')}` : '';
+  document.getElementById('customerVerified').classList.add('hidden');
+  document.getElementById('modalError').classList.add('hidden');
+  document.getElementById('formModal').classList.remove('hidden');
+}
+
+function openEdit(id){
+  const p = allPets.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('modalTitle').textContent = `Sửa thú cưng: ${p.name}`;
+  document.getElementById('editId').value        = id;
+  document.getElementById('f_name').value        = p.name        || '';
+  document.getElementById('f_species').value     = p.species     || '';
+  document.getElementById('f_breed').value       = p.breed       || '';
+  document.getElementById('f_gender').value      = p.gender      || '';
+  document.getElementById('f_birthDate').value   = p.birthDate   || '';
+  document.getElementById('f_weight').value      = p.weight      || '';
+  document.getElementById('f_color').value       = p.color       || '';
+  document.getElementById('f_healthNotes').value = p.healthNotes || '';
+  document.getElementById('f_customerId').value  = p.customerId ? `KH${String(p.customerId).padStart(3, '0')}` : '';
+  document.getElementById('customerVerified').classList.add('hidden');
+  document.getElementById('modalError').classList.add('hidden');
+  document.getElementById('formModal').classList.remove('hidden');
+}
+
+function closeModal(){ document.getElementById('formModal').classList.add('hidden'); }
+document.getElementById('formModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
+
+// ── CREATE ITEM ──
+async function createItem(payload){
+  const r = await fetch(`${API}/pets`, { method:'POST', headers:H(), body:JSON.stringify(payload) });
+  const j = await r.json();
+  if(!r.ok) throw new Error(j.message||'Lỗi tạo thú cưng');
+  return j.data||j;
+}
+
+// ── UPDATE ITEM ──
+async function updateItem(id, payload){
+  // Backend có PUT /pets/{id}? Theo code đọc được chỉ có POST + GET
+  // → thông báo không hỗ trợ
+  toast('Backend chưa có API cập nhật thú cưng!','err');
+  throw new Error('unsupported');
+}
+
+// ── DELETE ITEM ──
+async function deleteItem(id, name){
+  if(!confirm(`Xóa thú cưng "${name}"?\nThao tác này không thể hoàn tác.`)) return;
+  loading(true);
+  try {
+    const r = await fetch(`${API}/pets/${id}`, { method:'DELETE', headers:H() });
+    if(!r.ok && r.status!==204){ const j=await r.json().catch(()=>({})); throw new Error(j.message||'Lỗi xóa'); }
+    toast(`Đã xóa thú cưng "${name}"`);
+    allPets = allPets.filter(p=>p.id!==id);
+    applyFilter(); updateStats();
+  } catch(e){ toast(e.message,'err'); }
+  finally { loading(false); }
+}
+
+// ── SUBMIT FORM ──
+async function submitForm(){
+  const id   = document.getElementById('editId').value;
+  const name = document.getElementById('f_name').value.trim();
+  await cacheCustomers();
+  const cid  = customerIdFromCode(document.getElementById('f_customerId').value);
+  const sp   = document.getElementById('f_species').value;
+
+  if(!name){ toast('Vui lòng nhập tên thú cưng!','err'); return; }
+  if(!sp)  { toast('Vui lòng chọn loài!','err'); return; }
+  if(!cid) { toast('Vui lòng nhập mã KH hợp lệ, ví dụ KH001!','err'); return; }
+
+  const payload = {
+    customerId  : cid,
+    name,
+    species     : sp,
+    breed       : document.getElementById('f_breed').value.trim()||null,
+    gender      : document.getElementById('f_gender').value||null,
+    birthDate   : document.getElementById('f_birthDate').value||null,
+    weight      : parseFloat(document.getElementById('f_weight').value)||null,
+    color       : document.getElementById('f_color').value.trim()||null,
+    healthNotes : document.getElementById('f_healthNotes').value.trim()||null,
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Đang lưu...';
+  loading(true);
+  try {
+    if(id){ await updateItem(Number(id), payload); }
+    else  { await createItem(payload); toast('Thêm thú cưng thành công! 🐾'); }
+    closeModal();
+    // reload
+    if(currentMode==='customer' && currentCid) await loadByCustomer();
+    else await loadAll();
+  } catch(e){
+    if(!e.message.includes('unsupported')) toast(e.message,'err');
+  } finally {
+    btn.disabled=false;
+    btn.innerHTML='<span class="material-symbols-outlined text-[18px]">save</span>Lưu thông tin';
+    loading(false);
+  }
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeModal();
+});
+
+// Check URL param ?customerId=X
+(function checkUrlParam(){
+  const p = new URLSearchParams(location.search);
+  const cid = p.get('customerId');
+  if(cid){
+    document.getElementById('filterCustomerId').value = cid;
+    setTimeout(()=>loadByCustomer(), 300);
+  } else {
+    loadAll();
+  }
+})();
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>
+

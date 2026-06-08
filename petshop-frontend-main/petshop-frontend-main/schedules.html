@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lịch làm việc - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#007517", "on-primary": "#ffffff", "primary-container": "#58ff5e",
+          "on-primary-container": "#005e11", "primary-dim": "#006713",
+          "secondary": "#3161ba", "on-secondary": "#ffffff", "secondary-container": "#d9e2ff",
+          "on-secondary-container": "#174ea6", "secondary-dim": "#2155ad",
+          "tertiary": "#1f61c4", "on-tertiary": "#ffffff", "tertiary-container": "#5289ef",
+          "on-tertiary-container": "#000311", "tertiary-dim": "#0054b7",
+          "error": "#af3d3b", "on-error": "#ffffff", "error-container": "#fa746f",
+          "on-error-container": "#6e0a12",
+          "surface": "#fcffdc", "surface-dim": "#d3f000", "surface-bright": "#fcffdc",
+          "surface-container-lowest": "#ffffff", "surface-container-low": "#f6ffbe",
+          "surface-container": "#e9ff6f", "surface-container-high": "#defc00",
+          "surface-container-highest": "#d9f600", "surface-variant": "#d9f600",
+          "on-surface": "#333c00", "on-surface-variant": "#5d6b00",
+          "outline": "#788900", "outline-variant": "#adc500",
+          "inverse-surface": "#0c1000", "inverse-on-surface": "#92a700",
+          "background": "#fcffdc", "on-background": "#333c00",
+        },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        spacing: { "xs": "4px", "sm": "8px", "md": "16px", "lg": "24px", "xl": "32px", "gutter": "16px", "margin": "24px", "base": "8px" },
+        fontFamily: { "headline-lg": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "label-md": ["Inter"] },
+        fontSize: {
+          "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+          "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+          "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.5px", fontWeight: "500" }],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #fcffdc; font-family: 'Inter', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  #toast { transition: opacity 0.3s, transform 0.3s; }
+  .calendar-event { cursor: pointer; }
+  .calendar-event:hover { opacity: 0.85; }
+</style>
+</head>
+<body class="bg-background text-on-background antialiased flex">
+
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+<div class="ml-64 w-[calc(100%-16rem)] flex flex-col min-h-screen">
+  <header class="bg-white/90 backdrop-blur-md fixed top-0 right-0 w-[calc(100%-16rem)] h-16 z-40 border-b border-slate-200 shadow-sm flex justify-between items-center px-8">
+    <h2 class="text-xl font-bold text-on-surface">Lịch làm việc</h2>
+    <div class="flex items-center gap-4 text-slate-500">
+      <span id="loadingIndicator" class="hidden text-sm text-on-surface-variant flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm animate-spin">refresh</span> Đang tải...
+      </span>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 mt-16 p-6">
+
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex bg-surface-container-low p-1 rounded-lg border border-surface-container-high">
+        <button id="btnCalendar" onclick="switchView('calendar')" class="px-4 py-2 bg-surface text-on-surface shadow-sm rounded-md text-xs font-semibold flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">calendar_view_month</span> Dạng Lịch
+        </button>
+        <button id="btnList" onclick="switchView('list')" class="px-4 py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-md text-xs transition-colors flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">list</span> Danh sách
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="btnDownloadTemplate" class="px-4 py-2 bg-surface text-on-surface border border-outline-variant hover:bg-surface-container rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 shadow-sm">
+          <span class="material-symbols-outlined text-sm">download</span> Tải mẫu Excel
+        </button>
+
+        <button id="btnImportExcel" class="px-4 py-2 bg-[#e9ff6f]/30 text-green-800 hover:bg-[#e9ff6f]/50 border border-[#adc500]/50 rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 shadow-sm">
+          <span class="material-symbols-outlined text-sm">upload_file</span> Import Excel
+        </button>
+        <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden" />
+
+        <button onclick="openModal()" class="bg-primary hover:bg-primary-dim text-on-primary px-4 py-2 rounded-lg text-xs font-semibold shadow-sm transition-colors flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">add</span> Thêm ca làm việc
+        </button>
+      </div>
+      </div>
+
+    <div id="calendarView" class="bg-surface rounded-xl border border-surface-container-high p-6 shadow-sm">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-4">
+          <button onclick="changeMonth(-1)" class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+          <h3 id="calTitle" class="text-xl font-semibold text-on-surface"></h3>
+          <button onclick="changeMonth(1)" class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+        </div>
+        <button onclick="goToday()" class="px-4 py-2 border border-outline-variant text-on-surface rounded-lg hover:bg-surface-container transition-colors text-xs font-medium">Hôm nay</button>
+      </div>
+      <div id="calendarGrid" class="grid grid-cols-7 rounded-lg overflow-hidden border border-outline-variant" style="border-collapse:collapse;">
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-r border-outline-variant">Thứ 2</div>
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-r border-outline-variant">Thứ 3</div>
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-r border-outline-variant">Thứ 4</div>
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-r border-outline-variant">Thứ 5</div>
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-r border-outline-variant">Thứ 6</div>
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-r border-outline-variant">Thứ 7</div>
+        <div class="bg-surface-container-low p-3 text-center text-xs text-on-surface-variant font-semibold border-b border-outline-variant">CN</div>
+      </div>
+    </div>
+
+    <div id="listView" class="hidden">
+      <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline/10 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-container-low border-b border-outline/10 text-on-surface-variant text-xs uppercase tracking-wider">
+                <th class="px-6 py-4 font-semibold">Nhân viên</th>
+                <th class="px-6 py-4 font-semibold">Ngày làm</th>
+                <th class="px-6 py-4 font-semibold">Giờ bắt đầu</th>
+                <th class="px-6 py-4 font-semibold">Giờ kết thúc</th>
+                <th class="px-6 py-4 font-semibold">Ghi chú</th>
+                <th class="px-6 py-4 font-semibold text-right">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody" class="divide-y divide-outline/10 text-sm">
+              <tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="modal" class="hidden fixed inset-0 bg-inverse-surface/50 backdrop-blur-sm z-50 flex items-center justify-center">
+  <div class="bg-surface rounded-xl shadow-xl w-full max-w-md border border-surface-container-high overflow-hidden">
+    <div class="p-6 border-b border-surface-container-high flex justify-between items-center">
+      <h2 id="modalTitle" class="text-xl font-semibold text-on-surface">Thêm ca làm việc mới</h2>
+      <button onclick="closeModal()" class="text-on-surface-variant hover:text-on-surface">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-6 space-y-4">
+      <input type="hidden" id="scheduleId"/>
+      <div>
+        <label class="block text-xs font-medium text-on-surface mb-1">Chọn nhân viên <span class="text-error">*</span></label>
+        <select id="empSelect" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-sm text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none">
+          <option value="">-- Chọn nhân viên --</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-on-surface mb-1">Ngày làm việc <span class="text-error">*</span></label>
+        <input id="workDate" type="date" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-sm text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none"/>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-on-surface mb-1">Giờ bắt đầu <span class="text-error">*</span></label>
+          <input id="shiftStart" type="time" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-sm text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none"/>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-on-surface mb-1">Giờ kết thúc <span class="text-error">*</span></label>
+          <input id="shiftEnd" type="time" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-sm text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none"/>
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-on-surface mb-1">Ghi chú</label>
+        <textarea id="scheduleNotes" rows="3" placeholder="Nhập ghi chú..." class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-sm text-on-surface focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none resize-none"></textarea>
+      </div>
+    </div>
+    <div class="p-6 bg-surface-container-lowest border-t border-surface-container-high flex justify-end gap-3">
+      <button onclick="closeModal()" class="px-4 py-2 text-on-surface-variant hover:bg-surface-container rounded-lg text-xs font-semibold transition-colors">Hủy</button>
+      <button onclick="saveSchedule()" class="px-4 py-2 bg-primary hover:bg-primary-dim text-on-primary rounded-lg text-xs font-semibold shadow-sm transition-colors">Lưu ca làm việc</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-6 right-6 z-[100] hidden">
+  <div id="toastInner" class="px-5 py-3 rounded-xl shadow-lg text-sm font-medium text-white flex items-center gap-2"></div>
+</div>
+
+<script>
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+const BASE = 'http://localhost:8080/api';
+let schedules = [];
+let employees = [];
+let currentYear, currentMonth;
+let currentView = 'calendar';
+
+// ── INIT ──
+window.onload = async () => {
+  const now = new Date();
+  currentYear = now.getFullYear();
+  currentMonth = now.getMonth();
+  await loadEmployees();
+  await loadData();
+};
+
+// ── LOAD SCHEDULES ──
+async function loadData() {
+  showLoading(true);
+  try {
+    const res = await fetch(`${BASE}/schedules`);
+    const data = await res.json();
+    schedules = Array.isArray(data) ? data : (data.data || []);
+    renderList();
+    renderCalendar();
+  } catch (e) {
+    showToast('Không thể kết nối API: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── LOAD EMPLOYEES ──
+async function loadEmployees() {
+  try {
+    const res = await fetch(`${BASE}/employees`);
+    const data = await res.json();
+    employees = Array.isArray(data) ? data : (data.data || []);
+    const sel = document.getElementById('empSelect');
+    employees.forEach(e => {
+      const opt = document.createElement('option');
+      opt.value = e.id;
+      opt.textContent = e.fullName;
+      sel.appendChild(opt);
+    });
+  } catch {}
+}
+
+// ── CALENDAR ──
+function changeMonth(delta) {
+  currentMonth += delta;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+  renderCalendar();
+}
+function goToday() {
+  const now = new Date();
+  currentYear = now.getFullYear();
+  currentMonth = now.getMonth();
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const months = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+  document.getElementById('calTitle').textContent = `${months[currentMonth]}, ${currentYear}`;
+
+  const grid = document.getElementById('calendarGrid');
+  // Remove day cells (keep 7 header cells)
+  while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0=Sun
+  // Convert: Mon=0 ... Sun=6
+  const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+  // Build lookup: date string -> schedules[]
+  const schMap = {};
+  schedules.forEach(s => {
+    const d = s.workDate; // "YYYY-MM-DD"
+    if (!schMap[d]) schMap[d] = [];
+    schMap[d].push(s);
+  });
+
+  // Helper border: cột cuối (CN) không có border-r
+  function cellBorder(colIdx) {
+    return colIdx % 7 === 6 ? 'border-b border-outline-variant' : 'border-b border-r border-outline-variant';
+  }
+
+  // Empty cells before day 1
+  for (let i = 0; i < startOffset; i++) {
+    const cell = document.createElement('div');
+    cell.className = `bg-surface-container-low min-h-[100px] p-2 ${cellBorder(i)}`;
+    grid.appendChild(cell);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = dateStr === todayStr;
+    const colIndex = (startOffset + d - 1) % 7;
+    const cell = document.createElement('div');
+    cell.className = `bg-surface min-h-[100px] p-2 ${cellBorder(colIndex)} ${isToday ? 'ring-2 ring-inset ring-secondary' : ''}`;
+
+    const dayNum = document.createElement('span');
+    dayNum.className = `text-xs mb-1 block font-medium ${isToday ? 'bg-secondary text-on-secondary rounded-full w-6 h-6 flex items-center justify-center' : 'text-on-surface'}`;
+    dayNum.textContent = d;
+    cell.appendChild(dayNum);
+
+    if (schMap[dateStr]) {
+      schMap[dateStr].forEach(s => {
+        const colors = ['bg-tertiary-container text-on-tertiary-container','bg-secondary-container text-on-secondary-container','bg-primary-container text-on-primary-container'];
+        const colorIdx = (s.employeeId || 0) % colors.length;
+        const ev = document.createElement('div');
+        ev.className = `calendar-event ${colors[colorIdx]} text-[10px] px-2 py-0.5 rounded mb-1 truncate`;
+        ev.title = `${s.employeeName || 'NV'} | ${s.shiftStart}–${s.shiftEnd}`;
+        ev.textContent = `${s.shiftStart?.slice(0,5) || ''} ${s.employeeName || 'NV'}`;
+        ev.onclick = () => openEdit(s);
+        cell.appendChild(ev);
+      });
+    }
+    grid.appendChild(cell);
+  }
+}
+
+// ── LIST ──
+function renderList() {
+  const tbody = document.getElementById('scheduleTableBody');
+  if (!schedules.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Chưa có lịch làm việc nào.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = schedules.map(s => `
+    <tr class="hover:bg-surface-container-low/50 transition-colors">
+      <td class="px-6 py-3 font-medium text-on-surface">${s.employeeName || 'N/A'}</td>
+      <td class="px-6 py-3 text-on-surface-variant">${formatDate(s.workDate)}</td>
+      <td class="px-6 py-3 text-on-surface-variant">${s.shiftStart?.slice(0,5) || ''}</td>
+      <td class="px-6 py-3 text-on-surface-variant">${s.shiftEnd?.slice(0,5) || ''}</td>
+      <td class="px-6 py-3 text-on-surface-variant max-w-[160px] truncate">${s.notes || '—'}</td>
+      <td class="px-6 py-3 text-right space-x-2">
+        <button onclick='openEdit(${JSON.stringify(s)})' class="text-tertiary hover:text-tertiary-dim p-1" title="Sửa">
+          <span class="material-symbols-outlined text-[20px]">edit</span>
+        </button>
+        <button onclick="deleteItem(${s.id})" class="text-error hover:text-error-dim p-1 ml-2" title="Xóa">
+          <span class="material-symbols-outlined text-[20px]">delete</span>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ── SWITCH VIEW ──
+function switchView(view) {
+  currentView = view;
+  const calView = document.getElementById('calendarView');
+  const listView = document.getElementById('listView');
+  const btnCal = document.getElementById('btnCalendar');
+  const btnList = document.getElementById('btnList');
+  if (view === 'calendar') {
+    calView.classList.remove('hidden');
+    listView.classList.add('hidden');
+    btnCal.className = 'px-4 py-2 bg-surface text-on-surface shadow-sm rounded-md text-xs font-semibold flex items-center gap-2';
+    btnList.className = 'px-4 py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-md text-xs transition-colors flex items-center gap-2';
+  } else {
+    calView.classList.add('hidden');
+    listView.classList.remove('hidden');
+    btnCal.className = 'px-4 py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-md text-xs transition-colors flex items-center gap-2';
+    btnList.className = 'px-4 py-2 bg-surface text-on-surface shadow-sm rounded-md text-xs font-semibold flex items-center gap-2';
+  }
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('scheduleId').value = '';
+  document.getElementById('empSelect').value = '';
+  document.getElementById('workDate').value = '';
+  document.getElementById('shiftStart').value = '08:00';
+  document.getElementById('shiftEnd').value = '17:00';
+  document.getElementById('scheduleNotes').value = '';
+  document.getElementById('modalTitle').textContent = 'Thêm ca làm việc mới';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function openEdit(s) {
+  document.getElementById('scheduleId').value = s.id;
+  document.getElementById('empSelect').value = s.employeeId;
+  document.getElementById('workDate').value = s.workDate;
+  document.getElementById('shiftStart').value = s.shiftStart?.slice(0,5) || '';
+  document.getElementById('shiftEnd').value = s.shiftEnd?.slice(0,5) || '';
+  document.getElementById('scheduleNotes').value = s.notes || '';
+  document.getElementById('modalTitle').textContent = 'Chỉnh sửa ca làm việc';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+}
+
+// ── SAVE (CREATE / UPDATE) ──
+async function saveSchedule() {
+  const id = document.getElementById('scheduleId').value;
+  const employeeId = document.getElementById('empSelect').value;
+  const workDate = document.getElementById('workDate').value;
+  const shiftStart = document.getElementById('shiftStart').value;
+  const shiftEnd = document.getElementById('shiftEnd').value;
+  const notes = document.getElementById('scheduleNotes').value;
+
+  if (!employeeId || !workDate || !shiftStart || !shiftEnd) {
+    showToast('Vui lòng điền đầy đủ thông tin bắt buộc!', 'error');
+    return;
+  }
+
+  const payload = { employeeId: Number(employeeId), workDate, shiftStart, shiftEnd, notes };
+
+  try {
+    showLoading(true);
+    const url = id ? `${BASE}/schedules/${id}` : `${BASE}/schedules`;
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, {
+      method, headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || res.statusText);
+    }
+    showToast(id ? 'Cập nhật ca làm việc thành công!' : 'Thêm ca làm việc thành công!', 'success');
+    closeModal();
+    await loadData();
+  } catch (e) {
+    showToast('Lỗi: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── DELETE ──
+async function deleteItem(id) {
+  if (!confirm('Bạn có chắc muốn xóa ca làm việc này?')) return;
+  try {
+    showLoading(true);
+    const res = await fetch(`${BASE}/schedules/${id}`, { method: 'DELETE' });
+    if (!res.ok && res.status !== 204) throw new Error(res.statusText);
+    showToast('Đã xóa ca làm việc!', 'success');
+    await loadData();
+  } catch (e) {
+    showToast('Lỗi xóa: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── HELPERS ──
+function formatDate(d) {
+  if (!d) return '—';
+  const [y, m, day] = d.split('-');
+  return `${day}/${m}/${y}`;
+}
+
+function showLoading(show) {
+  document.getElementById('loadingIndicator').classList.toggle('hidden', !show);
+}
+
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  const inner = document.getElementById('toastInner');
+  inner.className = `px-5 py-3 rounded-xl shadow-lg text-sm font-medium text-white flex items-center gap-2 ${type === 'success' ? 'bg-primary' : 'bg-error'}`;
+  inner.innerHTML = `<span class="material-symbols-outlined text-sm">${type === 'success' ? 'check_circle' : 'error'}</span>${msg}`;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+
+
+// ==========================================
+// THÊM LOGIC XỬ LÝ IMPORT / EXPORT EXCEL
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnDownload = document.getElementById('btnDownloadTemplate');
+  const btnImport = document.getElementById('btnImportExcel');
+  const fileInput = document.getElementById('excelFileInput');
+
+  if (btnDownload) btnDownload.addEventListener('click', downloadTemplate);
+  if (btnImport) btnImport.addEventListener('click', () => fileInput.click());
+  if (fileInput) fileInput.addEventListener('change', handleExcelUpload);
+});
+
+async function downloadTemplate() {
+  try {
+    showLoading(true);
+    const token = localStorage.getItem('token');
+    
+    // Tạo headers, thêm token nếu có (để khớp với Spring Security của BE)
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const response = await fetch(`${BASE}/schedules/template`, {
+      method: 'GET',
+      headers: headers
+    });
+    
+    if (!response.ok) throw new Error('Không thể tải file template từ hệ thống.');
+    
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Template_Import_Lich_Lam_Viec.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    
+    showToast('Đã tải thành công file mẫu Excel!', 'success');
+  } catch (e) {
+    showToast('Lỗi: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+async function handleExcelUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  e.target.value = ''; // Reset input để cho phép tải lên cùng 1 file nhiều lần
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  try {
+    showLoading(true);
+    const token = localStorage.getItem('token');
+    
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const response = await fetch(`${BASE}/schedules/import`, {
+      method: 'POST',
+      headers: headers,
+      body: formData
+    });
+    
+    const result = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(result.message || 'Cấu trúc file không đúng hoặc gặp sự cố!');
+    }
+    
+    // Nếu thành công toàn bộ
+    if (result.success || (result.successCount > 0 && result.errors.length === 0)) {
+      showToast(`🎉 ${result.message}`, 'success');
+      await loadData();
+    } 
+    // Nếu thành công 1 phần, lỗi 1 phần (vd: Trùng ca)
+    else if (result.successCount > 0 && result.errors.length > 0) {
+      let errorMsg = `Import thành công ${result.successCount} dòng.\nCó ${result.errors.length} dòng lỗi không thể lưu:\n`;
+      result.errors.slice(0, 3).forEach(err => {
+        errorMsg += `- Dòng ${err.row}: ${err.error}\n`;
+      });
+      if (result.errors.length > 3) errorMsg += '... và các dòng khác.';
+      alert(errorMsg);
+      await loadData();
+    } 
+    // Nếu thất bại toàn bộ
+    else {
+      let errorMsg = result.message || 'Lỗi xử lý file Excel:\n';
+      if (result.errors && result.errors.length > 0) {
+        result.errors.slice(0, 4).forEach(err => {
+          errorMsg += `- Dòng ${err.row}: ${err.error}\n`;
+        });
+      }
+      alert(errorMsg);
+    }
+  } catch (e) {
+    showToast('Lỗi: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>

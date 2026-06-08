@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý Lịch hẹn - PetManager Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+   <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-variant": "#d9f600","surface-container-high": "#defc00","on-secondary": "#ffffff",
+          "surface-container-low": "#f6ffbe","secondary-fixed": "#d9e2ff","on-secondary-fixed": "#003b8a",
+          "error-container": "#fa746f","error-dim": "#67040d","on-surface": "#333c00","error": "#af3d3b",
+          "surface-container-highest": "#d9f600","surface-tint": "#007517","primary-dim": "#006713",
+          "tertiary-container": "#5289ef","primary-fixed": "#58ff5e","inverse-on-surface": "#92a700",
+          "on-tertiary-fixed-variant": "#001435","inverse-surface": "#0c1000","surface-bright": "#fcffdc",
+          "secondary": "#3161ba","on-tertiary-fixed": "#000000","on-surface-variant": "#5d6b00",
+          "inverse-primary": "#58ff5e","on-error-container": "#6e0a12","surface": "#fcffdc",
+          "primary": "#007517","secondary-dim": "#2155ad","on-background": "#333c00",
+          "primary-fixed-dim": "#47f051","surface-dim": "#d3f000","on-primary": "#ffffff",
+          "background": "#fcffdc","secondary-fixed-dim": "#c4d4ff","tertiary": "#1f61c4",
+          "on-error": "#ffffff","on-primary-fixed-variant": "#006914","tertiary-dim": "#0054b7",
+          "on-tertiary": "#ffffff","tertiary-fixed-dim": "#437ce1","outline": "#788900",
+          "on-secondary-fixed-variant": "#2658b0","surface-container": "#e9ff6f",
+          "tertiary-fixed": "#5289ef","primary-container": "#58ff5e","on-primary-container": "#005e11",
+          "on-secondary-container": "#174ea6","surface-container-lowest": "#ffffff",
+          "outline-variant": "#adc500","secondary-container": "#d9e2ff","on-tertiary-container": "#000311",
+          "on-primary-fixed": "#00490b"
+        },
+        "borderRadius": {"DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px"},
+        "spacing": {"xl": "32px","md": "16px","gutter": "16px","xs": "4px","margin": "24px","lg": "24px","sm": "8px","base": "8px"},
+        "fontFamily": {"headline-lg": ["Inter"],"body-md": ["Inter"],"label-md": ["Inter"],"headline-md": ["Inter"]},
+        "fontSize": {
+          "headline-lg": ["32px", {"lineHeight": "40px","fontWeight": "700"}],
+          "body-md": ["16px", {"lineHeight": "24px","fontWeight": "400"}],
+          "label-md": ["12px", {"lineHeight": "16px","letterSpacing": "0.5px","fontWeight": "500"}],
+          "headline-md": ["24px", {"lineHeight": "32px","fontWeight": "600"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .spinner{display:inline-block;width:20px;height:20px;border:2px solid #e5e7eb;border-top-color:#007517;border-radius:50%;animation:spin .7s linear infinite;}
+  .spinner-sm{width:14px;height:14px;border-width:1.5px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #toast{position:fixed;bottom:24px;right:24px;z-index:9999;padding:12px 20px;border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.15);transform:translateY(20px);opacity:0;transition:.3s;pointer-events:none;}
+  #toast.show{transform:translateY(0);opacity:1;}
+  #toast.ok{background:#f0fdf4;color:#15803d;border:1px solid #86efac;}
+  #toast.err{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;}
+  .modal-open{display:flex!important;}
+</style>
+</head>
+<body class="bg-background font-body-md text-body-md text-on-background flex h-screen overflow-hidden">
+
+<!-- ══════════════════ SIDEBAR (giữ nguyên gốc) ══════════════════ -->
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden">
+
+  <!-- TopNavBar (giữ nguyên gốc, thêm search thật) -->
+  <header class="w-full h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center px-6 sticky top-0 z-40">
+    <div class="flex items-center gap-4">
+      <h2 class="text-xl font-black  dark:text-blue-400 font-headline-md">Quản lý Lịch hẹn</h2>
+    </div>
+    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:block">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+      <input id="searchInput" oninput="applyFilters()" class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-64" placeholder="Tìm kiếm khách, thú cưng..." type="text"/>
+    </div>
+    <div class="flex items-center gap-4 text-slate-500 dark:text-slate-400">
+      <button onclick="loadData()" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100" title="Làm mới">
+        <span class="material-symbols-outlined">refresh</span>
+      </button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100">
+        <span class="material-symbols-outlined">help_outline</span>
+      </button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Scrollable Content -->
+  <div class="flex-1 overflow-y-auto p-margin bg-background">
+
+    <!-- Toolbar (giữ layout gốc, thêm select status thật + wire sự kiện) -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-lg">
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="relative">
+          <input id="filterDate" oninput="applyFilters()" class="px-4 py-2 bg-white border border-outline-variant rounded-lg text-sm text-on-surface focus:ring-2 focus:ring-primary focus:outline-none font-body-md" type="date"/>
+        </div>
+        <!-- Select nhân viên — load từ API -->
+        <select id="filterEmployee" onchange="applyFilters()" class="pl-4 pr-10 py-2 bg-white border border-outline-variant rounded-lg text-sm text-on-surface focus:ring-2 focus:ring-primary focus:outline-none font-body-md">
+          <option value="">Tất cả Nhân viên</option>
+        </select>
+        <!-- Select trạng thái — đúng enum BookingController -->
+        <select id="filterStatus" onchange="applyFilters()" class="pl-4 pr-10 py-2 bg-white border border-outline-variant rounded-lg text-sm text-on-surface focus:ring-2 focus:ring-primary focus:outline-none font-body-md">
+          <option value="">Tất cả Trạng thái</option>
+          <option value="Pending">Chờ xác nhận</option>
+          <option value="Confirmed">Đã xác nhận</option>
+          <option value="InProgress">Đang thực hiện</option>
+          <option value="Completed">Hoàn thành</option>
+          <option value="Cancelled">Đã hủy</option>
+          <option value="NoShow">Không đến</option>
+        </select>
+      </div>
+      <button onclick="openCreate()" class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-lg font-label-md hover:bg-primary-dim transition-colors shadow-sm">
+        <span class="material-symbols-outlined text-sm">add</span>
+        Tạo lịch hẹn
+      </button>
+    </div>
+
+    <!-- Main Bento Grid Layout (giữ nguyên cấu trúc gốc) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+
+      <!-- Appointment Table Card (Spans 2 columns on lg) -->
+      <div class="lg:col-span-2 bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col">
+        <div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+          <h3 class="font-headline-md text-on-surface">Danh sách Lịch hẹn</h3>
+          <div class="flex gap-2 items-center">
+            <span id="countBadge" class="text-xs font-label-md text-on-surface-variant bg-surface-container px-3 py-1 rounded-full hidden"></span>
+            <button class="p-1.5 rounded-md bg-secondary-container text-on-secondary-container"><span class="material-symbols-outlined text-sm">list</span></button>
+            <button class="p-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm">calendar_view_week</span></button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface border-b border-outline-variant font-label-md text-on-surface-variant uppercase">
+                <th class="p-4 font-medium">ID</th>
+                <th class="p-4 font-medium">Khách hàng / Thú cưng</th>
+                <th class="p-4 font-medium">Dịch vụ</th>
+                <th class="p-4 font-medium">Thời gian</th>
+                <th class="p-4 font-medium">Trạng thái</th>
+                <th class="p-4 font-medium text-right">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTbody" class="divide-y divide-outline-variant font-body-md text-sm text-on-surface">
+              <tr><td colspan="6" class="p-8 text-center"><div class="spinner mx-auto"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right Column: Timeline & Quick Create -->
+      <div class="flex flex-col gap-gutter">
+
+        <!-- Daily Timeline Card -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant p-md shadow-sm">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-headline-md text-sm text-on-surface">Lịch trình hôm nay</h3>
+            <span id="todayDateLabel" class="text-xs font-label-md text-on-surface-variant"></span>
+          </div>
+          <div id="todayTimeline" class="relative border-l-2 border-surface-variant ml-3 space-y-6">
+            <div class="pl-6 py-2"><div class="spinner spinner-sm"></div></div>
+          </div>
+        </div>
+
+        <!-- Empty State / Quick Create -->
+        <div class="bg-white rounded-xl border border-outline-variant border-dashed p-xl flex flex-col items-center justify-center text-center shadow-sm flex-1">
+          <div class="w-16 h-16 bg-surface rounded-full flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-3xl text-outline" style="font-variation-settings: 'FILL' 0;">event_busy</span>
+          </div>
+          <h4 id="emptyStateTitle" class="font-headline-md text-sm text-on-surface mb-2">Tạo lịch hẹn mới</h4>
+          <p class="font-body-md text-xs text-on-surface-variant max-w-[200px] mb-4">Bạn có thể thêm lịch hẹn mới cho khách hàng.</p>
+          <button onclick="openCreate()" class="text-primary font-label-md hover:underline flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">add</span> Tạo nhanh
+          </button>
+        </div>
+
+      </div>
+    </div><!-- end bento grid -->
+  </div><!-- end scrollable -->
+</main>
+
+<!-- ══════════════════ MODAL TẠO / SỬA LỊCH HẸN ══════════════════ -->
+<div id="bookingModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center backdrop-blur-sm">
+  <div class="bg-white w-full max-w-lg rounded-xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+      <h3 id="modalTitle" class="font-headline-md text-lg text-on-surface">Tạo Lịch hẹn Mới</h3>
+      <button onclick="closeModal()" class="text-on-surface-variant hover:text-error transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-6 overflow-y-auto space-y-4">
+      <input type="hidden" id="editId"/>
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Khách hàng -->
+        <div class="col-span-2">
+          <label class="block font-label-md text-on-surface-variant mb-1">Khách hàng *</label>
+          <select id="fCustomerId" onchange="onCustomerChange()" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+            <option value="">-- Chọn khách hàng --</option>
+          </select>
+        </div>
+        <!-- Thú cưng -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Thú cưng *</label>
+          <select id="fPetId" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+            <option value="">-- Chọn thú cưng --</option>
+          </select>
+        </div>
+        <!-- Dịch vụ -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Dịch vụ *</label>
+          <div id="fServicesContainer" class="w-full border border-outline-variant rounded-lg p-3 max-h-48 overflow-y-auto space-y-2 bg-surface text-sm">
+            <!-- Checkboxes populated via JS -->
+          </div>
+        </div>
+        <!-- Ngày -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Ngày *</label>
+          <input id="fDate" type="date" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none"/>
+        </div>
+        <!-- Giờ -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Giờ *</label>
+          <input id="fTime" type="time" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none"/>
+        </div>
+        <!-- Nhân viên -->
+        <div class="col-span-2">
+          <label class="block font-label-md text-on-surface-variant mb-1">Nhân viên thực hiện</label>
+          <select id="fEmployeeId" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+            <option value="">-- Phân công sau --</option>
+          </select>
+        </div>
+        <!-- Ghi chú -->
+        <div class="col-span-2">
+          <label class="block font-label-md text-on-surface-variant mb-1">Ghi chú</label>
+          <textarea id="fNotes" rows="2" placeholder="Ghi chú thêm..." class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-outline-variant bg-surface flex justify-end gap-3">
+      <button onclick="closeModal()" class="px-4 py-2 font-label-md text-on-surface hover:bg-surface-variant rounded-lg transition-colors">Hủy</button>
+      <button id="saveBtn" onclick="saveBooking()" class="px-4 py-2 font-label-md bg-primary text-on-primary hover:bg-primary-dim rounded-lg transition-colors shadow-sm flex items-center gap-2">
+        <span id="saveSpinner" class="spinner spinner-sm hidden" style="border-top-color:#fff"></span>
+        Lưu lịch hẹn
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL CẬP NHẬT TRẠNG THÁI ══════════════════ -->
+<div id="statusModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center backdrop-blur-sm">
+  <div class="bg-white w-full max-w-sm rounded-xl shadow-xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+      <h3 class="font-headline-md text-base text-on-surface">Cập nhật trạng thái</h3>
+      <button onclick="closeStatusModal()" class="text-on-surface-variant hover:text-error transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-6 space-y-4">
+      <input type="hidden" id="statusEditId"/>
+      <p class="text-sm text-on-surface-variant">Booking: <strong id="statusLabel" class="text-on-surface"></strong></p>
+      <div>
+        <label class="block font-label-md text-on-surface-variant mb-1">Trạng thái mới</label>
+        <select id="newStatus" onchange="toggleCancelReason()" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+          <option value="Pending">Chờ xác nhận</option>
+          <option value="Confirmed">Đã xác nhận</option>
+          <option value="InProgress">Đang thực hiện</option>
+          <option value="Completed">Hoàn thành</option>
+          <option value="Cancelled">Đã hủy</option>
+          <option value="NoShow">Không đến</option>
+        </select>
+      </div>
+      <div id="cancelReasonWrap" class="hidden">
+        <label class="block font-label-md text-on-surface-variant mb-1">Lý do hủy</label>
+        <input id="cancelReason" type="text" placeholder="VD: Khách bận, đổi lịch..." class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none"/>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-outline-variant bg-surface flex justify-end gap-3">
+      <button onclick="closeStatusModal()" class="px-4 py-2 font-label-md text-on-surface hover:bg-surface-variant rounded-lg">Hủy</button>
+      <button onclick="updateStatus()" class="px-4 py-2 font-label-md bg-secondary text-on-secondary hover:bg-secondary-dim rounded-lg transition-colors shadow-sm">Cập nhật</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- ══════════════════ JAVASCRIPT ══════════════════ -->
+<script>
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+const API = 'http://localhost:8080/api';
+let allBookings = [];
+let allEmployees = [];
+
+// ─── TOAST ───
+function showToast(msg, ok = true) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + (ok ? 'ok' : 'err');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.className = ok ? 'ok' : 'err'; }, 3500);
+}
+
+// ─── FORMAT HELPERS ───
+function formatLocalDateISO(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function fmtTime(b) {
+  const time = b.bookingTime ? b.bookingTime.slice(0, 5) : '';
+  const date = b.bookingDate || '';
+  if (!date) return '—';
+  const d = new Date(date);
+  return `<p class="font-medium">${time}</p><p class="text-xs text-on-surface-variant">${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}</p>`;
+}
+
+function statusBadge(s) {
+  const cfg = {
+    Pending:    ['bg-surface-variant text-on-surface-variant', 'bg-on-surface-variant', 'Chờ xác nhận'],
+    Confirmed:  ['bg-secondary-container text-on-secondary-container', 'bg-secondary', 'Đã xác nhận'],
+    InProgress: ['bg-tertiary-container text-white', 'bg-white', 'Đang thực hiện'],
+    Completed:  ['bg-primary-container text-on-primary-container', 'bg-primary', 'Hoàn thành'],
+    Cancelled:  ['bg-error-container text-on-error-container', 'bg-error', 'Đã hủy'],
+    NoShow:     ['bg-surface-dim text-on-surface', 'bg-on-surface', 'Không đến'],
+  };
+  const [wrap, dot, label] = cfg[s] || cfg['Pending'];
+  return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${wrap}">
+    <span class="w-1.5 h-1.5 rounded-full ${dot} mr-1.5"></span>${label}</span>`;
+}
+
+// ─── LOAD DỮ LIỆU CHÍNH ───
+async function loadData() {
+  renderLoading();
+  try {
+    const r = await fetch(`${API}/bookings`);
+    const data = await r.json();
+    if (!r.ok || data.success === false) {
+      throw new Error(data.message || 'Không tải được danh sách lịch hẹn');
+    }
+    allBookings = Array.isArray(data) ? data : (data.data || []);
+    applyFilters();
+    buildTodayTimeline();
+  } catch(e) {
+    document.getElementById('bookingsTbody').innerHTML =
+      `<tr><td colspan="6" class="p-8 text-center text-error text-sm">⚠️ ${e.message || 'Không kết nối được API'}</td></tr>`;
+    const badge = document.getElementById('countBadge');
+    badge.textContent = 'Lỗi tải dữ liệu';
+    badge.classList.remove('hidden');
+  }
+}
+
+async function loadEmployees() {
+  try {
+    const r = await fetch(`${API}/employees/active`);
+    const data = await r.json();
+    allEmployees = Array.isArray(data) ? data : (data.data || []);
+    const sel = document.getElementById('filterEmployee');
+    allEmployees.forEach(e => {
+      sel.innerHTML += `<option value="${e.id}">${e.fullName}</option>`;
+    });
+  } catch(e) {}
+}
+
+async function loadCustomers() {
+  try {
+    const r = await fetch(`${API}/customers`);
+    const data = await r.json();
+    const list = Array.isArray(data) ? data : (data.data || []);
+    const sel = document.getElementById('fCustomerId');
+    sel.innerHTML = '<option value="">-- Chọn khách hàng --</option>';
+    list.forEach(c => {
+      sel.innerHTML += `<option value="${c.id}">${c.fullName}${c.phone ? ' – ' + c.phone : ''}</option>`;
+    });
+  } catch(e) {}
+}
+
+async function loadServices() {
+  try {
+    const r = await fetch(`${API}/services?active=true`);
+    const data = await r.json();
+    const list = Array.isArray(data) ? data : (data.data || []);
+    services = list;
+    const container = document.getElementById('fServicesContainer');
+    if (container) {
+      container.innerHTML = list.map(s => `
+        <label class="flex items-center gap-2 cursor-pointer hover:bg-surface-container-low p-1 rounded transition-colors select-none">
+          <input type="checkbox" name="fServiceIds" value="${s.id}" class="text-primary h-4 w-4 rounded border-outline-variant focus:ring-primary"/>
+          <span>${s.serviceName} - <strong class="text-primary">${Number(s.price).toLocaleString('vi-VN')}đ</strong></span>
+        </label>
+      `).join('');
+    }
+  } catch(e) {}
+}
+
+function loadEmployeesInModal() {
+  const sel = document.getElementById('fEmployeeId');
+  sel.innerHTML = '<option value="">-- Phân công sau --</option>';
+  allEmployees.forEach(e => {
+    sel.innerHTML += `<option value="${e.id}">${e.fullName}</option>`;
+  });
+}
+
+async function onCustomerChange() {
+  const cid = document.getElementById('fCustomerId').value;
+  const sel = document.getElementById('fPetId');
+  sel.innerHTML = '<option value="">-- Chọn thú cưng --</option>';
+  if (!cid) return;
+  try {
+    const r = await fetch(`${API}/pets/customer/${cid}`);
+    const data = await r.json();
+    const list = Array.isArray(data) ? data : (data.data || []);
+    list.forEach(p => {
+      sel.innerHTML += `<option value="${p.id}">${p.name} (${p.species || ''})</option>`;
+    });
+  } catch(e) {}
+}
+
+// ─── FILTER & RENDER ───
+function groupBookings(list) {
+  const grouped = [];
+  const map = {};
+
+  list.forEach(b => {
+    const datePart = b.bookingDate ? b.bookingDate.substring(0, 10) : '';
+    const key = `${b.customerId}_${b.petId}_${datePart}_${b.bookingTime}_${b.status}`;
+
+    if (!map[key]) {
+      map[key] = {
+        ...b,
+        groupedBookings: [b],
+        serviceNames: [b.serviceName].filter(Boolean),
+        totalPriceGrouped: b.totalPrice || 0
+      };
+      grouped.push(map[key]);
+    } else {
+      map[key].groupedBookings.push(b);
+      if (b.serviceName && !map[key].serviceNames.includes(b.serviceName)) {
+        map[key].serviceNames.push(b.serviceName);
+      }
+      map[key].totalPriceGrouped += (b.totalPrice || 0);
+      if (b.notes && map[key].notes && !map[key].notes.includes(b.notes)) {
+        map[key].notes += ' | ' + b.notes;
+      } else if (b.notes && !map[key].notes) {
+        map[key].notes = b.notes;
+      }
+    }
+  });
+
+  grouped.forEach(g => {
+    g.serviceName = g.serviceNames.join(', ');
+    g.totalPrice = g.totalPriceGrouped;
+  });
+
+  return grouped;
+}
+
+function applyFilters() {
+  const dateVal  = document.getElementById('filterDate').value;
+  const empVal   = document.getElementById('filterEmployee').value;
+  const statVal  = document.getElementById('filterStatus').value;
+  const search   = document.getElementById('searchInput').value.toLowerCase();
+
+  let filtered = allBookings.filter(b => {
+    const matchDate = !dateVal || (b.bookingDate && b.bookingDate.startsWith(dateVal));
+    const matchEmp  = !empVal  || String(b.employeeId) === empVal;
+    const matchStat = !statVal || b.status === statVal;
+    const matchSrch = !search  ||
+      (b.customerName||'').toLowerCase().includes(search) ||
+      (b.petName||'').toLowerCase().includes(search) ||
+      (b.serviceName||'').toLowerCase().includes(search);
+    return matchDate && matchEmp && matchStat && matchSrch;
+  });
+
+  const grouped = groupBookings(filtered);
+  renderTable(grouped);
+
+  const badge = document.getElementById('countBadge');
+  badge.textContent = grouped.length + ' kết quả';
+  badge.classList.remove('hidden');
+}
+
+function renderLoading() {
+  document.getElementById('bookingsTbody').innerHTML =
+    `<tr><td colspan="6" class="p-8 text-center"><div class="spinner mx-auto"></div></td></tr>`;
+}
+
+function renderTable(list) {
+  const tbody = document.getElementById('bookingsTbody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-on-surface-variant text-sm">
+      <span class="material-symbols-outlined text-3xl block mb-2 opacity-40">calendar_today</span>
+      Khách không có lịch hẹn nào</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(b => `
+    <tr class="hover:bg-surface-container-low transition-colors group">
+      <td class="p-4 font-medium">#LH${String(b.id).padStart(3,'0')}</td>
+      <td class="p-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">pets</span>
+          </div>
+          <div>
+            <p class="font-medium text-on-surface">${b.customerName || '-'}</p>
+            <p class="text-xs text-on-surface-variant">${b.petSpecies || ''} (${b.petName || '-'})</p>
+          </div>
+        </div>
+      </td>
+      <td class="p-4">${b.serviceName || '-'}</td>
+      <td class="p-4">${fmtTime(b)}</td>
+      <td class="p-4">${statusBadge(b.status)}</td>
+      <td class="p-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+        <div class="flex justify-end gap-2">
+          <button onclick="openStatusModal(${b.id})" class="p-1.5 text-on-surface-variant hover:text-secondary transition-colors" title="Cập nhật trạng thái">
+            <span class="material-symbols-outlined text-sm">edit</span>
+          </button>
+          <button onclick="openEdit(${b.id})" class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Chỉnh sửa">
+            <span class="material-symbols-outlined text-sm">manage_accounts</span>
+          </button>
+          <button onclick="deleteBooking(${b.id})" class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Xóa">
+            <span class="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+// ─── TIMELINE HÔM NAY ───
+function buildTodayTimeline() {
+  const now = new Date();
+  const today = formatLocalDateISO(now);
+
+  const dd = now.getDate().toString().padStart(2,'0');
+  document.getElementById('todayDateLabel').textContent = `${dd} Tháng ${now.getMonth()+1}`;
+
+  const todayBookings = allBookings
+    .filter(b => b.bookingDate && b.bookingDate.startsWith(today) && b.status !== 'Cancelled')
+    .sort((a,b) => (a.bookingTime||'').localeCompare(b.bookingTime||''));
+
+  const timeline = document.getElementById('todayTimeline');
+  const groupedToday = groupBookings(todayBookings);
+
+  if (!groupedToday.length) {
+    timeline.innerHTML = `<div class="pl-6 py-3 text-xs text-on-surface-variant italic">Không có lịch hẹn hôm nay.</div>`;
+    document.getElementById('emptyStateTitle').textContent = 'Chưa có lịch hẹn hôm nay';
+    return;
+  }
+
+  const dotColor = { Confirmed:'bg-secondary', InProgress:'bg-tertiary', Completed:'bg-primary', Pending:'bg-surface-variant', Cancelled:'bg-error', NoShow:'bg-on-surface-variant' };
+
+  timeline.innerHTML = groupedToday.slice(0,5).map(b => {
+    const dot = dotColor[b.status] || 'bg-surface-variant';
+    const timeFormatted = b.bookingTime ? b.bookingTime.slice(0, 5) : '';
+    const endTime = b.bookingTime && b.durationMinutes
+      ? calcEndTime(timeFormatted, b.durationMinutes)
+      : '';
+    return `<div class="relative pl-6">
+      <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full ${dot} border-2 border-white"></span>
+      <p class="text-xs font-label-md text-secondary">${timeFormatted}${endTime ? ' - ' + endTime : ''}</p>
+      <div class="bg-white p-3 rounded-lg border border-outline-variant mt-1 shadow-sm">
+        <p class="text-sm font-medium text-on-surface">${b.serviceName || ''} – ${b.petName || ''}</p>
+        <p class="text-xs text-on-surface-variant mt-1 flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">person</span>
+          ${b.employeeName ? 'NV: ' + b.employeeName : 'Chưa phân công'}
+        </p>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function calcEndTime(timeStr, minutes) {
+  const [h,m] = timeStr.split(':').map(Number);
+  const total = h * 60 + m + minutes;
+  return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;
+}
+
+// ─── MODAL TẠO / SỬA ───
+async function openCreate() {
+  document.getElementById('modalTitle').textContent = 'Tạo Lịch Hẹn Mới';
+  document.getElementById('editId').value = '';
+  document.getElementById('fCustomerId').value = '';
+  document.getElementById('fPetId').innerHTML = '<option value="">-- Chọn thú cưng --</option>';
+  document.getElementById('fDate').value = '';
+  document.getElementById('fTime').value = '';
+  document.getElementById('fEmployeeId').value = '';
+  document.getElementById('fNotes').value = '';
+  await loadCustomers();
+  await loadServices();
+  
+  // Bỏ tích tất cả checkbox dịch vụ
+  const checkboxes = document.querySelectorAll('input[name="fServiceIds"]');
+  checkboxes.forEach(cb => cb.checked = false);
+
+  loadEmployeesInModal();
+  showModal('bookingModal');
+}
+
+async function openEdit(id) {
+  const b = allBookings.find(x => x.id === id);
+  if (!b) return;
+  document.getElementById('modalTitle').textContent = 'Chỉnh sửa Lịch hẹn';
+  document.getElementById('editId').value = id;
+  await loadCustomers();
+  await loadServices();
+  loadEmployeesInModal();
+  document.getElementById('fCustomerId').value = b.customerId || '';
+  await onCustomerChange();
+  document.getElementById('fPetId').value = b.petId || '';
+  document.getElementById('fDate').value = b.bookingDate ? b.bookingDate.substring(0, 10) : '';
+  document.getElementById('fTime').value = b.bookingTime || '';
+  document.getElementById('fEmployeeId').value = b.employeeId || '';
+  document.getElementById('fNotes').value = b.notes || '';
+
+  // Tìm các dịch vụ cùng nhóm để tích chọn checkbox tương ứng
+  const datePart = b.bookingDate ? b.bookingDate.substring(0, 10) : '';
+  const sameGroup = allBookings.filter(x => 
+    x.customerId === b.customerId && 
+    x.petId === b.petId && 
+    (x.bookingDate ? x.bookingDate.substring(0, 10) : '') === datePart && 
+    x.bookingTime === b.bookingTime
+  );
+  const selectedServiceIds = sameGroup.map(x => x.serviceId);
+
+  const checkboxes = document.querySelectorAll('input[name="fServiceIds"]');
+  checkboxes.forEach(cb => {
+    cb.checked = selectedServiceIds.includes(Number(cb.value));
+  });
+
+  showModal('bookingModal');
+}
+
+async function saveBooking() {
+  const id = document.getElementById('editId').value;
+  
+  // Thu thập ID dịch vụ được chọn
+  const checkedBoxes = document.querySelectorAll('input[name="fServiceIds"]:checked');
+  const serviceIds = Array.from(checkedBoxes).map(cb => Number(cb.value));
+
+  if (!serviceIds.length) { showToast('Vui lòng chọn ít nhất 1 dịch vụ', false); return; }
+
+  const body = {
+    customerId: Number(document.getElementById('fCustomerId').value) || null,
+    petId:      Number(document.getElementById('fPetId').value) || null,
+    serviceIds: serviceIds,
+    bookingDate: document.getElementById('fDate').value || null,
+    bookingTime: document.getElementById('fTime').value || null,
+    employeeId:  Number(document.getElementById('fEmployeeId').value) || null,
+    notes:       document.getElementById('fNotes').value.trim() || null,
+  };
+
+  if (!body.customerId) { showToast('Vui lòng chọn khách hàng', false); return; }
+  if (!body.petId)      { showToast('Vui lòng chọn thú cưng', false); return; }
+  if (!body.bookingDate){ showToast('Vui lòng chọn ngày', false); return; }
+  if (!body.bookingTime){ showToast('Vui lòng chọn giờ', false); return; }
+
+  const spinner = document.getElementById('saveSpinner');
+  spinner.classList.remove('hidden');
+
+  try {
+    const url    = id ? `${API}/bookings/${id}` : `${API}/bookings`;
+    const method = id ? 'PUT' : 'POST';
+    const r = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      showToast(data.message || 'Lỗi server', false);
+    } else {
+      showToast(id ? 'Cập nhật lịch hẹn thành công!' : 'Tạo lịch hẹn thành công!');
+      closeModal();
+      loadData();
+    }
+  } catch(e) {
+    showToast('Lỗi kết nối API', false);
+  } finally {
+    spinner.classList.add('hidden');
+  }
+}
+
+// ─── MODAL TRẠNG THÁI ───
+function openStatusModal(id) {
+  const b = allBookings.find(x => x.id === id);
+  if (!b) return;
+  document.getElementById('statusEditId').value = id;
+  document.getElementById('statusLabel').textContent = `#LH${String(id).padStart(3,'0')} – ${b.customerName || ''} (${b.petName || ''})`;
+  document.getElementById('newStatus').value = b.status || 'Pending';
+  document.getElementById('cancelReason').value = '';
+  toggleCancelReason();
+  showModal('statusModal');
+}
+
+function toggleCancelReason() {
+  const v = document.getElementById('newStatus').value;
+  document.getElementById('cancelReasonWrap').classList.toggle('hidden', v !== 'Cancelled');
+}
+
+async function updateStatus() {
+  const id     = document.getElementById('statusEditId').value;
+  const status = document.getElementById('newStatus').value;
+  const reason = document.getElementById('cancelReason').value.trim();
+  const body   = { status };
+  if (status === 'Cancelled' && reason) body.reason = reason;
+
+  const b = allBookings.find(x => x.id === Number(id));
+  if (!b) return;
+
+  const datePart = b.bookingDate ? b.bookingDate.substring(0, 10) : '';
+  const sameGroup = allBookings.filter(x => 
+    x.customerId === b.customerId && 
+    x.petId === b.petId && 
+    (x.bookingDate ? x.bookingDate.substring(0, 10) : '') === datePart && 
+    x.bookingTime === b.bookingTime
+  );
+  const ids = sameGroup.map(x => x.id);
+
+  try {
+    const promises = ids.map(bookingId => 
+      fetch(`${API}/bookings/${bookingId}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+    );
+    const responses = await Promise.all(promises);
+    const hasError = responses.some(r => !r.ok);
+    if (hasError) {
+      showToast('Có lỗi xảy ra khi cập nhật một số dịch vụ', false);
+    } else {
+      showToast('Cập nhật trạng thái thành công!');
+      closeStatusModal();
+      loadData();
+    }
+  } catch(e) {
+    showToast('Lỗi kết nối API', false);
+  }
+}
+
+// ─── XÓA ───
+async function deleteBooking(id) {
+  if (!confirm(`Xác nhận xóa lịch hẹn #LH${String(id).padStart(3,'0')}?`)) return;
+  try {
+    const r = await fetch(`${API}/bookings/${id}`, { method: 'DELETE' });
+    if (r.ok) {
+      showToast('Đã xóa lịch hẹn');
+      loadData();
+    } else {
+      const d = await r.json();
+      showToast(d.message || 'Lỗi xóa', false);
+    }
+  } catch(e) {
+    showToast('Lỗi kết nối API', false);
+  }
+}
+
+// ─── MODAL UTILS ───
+function showModal(id) {
+  document.getElementById(id).classList.remove('hidden');
+  document.getElementById(id).classList.add('flex');
+}
+function closeModal()       { hideModal('bookingModal'); }
+function closeStatusModal() { hideModal('statusModal'); }
+function hideModal(id) {
+  document.getElementById(id).classList.add('hidden');
+  document.getElementById(id).classList.remove('flex');
+}
+
+// Đóng modal khi click overlay
+['bookingModal','statusModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    if (e.target === document.getElementById(id)) hideModal(id);
+  });
+});
+
+// ─── KHỞI TẠO ───
+loadEmployees();
+loadData();
+
+function refreshBookingsIfNeeded() {
+  const flag = localStorage.getItem('bookings_needs_refresh');
+  if (!flag) return;
+  localStorage.removeItem('bookings_needs_refresh');
+  loadData();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) refreshBookingsIfNeeded();
+});
+window.addEventListener('focus', refreshBookingsIfNeeded);
+</script>
+<script src="i18n.js"></script>
+</body></html>
+

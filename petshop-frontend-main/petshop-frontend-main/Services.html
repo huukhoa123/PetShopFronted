@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý Dịch vụ - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary": "#3161ba","tertiary-fixed": "#5289ef","inverse-on-surface": "#92a700",
+          "on-primary-fixed": "#00490b","inverse-surface": "#0c1000","on-tertiary": "#ffffff",
+          "on-secondary": "#ffffff","on-tertiary-fixed": "#000000","primary-container": "#58ff5e",
+          "surface-variant": "#d9f600","surface-dim": "#d3f000","outline": "#788900",
+          "surface-container": "#e9ff6f","on-tertiary-container": "#000311","background": "#fcffdc",
+          "error-container": "#fa746f","outline-variant": "#adc500","on-surface": "#333c00",
+          "surface-container-highest": "#d9f600","secondary-fixed": "#d9e2ff","secondary-dim": "#2155ad",
+          "on-surface-variant": "#5d6b00","on-error-container": "#6e0a12","tertiary-container": "#5289ef",
+          "on-primary-container": "#005e11","inverse-primary": "#58ff5e","secondary-fixed-dim": "#c4d4ff",
+          "on-error": "#ffffff","on-secondary-fixed-variant": "#2658b0","tertiary-dim": "#0054b7",
+          "tertiary-fixed-dim": "#437ce1","on-tertiary-fixed-variant": "#001435","surface": "#fcffdc",
+          "primary-dim": "#006713","surface-tint": "#007517","primary-fixed-dim": "#47f051",
+          "surface-container-lowest": "#ffffff","on-secondary-container": "#174ea6","on-background": "#333c00",
+          "secondary-container": "#d9e2ff","surface-container-high": "#defc00","primary-fixed": "#58ff5e",
+          "error": "#af3d3b","on-secondary-fixed": "#003b8a","on-primary": "#ffffff",
+          "primary": "#007517","surface-bright": "#fcffdc","tertiary": "#1f61c4",
+          "on-primary-fixed-variant": "#006914","error-dim": "#67040d","surface-container-low": "#f6ffbe"
+        },
+        borderRadius: { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+        spacing: { "lg": "24px","sm": "8px","gutter": "16px","base": "8px","xs": "4px","md": "16px","margin": "24px","xl": "32px" },
+        fontFamily: { "body-md": ["Inter"],"headline-md": ["Inter"],"headline-lg": ["Inter"],"label-md": ["Inter"] },
+        fontSize: {
+          "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+          "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+          "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+          "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }]
+        }
+      }
+    }
+  }
+</script>
+<style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex antialiased">
+
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+<!-- Main -->
+<div class="ml-64 flex-1 flex flex-col min-h-screen">
+  <!-- TopNavBar -->
+  <header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-40 bg-white border-b border-slate-200">
+    <div class="text-xl font-bold text-slate-900">Quản lý Dịch vụ</div>
+    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:block">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+      <input id="searchInput" class="pl-10 pr-4 py-2 bg-slate-50 border-none rounded-full text-sm focus:ring-2 focus:ring-blue-500 w-64 outline-none text-slate-600" placeholder="Tìm kiếm dịch vụ..." type="text" oninput="filterTable()"/>
+    </div>
+    <div class="flex items-center gap-4 text-slate-500">
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Canvas -->
+  <main class="pt-24 px-8 pb-12 flex-1">
+    <!-- Toolbar -->
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <h2 class="font-headline-md text-headline-md text-on-background">Danh sách Dịch vụ</h2>
+        <p class="text-on-surface-variant mt-1 text-sm">Quản lý các dịch vụ thú cưng hiện có trong hệ thống.</p>
+      </div>
+      <button onclick="openModal()" class="bg-primary hover:bg-primary-dim text-on-primary px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors shadow-sm">
+        <span class="material-symbols-outlined">add</span>Thêm dịch vụ mới
+      </button>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="hidden fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all"></div>
+
+    <!-- Loading -->
+    <div id="loading" class="flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
+      <span class="ml-3 text-on-surface-variant">Đang tải...</span>
+    </div>
+
+    <!-- Table -->
+    <div id="tableSection" class="hidden bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-outline-variant bg-surface-container-low text-on-surface text-xs uppercase tracking-wider">
+            <th class="py-4 px-6 font-semibold">Tên dịch vụ</th>
+            <th class="py-4 px-6 font-semibold">Mô tả</th>
+            <th class="py-4 px-6 font-semibold">Giá (VNĐ)</th>
+            <th class="py-4 px-6 font-semibold">Thời gian (phút)</th>
+            <th class="py-4 px-6 font-semibold text-center">Trạng thái</th>
+            <th class="py-4 px-6 font-semibold text-right">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody" class="text-on-surface divide-y divide-outline-variant/50"></tbody>
+      </table>
+      <div id="emptyState" class="hidden text-center py-16 text-on-surface-variant">
+        <span class="material-symbols-outlined text-5xl">build_circle</span>
+        <p class="mt-2">Chưa có dịch vụ nào</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-lg border border-outline-variant overflow-hidden flex flex-col">
+    <div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+      <h3 id="modalTitle" class="text-lg font-semibold text-on-surface">Thêm dịch vụ mới</h3>
+      <button onclick="closeModal()" class="text-on-surface-variant hover:text-on-surface transition-colors p-1 rounded-full hover:bg-surface-variant">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-6 flex-1 overflow-y-auto space-y-5">
+      <input type="hidden" id="editId"/>
+      <div>
+        <label class="block text-xs font-medium text-on-surface mb-1">Tên dịch vụ <span class="text-error">*</span></label>
+        <input id="fServiceName" type="text" placeholder="VD: Cắt tỉa lông" class="w-full px-4 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"/>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-on-surface mb-1">Giá (VNĐ) <span class="text-error">*</span></label>
+          <input id="fPrice" type="number" min="1000" placeholder="250000" class="w-full px-4 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"/>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-on-surface mb-1">Thời gian (phút)</label>
+          <select id="fDuration" class="w-full px-4 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary appearance-none">
+            <option value="15">15 phút</option>
+            <option value="30">30 phút</option>
+            <option value="45">45 phút</option>
+            <option value="60" selected>60 phút</option>
+            <option value="90">90 phút</option>
+            <option value="120">120 phút</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-on-surface mb-1">Mô tả</label>
+        <textarea id="fDescription" rows="3" placeholder="Mô tả chi tiết dịch vụ..." class="w-full px-4 py-2 rounded-lg border border-outline-variant bg-surface text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary resize-none"></textarea>
+      </div>
+      <div class="flex items-center justify-between pt-2">
+        <div>
+          <span class="block font-medium text-on-surface text-sm">Trạng thái hoạt động</span>
+          <span class="text-xs text-on-surface-variant">Cho phép khách hàng đặt lịch dịch vụ này</span>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input id="fIsActive" type="checkbox" checked class="sr-only peer"/>
+          <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+        </label>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-outline-variant bg-surface-container flex justify-end gap-3">
+      <button onclick="closeModal()" class="px-5 py-2.5 rounded-lg font-medium text-on-surface hover:bg-surface-variant transition-colors border border-outline-variant">Hủy</button>
+      <button onclick="saveService()" id="saveBtn" class="px-5 py-2.5 rounded-lg font-semibold text-on-primary bg-primary hover:bg-primary-dim transition-colors shadow-sm flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">save</span>Lưu thay đổi
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 bg-on-background/40 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-sm border border-outline-variant overflow-hidden">
+    <div class="p-6 text-center">
+      <span class="material-symbols-outlined text-5xl text-error">delete_forever</span>
+      <h3 class="mt-3 text-lg font-semibold text-on-surface">Xác nhận xóa?</h3>
+      <p class="mt-1 text-sm text-on-surface-variant">Dịch vụ sẽ bị ngừng hoạt động. Hành động này không thể hoàn tác.</p>
+    </div>
+    <div class="px-6 pb-6 flex justify-center gap-3">
+      <button onclick="closeDeleteModal()" class="px-5 py-2 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container transition-colors">Hủy</button>
+      <button onclick="confirmDelete()" class="px-5 py-2 rounded-lg bg-error text-on-error hover:opacity-90 transition-colors">Xóa</button>
+    </div>
+  </div>
+</div>
+
+<script>
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+const BASE = 'http://localhost:8080/api';
+let services = [];
+let deleteId = null;
+
+// ─── LOAD ───────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch(`${BASE}/services`);
+    const data = await res.json();
+    const raw = Array.isArray(data) ? data : (data.content || data.data || []);
+    services = raw.map(s => ({
+      ...s,
+      id:          s.serviceId || s.id,       // normalize id
+      serviceName: s.serviceName || s.name || '(Dịch vụ)',  // normalize tên
+      price:       Number(s.price) || 0
+    }));
+    renderTable(services);
+  } catch(e) {
+    showToast('Không thể kết nối đến server!', 'error');
+  } finally {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('tableSection').classList.remove('hidden');
+  }
+}
+
+// ─── RENDER ─────────────────────────────────────────────
+function renderTable(list) {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+  if (!list.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  tbody.innerHTML = list.map(s => `
+    <tr class="hover:bg-surface-container-low/50 transition-colors">
+      <td class="py-4 px-6 font-medium">${s.serviceName || s.name || "—"}</td>
+      <td class="py-4 px-6 text-on-surface-variant text-sm">${s.description || '—'}</td>
+      <td class="py-4 px-6">${Number(s.price).toLocaleString('vi-VN')}</td>
+      <td class="py-4 px-6">${s.durationMinutes}</td>
+      <td class="py-4 px-6">
+        <div class="flex justify-center">
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" ${s.isActive ? 'checked' : ''} onchange="toggleActive(${s.id}, this.checked)"/>
+            <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+      </td>
+      <td class="py-4 px-6 text-right">
+        <button onclick="openEdit(${s.id})" class="text-tertiary hover:text-tertiary-dim p-1 transition-colors"><span class="material-symbols-outlined text-sm">edit</span></button>
+        <button onclick="openDelete(${s.id})" class="text-error hover:text-error-dim p-1 transition-colors ml-2"><span class="material-symbols-outlined text-sm">delete</span></button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ─── FILTER ─────────────────────────────────────────────
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  renderTable(services.filter(s => (s.serviceName||s.name||'').toLowerCase().includes(q) || (s.description||'').toLowerCase().includes(q)));
+}
+
+// ─── MODAL ──────────────────────────────────────────────
+function openModal() {
+  document.getElementById('editId').value = '';
+  document.getElementById('modalTitle').textContent = 'Thêm dịch vụ mới';
+  document.getElementById('fServiceName').value = '';
+  document.getElementById('fPrice').value = '';
+  document.getElementById('fDuration').value = '60';
+  document.getElementById('fDescription').value = '';
+  document.getElementById('fIsActive').checked = true;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+// ─── EDIT ───────────────────────────────────────────────
+function openEdit(id) {
+  const s = services.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('editId').value = s.id;
+  document.getElementById('modalTitle').textContent = 'Chỉnh sửa dịch vụ';
+  document.getElementById('fServiceName').value = s.serviceName || s.name || '';
+  document.getElementById('fPrice').value = s.price;
+  document.getElementById('fDuration').value = s.durationMinutes;
+  document.getElementById('fDescription').value = s.description || '';
+  document.getElementById('fIsActive').checked = s.isActive;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+// ─── SAVE (Create / Update) ──────────────────────────────
+async function saveService() {
+  const id = document.getElementById('editId').value;
+  const body = {
+    name:        document.getElementById('fServiceName').value.trim(),
+    serviceName: document.getElementById('fServiceName').value.trim(),
+    description: document.getElementById('fDescription').value.trim(),
+    price:       parseFloat(document.getElementById('fPrice').value),
+    isActive:    document.getElementById('fIsActive').checked
+  };
+  if (!body.serviceName || !body.price) { showToast('Vui lòng điền đầy đủ thông tin!', 'error'); return; }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Đang lưu...';
+
+  try {
+    const res = await fetch(`${BASE}/services${id ? '/'+id : ''}`, {
+      method: id ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.message || 'Lỗi server'); }
+    showToast(id ? 'Cập nhật dịch vụ thành công!' : 'Thêm dịch vụ thành công!', 'success');
+    closeModal();
+    loadData();
+  } catch(e) {
+    showToast(e.message || 'Có lỗi xảy ra!', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">save</span>Lưu thay đổi';
+  }
+}
+
+// ─── TOGGLE ACTIVE ──────────────────────────────────────
+async function toggleActive(id, isActive) {
+  const s = services.find(x => x.id === id);
+  if (!s) return;
+  try {
+    const res = await fetch(`${BASE}/services/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...s, isActive })
+    });
+    if (!res.ok) throw new Error();
+    showToast(isActive ? 'Đã bật dịch vụ' : 'Đã tắt dịch vụ', 'success');
+    loadData();
+  } catch {
+    showToast('Cập nhật trạng thái thất bại!', 'error');
+  }
+}
+
+// ─── DELETE ─────────────────────────────────────────────
+function openDelete(id) { deleteId = id; document.getElementById('deleteModal').classList.remove('hidden'); }
+function closeDeleteModal() { document.getElementById('deleteModal').classList.add('hidden'); deleteId = null; }
+
+async function confirmDelete() {
+  if (!deleteId) return;
+  try {
+    const res = await fetch(`${BASE}/services/${deleteId}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error();
+    showToast('Đã xóa dịch vụ thành công!', 'success');
+    closeDeleteModal();
+    loadData();
+  } catch {
+    showToast('Xóa thất bại!', 'error');
+  }
+}
+
+// ─── TOAST ──────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all ${type === 'error' ? 'bg-error' : 'bg-primary'}`;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 3000);
+}
+
+// Close modal on backdrop click
+document.getElementById('modal').addEventListener('click', e => { if(e.target === document.getElementById('modal')) closeModal(); });
+document.getElementById('deleteModal').addEventListener('click', e => { if(e.target === document.getElementById('deleteModal')) closeDeleteModal(); });
+
+loadData();
+</script>
+</body>
+</html>

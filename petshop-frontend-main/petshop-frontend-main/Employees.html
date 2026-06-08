@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý Nhân viên - PetShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#007517", "on-primary": "#ffffff", "primary-container": "#58ff5e",
+          "on-primary-container": "#005e11", "primary-dim": "#006713", "primary-fixed": "#58ff5e",
+          "secondary": "#3161ba", "on-secondary": "#ffffff", "secondary-container": "#d9e2ff",
+          "on-secondary-container": "#174ea6", "secondary-dim": "#2155ad",
+          "tertiary": "#1f61c4", "on-tertiary": "#ffffff", "tertiary-container": "#5289ef",
+          "on-tertiary-container": "#000311", "tertiary-dim": "#0054b7",
+          "error": "#af3d3b", "on-error": "#ffffff", "error-container": "#fa746f",
+          "on-error-container": "#6e0a12", "error-dim": "#67040d",
+          "surface": "#fcffdc", "surface-dim": "#d3f000",
+          "surface-container-lowest": "#ffffff", "surface-container-low": "#f6ffbe",
+          "surface-container": "#e9ff6f", "surface-container-high": "#defc00",
+          "surface-container-highest": "#d9f600",
+          "on-surface": "#333c00", "on-surface-variant": "#5d6b00",
+          "outline": "#788900", "outline-variant": "#adc500",
+          "inverse-surface": "#0c1000",
+          "background": "#fcffdc", "on-background": "#333c00",
+        },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        spacing: { "xs": "4px", "sm": "8px", "md": "16px", "lg": "24px", "xl": "32px", "gutter": "16px", "margin": "24px", "base": "8px" },
+        fontFamily: { "headline-lg": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "label-md": ["Inter"] },
+        fontSize: {
+          "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+          "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+          "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.5px", fontWeight: "500" }],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; background-color: #fcffdc; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+</style>
+</head>
+<body class="bg-background text-on-background antialiased overflow-hidden flex h-screen">
+
+<!-- ───── SIDEBAR ───── -->
+<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+  <div class="mb-6 px-3 py-2">
+    <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
+    <p class="text-xs text-slate-500">Management Portal</p>
+  </div>
+  <a href="dashboard.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tổng quan</a>
+  <a href="customers.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">group</span>Khách hàng</a>
+  <a href="pets.html"      class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">pets</span>Thú cưng</a>
+  <a href="products.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Sản phẩm</a>
+  <a href="orders.html"    class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Đơn hàng</a>
+  <a href="services.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">medical_services</span>Dịch vụ</a>
+  <a href="bookings.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Lịch hẹn</a>
+  <a href="payments.html"  class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Thanh toán</a>
+  <div class="mt-2 border-t border-slate-100 pt-2">
+    <a href="employees.html" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold transition-colors"><span class="material-symbols-outlined text-[20px]">badge</span>Nhân viên</a>
+    <a href="schedules.html" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"><span class="material-symbols-outlined text-[20px]">schedule</span>Lịch làm việc</a>
+  </div>
+  <div class="mt-auto pt-4 border-t border-slate-100">
+    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors text-left text-sm font-medium">
+      <span class="material-symbols-outlined text-[20px]">logout</span>Đăng xuất
+    </button>
+  </div>
+</aside>
+
+<!-- ───── MAIN AREA ───── -->
+<div class="flex-1 flex flex-col md:ml-64 w-full h-full relative">
+
+  <!-- TOPBAR -->
+  <header class="fixed top-0 right-0 left-64 h-16 bg-white border-b border-slate-200 shadow-sm flex items-center justify-between px-6 z-10">
+    <h2 class="text-xl font-bold text-slate-900">Quản lý Nhân viên</h2>
+    <!-- Search in topbar -->
+    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden sm:block">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+      <input id="topSearch" oninput="filterTable()" class="pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-sm w-56 focus:ring-1 focus:ring-blue-500 text-slate-700" placeholder="Tìm kiếm nhanh..." type="text"/>
+    </div>
+    <div class="flex items-center gap-4 text-slate-500">
+      <span id="loadingIndicator" class="hidden text-sm text-slate-500 flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm animate-spin">refresh</span> Đang tải...
+      </span>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
+      <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>
+      <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant cursor-pointer">
+        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold" id="avatarInitial">Q</div>
+        <span class="text-sm font-semibold text-on-surface" id="userDisplay">Quản trị hệ thống</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CANVAS -->
+  <main class="flex-1 overflow-y-auto pt-16 px-6 py-6">
+    <div class="max-w-7xl mx-auto space-y-6">
+
+      <!-- ACTION BAR -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface-container-low p-4 rounded-xl shadow-sm border border-outline/10">
+        <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+            <input id="searchInput" oninput="filterTable()" class="pl-10 pr-4 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm w-56" placeholder="Tìm tên, SĐT, email..." type="text"/>
+          </div>
+          <select id="filterPosition" onchange="filterTable()" class="py-2 pl-3 pr-8 bg-surface rounded-lg border border-outline/20 text-on-surface text-sm focus:border-secondary focus:ring-1 focus:ring-secondary">
+            <option value="">Tất cả vị trí</option>
+            <option value="Quản lý">Quản lý</option>
+            <option value="Bác sĩ thú y">Bác sĩ thú y</option>
+            <option value="Nhân viên chăm sóc">Nhân viên chăm sóc</option>
+            <option value="Lễ tân">Lễ tân</option>
+            <option value="Groomer">Groomer</option>
+          </select>
+          <select id="filterStatus" onchange="filterTable()" class="py-2 pl-3 pr-8 bg-surface rounded-lg border border-outline/20 text-on-surface text-sm focus:border-secondary focus:ring-1 focus:ring-secondary">
+            <option value="">Tất cả trạng thái</option>
+            <option value="ACTIVE">Đang làm việc</option>
+            <option value="INACTIVE">Đã nghỉ</option>
+          </select>
+        </div>
+        <button onclick="openModal()" class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-xs font-semibold hover:bg-primary-dim transition-colors shadow-sm w-full sm:w-auto justify-center">
+          <span class="material-symbols-outlined text-[18px]">add</span> Thêm nhân viên mới
+        </button>
+      </div>
+
+      <!-- STATS ROW -->
+      <div id="statsRow" class="grid grid-cols-3 gap-4 hidden">
+        <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline/10 shadow-sm text-center">
+          <div id="statTotal" class="text-2xl font-bold text-on-surface">0</div>
+          <div class="text-xs text-on-surface-variant mt-1">Tổng nhân viên</div>
+        </div>
+        <div class="bg-primary-container rounded-xl p-4 border border-outline/10 shadow-sm text-center">
+          <div id="statActive" class="text-2xl font-bold text-on-primary-container">0</div>
+          <div class="text-xs text-on-primary-container/70 mt-1">Đang làm việc</div>
+        </div>
+        <div class="bg-error-container rounded-xl p-4 border border-outline/10 shadow-sm text-center">
+          <div id="statInactive" class="text-2xl font-bold text-on-error-container">0</div>
+          <div class="text-xs text-on-error-container/70 mt-1">Đã nghỉ</div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline/10 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-container-low border-b border-outline/10 text-on-surface-variant text-xs uppercase tracking-wider">
+                <th class="px-6 py-4 font-semibold">ID</th>
+                <th class="px-6 py-4 font-semibold">Họ Tên</th>
+                <th class="px-6 py-4 font-semibold">Vị Trí</th>
+                <th class="px-6 py-4 font-semibold">Số Điện Thoại</th>
+                <th class="px-6 py-4 font-semibold">Email</th>
+                <th class="px-6 py-4 font-semibold">Lương</th>
+                <th class="px-6 py-4 font-semibold">Ngày bắt đầu</th>
+                <th class="px-6 py-4 font-semibold">Trạng Thái</th>
+                <th class="px-6 py-4 font-semibold text-right">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTableBody" class="divide-y divide-outline/10 text-sm">
+              <tr><td colspan="9" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-outline/10 flex items-center justify-between bg-surface-container-lowest">
+          <span id="pageInfo" class="text-sm text-on-surface-variant">—</span>
+          <div id="pagination" class="flex gap-1"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ───── MODAL ───── -->
+<div id="modal" class="hidden fixed inset-0 bg-on-surface/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+  <div class="bg-surface-container-lowest rounded-xl shadow-lg w-full max-w-lg overflow-hidden border border-outline/10 flex flex-col">
+    <div class="px-6 py-4 border-b border-outline/10 flex items-center justify-between bg-surface">
+      <h3 id="modalTitle" class="text-xl font-semibold text-on-surface">Thêm Nhân viên</h3>
+      <button onclick="closeModal()" class="text-on-surface-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container-low transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="px-6 py-5 overflow-y-auto flex-1 space-y-4">
+      <input type="hidden" id="empId"/>
+      <!-- Họ tên -->
+      <div class="space-y-1.5">
+        <label class="block text-xs font-medium text-on-surface">Họ Tên <span class="text-error">*</span></label>
+        <input id="fFullName" type="text" placeholder="Nhập họ và tên" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm"/>
+      </div>
+      <!-- Email -->
+      <div class="space-y-1.5">
+        <label class="block text-xs font-medium text-on-surface">Email <span class="text-error">*</span></label>
+        <input id="fEmail" type="email" placeholder="example@domain.com" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm"/>
+      </div>
+      <!-- Phone + Position -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-medium text-on-surface">Số Điện Thoại</label>
+          <input id="fPhone" type="tel" placeholder="0901 234 567" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm"/>
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-medium text-on-surface">Vị Trí <span class="text-error">*</span></label>
+          <select id="fPosition" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm">
+            <option value="">Chọn vị trí</option>
+            <option value="Quản lý">Quản lý</option>
+            <option value="Bác sĩ thú y">Bác sĩ thú y</option>
+            <option value="Nhân viên chăm sóc">Nhân viên chăm sóc</option>
+            <option value="Lễ tân">Lễ tân</option>
+            <option value="Groomer">Groomer</option>
+          </select>
+        </div>
+      </div>
+      <!-- Salary + Hire Date -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-medium text-on-surface">Lương (VNĐ)</label>
+          <input id="fSalary" type="number" min="0" placeholder="Nhập mức lương" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm"/>
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-medium text-on-surface">Ngày bắt đầu</label>
+          <input id="fHireDate" type="date" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm"/>
+        </div>
+      </div>
+      <!-- Status (chỉ hiển thị khi edit) -->
+      <div id="statusField" class="space-y-1.5 hidden">
+        <label class="block text-xs font-medium text-on-surface">Trạng thái</label>
+        <select id="fStatus" class="w-full px-3 py-2 bg-surface rounded-lg border border-outline/20 text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary text-sm">
+          <option value="ACTIVE">Đang làm việc</option>
+          <option value="INACTIVE">Đã nghỉ</option>
+        </select>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-outline/10 bg-surface flex justify-end gap-3">
+      <button onclick="closeModal()" class="px-4 py-2 rounded-lg border border-outline/20 text-on-surface hover:bg-surface-container-low text-xs font-medium transition-colors">Hủy bỏ</button>
+      <button onclick="saveEmployee()" class="px-4 py-2 rounded-lg bg-secondary text-on-secondary hover:bg-secondary-dim text-xs font-semibold transition-colors shadow-sm">Lưu thông tin</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───── TOAST ───── -->
+<div id="toast" class="fixed bottom-6 right-6 z-[100] hidden">
+  <div id="toastInner" class="px-5 py-3 rounded-xl shadow-lg text-sm font-medium text-white flex items-center gap-2"></div>
+</div>
+
+<script>
+try {
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const n = u.fullName||u.username||'Quản trị hệ thống';
+  document.getElementById('userDisplay').textContent = n;
+  document.getElementById('avatarInitial').textContent = n.charAt(0).toUpperCase();
+} catch(e){}
+
+const BASE = 'http://localhost:8080/api';
+let allEmployees = [];
+let filtered = [];
+let currentPage = 1;
+const PAGE_SIZE = 10;
+
+// ── INIT ──
+window.onload = () => loadData();
+
+// ── LOAD ──
+async function loadData() {
+  showLoading(true);
+  try {
+    const res = await fetch(`${BASE}/employees`);
+    if (!res.ok) throw new Error(res.statusText);
+    const data = await res.json();
+    allEmployees = Array.isArray(data) ? data : (data.data || []);
+    updateStats();
+    filterTable();
+    document.getElementById('statsRow').classList.remove('hidden');
+  } catch (e) {
+    showToast('Không thể kết nối API: ' + e.message, 'error');
+    document.getElementById('employeeTableBody').innerHTML =
+      `<tr><td colspan="9" class="text-center py-10 text-error">Lỗi kết nối: ${e.message}</td></tr>`;
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── STATS ──
+function updateStats() {
+  const active = allEmployees.filter(e => e.status === 'ACTIVE').length;
+  document.getElementById('statTotal').textContent = allEmployees.length;
+  document.getElementById('statActive').textContent = active;
+  document.getElementById('statInactive').textContent = allEmployees.length - active;
+}
+
+// ── FILTER ──
+function filterTable() {
+  const kw = (document.getElementById('searchInput').value || document.getElementById('topSearch').value || '').toLowerCase();
+  const pos = document.getElementById('filterPosition').value.toLowerCase();
+  const st = document.getElementById('filterStatus').value.toUpperCase();
+
+  filtered = allEmployees.filter(e => {
+    const matchKw = !kw || (e.fullName||'').toLowerCase().includes(kw) || (e.phone||'').includes(kw) || (e.email||'').toLowerCase().includes(kw);
+    const matchPos = !pos || (e.position||'').toLowerCase().includes(pos);
+    const matchSt = !st || (e.status||'') === st;
+    return matchKw && matchPos && matchSt;
+  });
+  currentPage = 1;
+  renderTable();
+}
+
+// ── RENDER ──
+function renderTable() {
+  const tbody = document.getElementById('employeeTableBody');
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const page = filtered.slice(start, start + PAGE_SIZE);
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="text-center py-10 text-on-surface-variant">Không tìm thấy nhân viên nào.</td></tr>';
+    document.getElementById('pageInfo').textContent = 'Không có dữ liệu';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = page.map(e => {
+    const initials = (e.fullName || 'NV').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    const isActive = e.status === 'ACTIVE';
+    const avatarColors = ['bg-secondary-container text-on-secondary-container', 'bg-tertiary-container text-on-tertiary-container', 'bg-primary-container text-on-primary-container'];
+    const ac = avatarColors[e.id % 3];
+    return `
+      <tr class="hover:bg-surface-container-low/50 transition-colors">
+        <td class="px-6 py-3 font-medium text-on-surface text-xs">#${e.id}</td>
+        <td class="px-6 py-3">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full ${ac} flex items-center justify-center font-bold text-xs flex-shrink-0">${initials}</div>
+            <span class="font-medium text-on-surface">${e.fullName || '—'}</span>
+          </div>
+        </td>
+        <td class="px-6 py-3 text-on-surface-variant">${e.position || '—'}</td>
+        <td class="px-6 py-3 text-on-surface-variant">${e.phone || '—'}</td>
+        <td class="px-6 py-3 text-on-surface-variant max-w-[160px] truncate">${e.email || '—'}</td>
+        <td class="px-6 py-3 text-on-surface-variant">${e.salary ? Number(e.salary).toLocaleString('vi-VN') + '₫' : '—'}</td>
+        <td class="px-6 py-3 text-on-surface-variant">${formatDate(e.hireDate)}</td>
+        <td class="px-6 py-3">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isActive ? 'bg-primary-container text-on-primary-container' : 'bg-error-container text-on-error-container'}">
+            ${isActive ? 'Đang làm việc' : 'Đã nghỉ'}
+          </span>
+        </td>
+        <td class="px-6 py-3 text-right whitespace-nowrap">
+          <button onclick='openEdit(${JSON.stringify(e)})' class="text-tertiary hover:text-tertiary-dim p-1 transition-colors" title="Sửa">
+            <span class="material-symbols-outlined text-[20px]">edit</span>
+          </button>
+          ${isActive ? `<button onclick="deactivate(${e.id})" class="text-on-surface-variant hover:text-error p-1 ml-1 transition-colors" title="Vô hiệu hóa"><span class="material-symbols-outlined text-[20px]">person_off</span></button>` : ''}
+          <button onclick="deleteItem(${e.id})" class="text-error hover:text-error-dim p-1 ml-1 transition-colors" title="Xóa">
+            <span class="material-symbols-outlined text-[20px]">delete</span>
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Pagination
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  document.getElementById('pageInfo').textContent = `Hiển thị ${start+1}–${Math.min(start+PAGE_SIZE, filtered.length)} của ${filtered.length} nhân viên`;
+  const pag = document.getElementById('pagination');
+  pag.innerHTML = '';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = `w-8 h-8 flex items-center justify-center rounded-md border border-outline/20 text-on-surface-variant hover:bg-surface-container-low ${currentPage===1?'opacity-50 cursor-not-allowed':''}`;
+  prevBtn.disabled = currentPage === 1;
+  prevBtn.innerHTML = '<span class="material-symbols-outlined text-sm">chevron_left</span>';
+  prevBtn.onclick = () => { currentPage--; renderTable(); };
+  pag.appendChild(prevBtn);
+
+  for (let p = Math.max(1, currentPage-1); p <= Math.min(totalPages, currentPage+2); p++) {
+    const b = document.createElement('button');
+    b.className = `w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium ${p===currentPage ? 'bg-secondary text-on-secondary' : 'border border-outline/20 text-on-surface hover:bg-surface-container-low'}`;
+    b.textContent = p;
+    b.onclick = () => { currentPage = p; renderTable(); };
+    pag.appendChild(b);
+  }
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = `w-8 h-8 flex items-center justify-center rounded-md border border-outline/20 text-on-surface-variant hover:bg-surface-container-low ${currentPage===totalPages?'opacity-50 cursor-not-allowed':''}`;
+  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.innerHTML = '<span class="material-symbols-outlined text-sm">chevron_right</span>';
+  nextBtn.onclick = () => { currentPage++; renderTable(); };
+  pag.appendChild(nextBtn);
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('empId').value = '';
+  document.getElementById('fFullName').value = '';
+  document.getElementById('fEmail').value = '';
+  document.getElementById('fPhone').value = '';
+  document.getElementById('fPosition').value = '';
+  document.getElementById('fSalary').value = '';
+  document.getElementById('fHireDate').value = '';
+  document.getElementById('statusField').classList.add('hidden');
+  document.getElementById('modalTitle').textContent = 'Thêm Nhân viên';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function openEdit(e) {
+  document.getElementById('empId').value = e.id;
+  document.getElementById('fFullName').value = e.fullName || '';
+  document.getElementById('fEmail').value = e.email || '';
+  document.getElementById('fPhone').value = e.phone || '';
+  document.getElementById('fPosition').value = e.position || '';
+  document.getElementById('fSalary').value = e.salary || '';
+  document.getElementById('fHireDate').value = e.hireDate || '';
+  document.getElementById('fStatus').value = e.status || 'ACTIVE';
+  document.getElementById('statusField').classList.remove('hidden');
+  document.getElementById('modalTitle').textContent = 'Chỉnh sửa Nhân viên';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+}
+
+// ── SAVE ──
+async function saveEmployee() {
+  const id = document.getElementById('empId').value;
+  const fullName = document.getElementById('fFullName').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const position = document.getElementById('fPosition').value;
+  const salary = document.getElementById('fSalary').value;
+  const hireDate = document.getElementById('fHireDate').value;
+  const status = document.getElementById('fStatus').value;
+
+  if (!fullName || !email || !position) {
+    showToast('Vui lòng điền Họ tên, Email và Vị trí!', 'error');
+    return;
+  }
+
+  const payload = { fullName, email, phone, position, salary: salary ? Number(salary) : null, hireDate: hireDate || null, status: id ? status : 'ACTIVE' };
+
+  try {
+    showLoading(true);
+    const url = id ? `${BASE}/employees/${id}` : `${BASE}/employees`;
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, {
+      method, headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || res.statusText);
+    }
+    showToast(id ? 'Cập nhật nhân viên thành công!' : 'Thêm nhân viên thành công!', 'success');
+    closeModal();
+    await loadData();
+  } catch (e) {
+    showToast('Lỗi: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── DEACTIVATE ──
+async function deactivate(id) {
+  if (!confirm('Vô hiệu hóa nhân viên này?')) return;
+  try {
+    showLoading(true);
+    const res = await fetch(`${BASE}/employees/${id}/deactivate`, { method: 'PATCH' });
+    if (!res.ok) throw new Error(res.statusText);
+    showToast('Đã vô hiệu hóa nhân viên!', 'success');
+    await loadData();
+  } catch (e) {
+    showToast('Lỗi: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── DELETE ──
+async function deleteItem(id) {
+  if (!confirm('Xóa vĩnh viễn nhân viên này? Hành động không thể hoàn tác.')) return;
+  try {
+    showLoading(true);
+    const res = await fetch(`${BASE}/employees/${id}`, { method: 'DELETE' });
+    if (!res.ok && res.status !== 204) throw new Error(res.statusText);
+    showToast('Đã xóa nhân viên!', 'success');
+    await loadData();
+  } catch (e) {
+    showToast('Lỗi xóa: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── HELPERS ──
+function formatDate(d) {
+  if (!d) return '—';
+  const parts = d.split('-');
+  if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  return d;
+}
+
+function showLoading(show) {
+  document.getElementById('loadingIndicator').classList.toggle('hidden', !show);
+}
+
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  const inner = document.getElementById('toastInner');
+  inner.className = `px-5 py-3 rounded-xl shadow-lg text-sm font-medium text-white flex items-center gap-2 ${type === 'success' ? 'bg-primary' : 'bg-error'}`;
+  inner.innerHTML = `<span class="material-symbols-outlined text-sm">${type === 'success' ? 'check_circle' : 'error'}</span>${msg}`;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>

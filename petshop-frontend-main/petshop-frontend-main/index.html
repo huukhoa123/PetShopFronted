@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PET LUXURY - Chăm Sóc Thú Cưng Đẳng Cấp</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+ <link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode:"class",
+    theme:{extend:{
+      colors:{
+        "inverse-surface":"#313030","secondary-fixed-dim":"#f7bd48","surface-container-highest":"#e5e2e1",
+        "secondary-fixed":"#ffdea6","surface-container-high":"#ebe7e7","on-tertiary-fixed":"#1a1c1a",
+        "surface-variant":"#e5e2e1","surface-container-lowest":"#ffffff","primary-container":"#d4af37",
+        "tertiary-fixed-dim":"#c7c6c4","primary-fixed-dim":"#e9c349","tertiary-container":"#b3b3b0",
+        "inverse-on-surface":"#f3f0ef","primary":"#735c00","on-error":"#ffffff","on-primary":"#ffffff",
+        "surface":"#fcf9f8","surface-container":"#f0edec","on-error-container":"#93000a",
+        "tertiary":"#5e5f5d","surface-bright":"#fcf9f8","on-secondary":"#ffffff","background":"#fcf9f8",
+        "primary-fixed":"#ffe088","secondary":"#7b5800","on-secondary-container":"#715000",
+        "on-secondary-fixed-variant":"#5d4200","on-background":"#1c1b1b","on-surface-variant":"#4d4635",
+        "surface-tint":"#735c00","on-tertiary":"#ffffff","error-container":"#ffdad6",
+        "tertiary-fixed":"#e3e2e0","outline-variant":"#d0c5af","surface-container-low":"#f6f3f2",
+        "on-tertiary-container":"#444543","outline":"#7f7663","on-surface":"#1c1b1b",
+        "on-primary-fixed":"#241a00","on-secondary-fixed":"#271900","on-primary-container":"#554300",
+        "error":"#ba1a1a","secondary-container":"#fdc34d","on-tertiary-fixed-variant":"#464745",
+        "inverse-primary":"#e9c349","on-primary-fixed-variant":"#574500","surface-dim":"#dcd9d9"
+      },
+      borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+      spacing:{"margin-desktop":"80px","container-max":"1440px","section-gap":"120px","margin-mobile":"20px","base":"8px","gutter":"24px"},
+      fontFamily:{"body-lg":["Inter"],"display-lg":["Playfair Display"],"headline-lg":["Playfair Display"],"headline-lg-mobile":["Playfair Display"],"body-md":["Inter"],"label-sm":["Inter"],"label-md":["Inter"],"headline-md":["Playfair Display"],"display-lg-mobile":["Playfair Display"]},
+      fontSize:{
+        "body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],
+        "display-lg":["64px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],
+        "headline-lg":["48px",{"lineHeight":"1.2","fontWeight":"600"}],
+        "headline-lg-mobile":["32px",{"lineHeight":"1.3","fontWeight":"600"}],
+        "body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],
+        "label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.1em","fontWeight":"500"}],
+        "label-md":["14px",{"lineHeight":"1","letterSpacing":"0.05em","fontWeight":"600"}],
+        "headline-md":["32px",{"lineHeight":"1.3","fontWeight":"500"}],
+        "display-lg-mobile":["40px",{"lineHeight":"1.2","letterSpacing":"-0.01em","fontWeight":"700"}]
+      }
+    }}
+  }
+</script>
+<style>
+  ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#fcf9f8}
+  ::-webkit-scrollbar-thumb{background:#d0c5af;border-radius:4px}::-webkit-scrollbar-thumb:hover{background:#735c00}
+
+  .glassmorphism{background:rgba(255,255,255,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(208,197,175,0.3)}
+  .ambient-shadow{box-shadow:0 20px 40px rgba(17,17,17,0.05)}
+
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .8s ease-out,transform .8s cubic-bezier(.2,.8,.2,1)}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+
+  .gold-button{background-color:#1c1b1b;color:#ffffff;transition:all .4s cubic-bezier(.4,0,.2,1)}
+  .gold-button:hover{background-color:#d4af37;transform:scale(1.05);box-shadow:0 10px 25px -5px rgba(212,175,55,.4)}
+
+  .outline-button{border:1px solid #d4af37;color:#1c1b1b;transition:all .4s cubic-bezier(.4,0,.2,1)}
+  .outline-button:hover{background-color:#d4af37;color:#ffffff;transform:scale(1.05);box-shadow:0 10px 25px -5px rgba(212,175,55,.4);border-color:#d4af37}
+
+  .hover-glow{transition:all .4s cubic-bezier(.4,0,.2,1)}
+  .hover-glow:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 25px 50px -12px rgba(212,175,55,.25),0 0 15px rgba(212,175,55,.1);border-color:rgba(212,175,55,.4)}
+
+  .nav-scrolled{background:rgba(252,249,248,.92)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,.06);border-bottom:1px solid rgba(212,175,55,.2)!important}
+
+  /* Marquee */
+  .marquee-container{overflow:hidden;position:relative;width:100%}
+  .marquee-content{display:flex;width:max-content;animation:marquee 32s linear infinite}
+  .marquee-content:hover{animation-play-state:paused}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* Logo */
+  .logo-pulse{animation:logo-float 4s ease-in-out infinite; transition: all 0.3s ease;}
+  @keyframes logo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .shimmer{position:absolute;top:-100%;left:-100%;width:300%;height:300%;background:linear-gradient(45deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.4) 50%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 100%);animation:shimmer-effect 6s infinite;pointer-events:none}
+  @keyframes shimmer-effect{0%{transform:translate(-50%,-50%) rotate(0deg)}20%,100%{transform:translate(50%,50%) rotate(0deg)}}
+  .group:hover .logo-img{transform:scale(1.15) rotate(12deg)}
+  .group:hover .logo-pulse{border-color:#d4af37!important; box-shadow:0 0 15px rgba(212,175,55,0.7)!important; transform:scale(1.05)}
+  .logo-img{transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
+
+  /* Service dropdown */
+  .service-dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);opacity:0;visibility:hidden;transition:all .25s ease;pointer-events:none;z-index:60;min-width:220px}
+  .service-dropdown.open{opacity:1;visibility:visible;pointer-events:auto}
+  .nav-service-item:hover .service-dropdown{opacity:1;visibility:visible;pointer-events:auto}
+
+  /* Store dropdown same pattern */
+  .store-dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);opacity:0;visibility:hidden;transition:all .25s ease;pointer-events:none;z-index:60;min-width:200px}
+  .nav-store-item:hover .store-dropdown{opacity:1;visibility:visible;pointer-events:auto}
+
+  /* Opaque dropdown menu background */
+  .service-dropdown .glassmorphism,
+  .store-dropdown .glassmorphism {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Avatar dropdown */
+  #avatar-dropdown{transform-origin:top right;transition:opacity .15s ease,transform .15s ease}
+  #avatar-dropdown.av-hidden{opacity:0;transform:scale(.95) translateY(-4px);pointer-events:none;display:block!important;visibility:hidden}
+  #avatar-dropdown.av-visible{opacity:1;transform:scale(1) translateY(0);visibility:visible}
+
+  /* Mobile menu */
+  #mobile-menu{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  #mobile-menu.open{max-height:700px}
+  .mobile-submenu{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .mobile-submenu.open{max-height:400px}
+
+  /* Product card */
+  .product-card{transition:all .3s ease}
+  .product-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(17,17,17,.1)}
+  .product-card:hover .product-img{transform:scale(1.06)}
+  .product-img{transition:transform .5s ease}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-md border-b border-transparent transition-all duration-500" id="main-nav">
+  <div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-24">
+
+    <!-- Brand -->
+    <a class="brand-link group font-display-lg text-headline-md text-primary tracking-tight shrink-0 flex items-center" href="#">
+      <div class="flex items-center gap-3">
+        <div class="relative rounded-full overflow-hidden w-10 h-10 md:w-12 md:h-12 logo-pulse shadow-sm border border-primary/10">
+          <img alt="PET LUXURY Logo" class="logo-img h-full w-full object-cover rounded-full" src="favicon.png">
+          <div class="shimmer"></div>
+        </div>
+        <span class="transition-colors duration-300 group-hover:text-secondary">PET LUXURY</span>
+      </div>
+    </a>
+
+    <!-- Nav Links Desktop -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md transition-all" href="index.html">Trang Chủ</a>
+
+      <!-- DỊCH VỤ với submenu -->
+      <div class="relative nav-service-item">
+        <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md flex items-center gap-1 cursor-pointer py-1" href="services_use.html">
+          Dịch Vụ <span class="material-symbols-outlined text-[16px] transition-transform duration-200" style="font-size:16px;">expand_more</span>
+        </a>
+        <div class="service-dropdown">
+          <div class="glassmorphism rounded-xl overflow-hidden ambient-shadow py-2 border border-outline-variant/20">
+            <div class="px-4 py-2 border-b border-outline-variant/20">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Chăm Sóc & Làm Đẹp</span>
+            </div>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">content_cut</span> Spa & Grooming
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#tắm">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">water_drop</span> Tắm & Sấy Lông
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#grooming">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">pets</span> Cắt Tỉa Lông
+            </a>
+            <div class="px-4 py-2 border-b border-t border-outline-variant/20 mt-1">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Y Tế & Sức Khoẻ</span>
+            </div>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#vet">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">stethoscope</span> Khám Thú Y
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#vaccine">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">vaccines</span> Tiêm Phòng
+            </a>
+            <a class="flex items-center gap-3 px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="services_use.html#dental">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px;">dentistry</span> Chăm Sóc Răng Miệng
+            </a>
+           
+            <div class="px-4 pb-3 pt-2 border-t border-outline-variant/20">
+              <a href="services_use.html" class="flex items-center justify-center gap-1.5 bg-primary text-on-primary rounded-full px-4 py-2 font-label-md text-xs hover:bg-on-surface transition-colors">
+                <span class="material-symbols-outlined text-sm">calendar_add_on</span> Đặt Lịch Ngay
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CỬA HÀNG với submenu -->
+      <div class="relative nav-store-item">
+        <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md flex items-center gap-1 cursor-pointer py-1" href="product_use.html">
+          Cửa Hàng <span class="material-symbols-outlined" style="font-size:16px;">expand_more</span>
+        </a>
+        <div class="store-dropdown">
+          <div class="glassmorphism rounded-xl overflow-hidden ambient-shadow py-2 border border-outline-variant/20">
+            <a class="block px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">Thức Ăn</a>
+            <a class="block px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">Vòng Cổ & Phụ Kiện</a>
+            <a class="block px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">Canxi & Thực Phẩm Chức Năng</a>
+            <a class="block px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">Dầu Tắm & Chăm Sóc</a>
+            <a class="block px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">Đồ Chơi</a>
+            <a class="block px-5 py-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors font-label-md text-label-md" href="product_use.html">Khác</a>
+          </div>
+        </div>
+      </div>
+
+      <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="order_use.html">Đơn Hàng</a>
+      
+      <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="contact.html">Liên Hệ</a>
+
+      <!-- Dashboard (staff only) -->
+      <a id="nav-dashboard" class="hidden items-center gap-1 text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="dashboard.html">
+        <span class="material-symbols-outlined" style="font-size:16px;">storefront</span> Quản Lý
+      </a>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="flex items-center space-x-3 shrink-0">
+      <button class="text-primary hover:text-primary-fixed-dim transition-transform hover:scale-110 duration-300">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0;">search</span>
+      </button>
+      <a href="product_use.html?openCart=true" class="text-primary hover:text-primary-fixed-dim transition-transform hover:scale-110 duration-300 relative flex items-center justify-center">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0;">shopping_cart</span>
+        <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+      </a>
+      <button class="text-primary hover:text-primary-fixed-dim transition-transform hover:scale-110 duration-300 hidden sm:block">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0;">notifications</span>
+      </button>
+
+      <!-- Login button -->
+      <a href="login.html" id="btn-login"
+         class="hidden items-center gap-1.5 bg-primary text-on-primary font-label-md text-sm px-4 py-2 rounded-full hover:scale-95 active:scale-90 transition-transform shadow-sm"
+         style="font-family:Inter,sans-serif;">
+        <span class="material-symbols-outlined" style="font-size:16px;">login</span> Đăng nhập
+      </a>
+
+      <!-- Avatar + Dropdown -->
+      <div class="relative" id="avatar-wrapper" style="display:none;">
+        <button id="avatar-btn" class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full hover:bg-primary/10 border border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+          <div id="avatar-circle" class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm shadow-sm ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all">?</div>
+          <span id="avatar-name" class="text-sm font-semibold text-on-surface hidden sm:block" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+          <span class="material-symbols-outlined text-on-surface-variant transition-transform duration-200" id="avatar-chevron" style="font-size:18px;">expand_more</span>
+        </button>
+        <div id="avatar-dropdown" class="av-hidden absolute right-0 mt-2 w-56 bg-surface rounded-xl shadow-[0_8px_32px_rgba(17,17,17,.12)] border border-outline-variant overflow-hidden z-50">
+          <div class="px-4 py-3 bg-surface-container-low border-b border-outline-variant">
+            <p class="text-xs text-on-surface-variant font-medium">Đã đăng nhập với</p>
+            <p id="dropdown-username" class="text-sm font-bold text-on-surface truncate mt-0.5"></p>
+            <p id="dropdown-role" class="text-xs text-primary font-semibold mt-0.5"></p>
+          </div>
+          <div class="py-1">
+            <a href="dashboard.html" id="dropdown-dashboard" class="hidden items-center gap-3 px-4 py-2.5 text-sm text-secondary font-semibold hover:bg-primary/5 transition-colors">
+              <span class="material-symbols-outlined text-secondary" style="font-size:18px;">storefront</span> Quản lý cửa hàng
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-on-surface hover:bg-surface-container-low transition-colors">
+              <span class="material-symbols-outlined text-on-surface-variant" style="font-size:18px;">settings</span> Cài đặt
+            </a>
+          </div>
+          <div class="border-t border-outline-variant py-1">
+            <button id="btn-logout" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-error hover:bg-error-container/30 transition-colors">
+              <span class="material-symbols-outlined text-error" style="font-size:18px;">logout</span> Đăng xuất
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-toggle" onclick="document.getElementById('mobile-menu').classList.toggle('open')" class="md:hidden text-primary hover:bg-primary/10 rounded-lg p-2">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-surface border-t border-outline-variant/30 px-6 overflow-hidden" style="max-height:0;transition:max-height .4s ease">
+    <div class="py-4 space-y-1">
+      <a class="block text-primary font-semibold py-2 border-l-2 border-primary pl-3 text-sm" href="index.html">Trang Chủ</a>
+
+      <!-- Dịch Vụ mobile -->
+      <div>
+        <button onclick="toggleMobileMenu('mobile-services')" class="w-full flex justify-between items-center text-on-surface-variant py-2 text-sm font-medium px-1">
+          Dịch Vụ <span class="material-symbols-outlined text-sm">expand_more</span>
+        </button>
+        <div id="mobile-services" class="mobile-submenu pl-4 space-y-1">
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">content_cut</span> Spa & Grooming</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">water_drop</span> Tắm & Sấy Lông</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">stethoscope</span> Khám Thú Y</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">vaccines</span> Tiêm Phòng</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">bed</span> Khách Sạn</a>
+          <a class="flex items-center gap-2 text-on-surface-variant py-1.5 text-sm" href="services_use.html"><span class="material-symbols-outlined text-primary" style="font-size:16px;">school</span> Huấn Luyện</a>
+          <a class="mt-2 inline-flex items-center gap-1.5 bg-primary text-on-primary rounded-full px-4 py-2 text-xs font-semibold" href="services_use.html">Đặt Lịch Ngay</a>
+        </div>
+      </div>
+
+      <!-- Cửa Hàng mobile -->
+      <div>
+        <button onclick="toggleMobileMenu('mobile-store')" class="w-full flex justify-between items-center text-on-surface-variant py-2 text-sm font-medium px-1">
+          Cửa Hàng <span class="material-symbols-outlined text-sm">expand_more</span>
+        </button>
+        <div id="mobile-store" class="mobile-submenu pl-4 space-y-1">
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="product_use.html">Thức Ăn</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="product_use.html">Vòng Cổ & Phụ Kiện</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="product_use.html">Canxi & Thực Phẩm Chức Năng</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="product_use.html">Dầu Tắm & Chăm Sóc</a>
+          <a class="block text-on-surface-variant py-1.5 text-sm" href="product_use.html">Khác</a>
+        </div>
+      </div>
+
+      <a class="block text-on-surface-variant py-2 text-sm" href="order_use.html">Đơn Hàng</a>
+    
+      <a class="block text-on-surface-variant py-2 text-sm" href="contact.html">Liên Hệ</a>
+      <a id="mobile-dashboard" class="hidden items-center gap-2 text-secondary py-2 text-sm font-semibold" href="dashboard.html">
+        <span class="material-symbols-outlined" style="font-size:16px;">storefront</span> Quản lý cửa hàng
+      </a>
+      <div class="pt-2 pb-1">
+        <a href="login.html" id="btn-login-mobile" class="inline-flex items-center gap-1.5 bg-primary text-on-primary font-semibold text-sm px-5 py-2.5 rounded-full">
+          <span class="material-symbols-outlined" style="font-size:16px;">login</span> Đăng nhập
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="relative h-screen flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <img alt="Hero - Chó Afghanistan sang trọng" class="w-full h-full object-cover object-center scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIBxvNxzCGM7IcZkdT1A-gErv5ceMFBiawYbGMQlv9nNRqBcBtsLh3rjGxDQpi3PPa0lNkm1mUEFAKJlqijiqyug-ZYVHFGmBn3YoZ6vW-MyZ3abqgw6r4IORtNZfUNIM9pGUDtK8Iz7gpcPKRcJ1pAkP-WA9exzrJwZ80Y0jP6Hvj9qsHZ_E1qh8G05DrhLOAk2FiV8G4aaNl4icFUo4DaaqYPFJQXMSm_ajUvN-E_rSwbPx-kRh67si388i20D8Ux_P9UeZspFM">
+    <div class="absolute inset-0 bg-black/45 mix-blend-multiply"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent"></div>
+  </div>
+  <div class="relative z-10 text-center px-margin-mobile max-w-4xl fade-up visible">
+    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 font-label-sm text-label-sm uppercase tracking-widest mb-6">
+      <span class="material-symbols-outlined text-primary-fixed" style="font-size:14px;font-variation-settings:'FILL' 1;">star</span>
+      Luxury Pet Care Since 2019
+    </span>
+    <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6 drop-shadow-lg">
+      Chăm Sóc Thú Cưng Đẳng Cấp <br><span class="text-primary-fixed">Nâng Tầm Trải Nghiệm</span>
+    </h1>
+    <p class="font-body-lg text-body-lg text-surface-container-lowest/90 mb-10 max-w-2xl mx-auto font-light">
+      Trung tâm chăm sóc, làm đẹp, khám chữa bệnh và cung cấp phụ kiện thú cưng cao cấp hàng đầu.
+      Nơi thú cưng của bạn được phục vụ như những thượng khách.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a class="gold-button px-8 py-4 rounded-full font-label-md text-label-md uppercase tracking-widest w-full sm:w-auto text-center flex items-center justify-center gap-2" href="services_use.html">
+        <span class="material-symbols-outlined" style="font-size:18px;">event</span> Đặt Lịch Ngay
+      </a>
+      <a class="outline-button px-8 py-4 rounded-full font-label-md text-label-md uppercase tracking-widest w-full sm:w-auto text-center bg-white/10 backdrop-blur-sm border-white text-white hover:border-primary-container" href="#store">
+        Khám Phá Cửa Hàng
+      </a>
+    </div>
+  </div>
+</header>
+
+<section id="store" class="py-section-gap bg-surface-container-low border-y border-outline-variant/20">
+  <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="flex justify-between items-end mb-12 fade-up">
+      <div>
+        <span class="font-label-sm text-label-sm uppercase text-secondary tracking-[0.2em] mb-2 block">Cửa Hàng</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Sản Phẩm Nổi Bật</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-lg">Những lựa chọn tốt nhất từ thiên nhiên dành cho thú cưng của bạn.</p>
+      </div>
+      <a href="product_use.html" class="hidden md:flex items-center gap-1 text-primary font-label-md hover:text-secondary transition-colors">Xem tất cả <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+    </div>
+    <div id="featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center py-12 text-on-surface-variant font-body-md">
+        <div class="inline-block w-6 h-6 border-2 border-outline-variant border-t-primary rounded-full animate-spin mb-2"></div>
+        <p class="text-sm">Đang tải sản phẩm đề xuất...</p>
+      </div>
+    </div>
+    <div class="text-center mt-8 fade-up">
+      <a href="product_use.html" class="outline-button px-8 py-3.5 rounded-full font-label-md text-label-md inline-flex items-center gap-2">
+        Xem Tất Cả Sản Phẩm <span class="material-symbols-outlined text-sm">storefront</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section id="about" class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+  <div class="text-center mb-16 fade-up">
+    <span class="font-label-sm text-label-sm uppercase text-secondary tracking-[0.2em] mb-4 block">Về Chúng Tôi</span>
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Sứ Mệnh & Tầm Nhìn</h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="glassmorphism rounded-2xl p-8 ambient-shadow border border-outline-variant/30 hover-glow fade-up text-center">
+      <div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mx-auto mb-6 text-primary">
+        <span class="material-symbols-outlined text-3xl">verified</span>
+      </div>
+      <h3 class="font-headline-md text-on-background mb-3 text-xl">Chất Lượng Hàng Đầu</h3>
+      <p class="font-body-md text-on-surface-variant text-sm">Sử dụng sản phẩm organic, an toàn và công nghệ chăm sóc tiên tiến nhất để đảm bảo sức khoẻ tối ưu.</p>
+    </div>
+    <div class="glassmorphism rounded-2xl p-8 ambient-shadow border border-outline-variant/30 hover-glow fade-up text-center" style="transition-delay:100ms">
+      <div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mx-auto mb-6 text-primary">
+        <span class="material-symbols-outlined text-3xl">favorite</span>
+      </div>
+      <h3 class="font-headline-md text-on-background mb-3 text-xl">Chăm Sóc Tận Tâm</h3>
+      <p class="font-body-md text-on-surface-variant text-sm">Mỗi thú cưng được đối xử bằng sự thấu hiểu, kiên nhẫn và tình yêu như thành viên trong gia đình.</p>
+    </div>
+    <div class="glassmorphism rounded-2xl p-8 ambient-shadow border border-outline-variant/30 hover-glow fade-up text-center" style="transition-delay:200ms">
+      <div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mx-auto mb-6 text-primary">
+        <span class="material-symbols-outlined text-3xl">groups</span>
+      </div>
+      <h3 class="font-headline-md text-on-background mb-3 text-xl">Cộng Đồng Yêu Thú Cưng</h3>
+      <p class="font-body-md text-on-surface-variant text-sm">Xây dựng nơi giao lưu ấm áp, chia sẻ kiến thức và lan toả tình yêu động vật đến mọi người.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="py-section-gap bg-surface-container-low border-y border-outline-variant/20">
+  <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <div class="text-center mb-12 fade-up">
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Khách Hàng Nói Gì?</h2>
+      <p class="font-body-md text-on-surface-variant mt-2">Sự hài lòng của bạn là phần thưởng lớn nhất của chúng tôi.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glassmorphism rounded-2xl p-6 ambient-shadow fade-up">
+        <div class="flex items-center gap-1 mb-4 text-amber-500">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span>
+        </div>
+        <p class="text-on-surface-variant italic mb-5 text-sm">"Dịch vụ spa ở đây thật tuyệt vời! Bé Cún nhà mình thường rất sợ tắm nhưng các bạn nhân viên cực kỳ nhẹ nhàng. Lông bé mềm mượt và thơm lâu."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center font-bold text-primary">M</div>
+          <div><h4 class="font-label-md text-on-surface text-sm">Minh Anh</h4><p class="text-xs text-on-surface-variant">Mẹ của bé Cún</p></div>
+        </div>
+      </div>
+      <div class="glassmorphism rounded-2xl p-6 ambient-shadow fade-up" style="transition-delay:100ms">
+        <div class="flex items-center gap-1 mb-4 text-amber-500">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span>
+        </div>
+        <p class="text-on-surface-variant italic mb-5 text-sm">"Rất yên tâm khi mua sản phẩm hữu cơ tại đây. Thức ăn hạt chất lượng, tư vấn viên rất am hiểu về dinh dưỡng cho mèo."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-secondary-container/50 flex items-center justify-center font-bold text-secondary">H</div>
+          <div><h4 class="font-label-md text-on-surface text-sm">Hoàng Nam</h4><p class="text-xs text-on-surface-variant">Chủ của bé Miu</p></div>
+        </div>
+      </div>
+      <div class="glassmorphism rounded-2xl p-6 ambient-shadow fade-up" style="transition-delay:200ms">
+        <div class="flex items-center gap-1 mb-4 text-amber-500">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px;">star</span>
+        </div>
+        <p class="text-on-surface-variant italic mb-5 text-sm">"Phòng khám thú y sạch sẽ, bác sĩ thân thiện. Mình đưa bé đến khám định kỳ và rất ưng ý với phong cách chuyên nghiệp."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center font-bold text-tertiary">L</div>
+          <div><h4 class="font-label-md text-on-surface text-sm">Lan Chi</h4><p class="text-xs text-on-surface-variant">Mẹ của bé Teddy</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BANNER ═══════════════ -->
+<section class="py-16 bg-on-surface relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5" style="background-image:radial-gradient(circle,#d4af37 1px,transparent 1px);background-size:24px 24px;"></div>
+  <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-around items-center gap-8 text-center fade-up visible">
+    <div><div class="font-display-lg text-4xl md:text-5xl text-primary-fixed mb-2">10+</div><div class="font-label-sm text-sm text-white/70 uppercase tracking-widest">Năm Kinh Nghiệm</div></div>
+    <div class="hidden md:block w-px h-16 bg-white/20"></div>
+    <div><div class="font-display-lg text-4xl md:text-5xl text-primary-fixed mb-2">5.000+</div><div class="font-label-sm text-sm text-white/70 uppercase tracking-widest">Khách Hàng Hài Lòng</div></div>
+    <div class="hidden md:block w-px h-16 bg-white/20"></div>
+    <div><div class="font-display-lg text-4xl md:text-5xl text-primary-fixed mb-2">20+</div><div class="font-label-sm text-sm text-white/70 uppercase tracking-widest">Giải Thưởng Ngành</div></div>
+    <div class="hidden md:block w-px h-16 bg-white/20"></div>
+    <div>
+      <p class="text-white/80 font-body-md mb-4 max-w-xs">Tham gia ngay hôm nay và nhận ưu đãi đặc biệt cho lần đầu đặt lịch.</p>
+      <a href="services_use.html" class="gold-button px-7 py-3 rounded-full font-label-md text-sm inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">event</span> Đặt Lịch Ngay
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer id="contact" class="bg-surface-container-low border-t border-outline-variant/50 w-full py-section-gap">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop fade-up">
+    <div class="col-span-1 mb-8 md:mb-0">
+      <a class="font-display-lg text-headline-md text-on-surface block mb-6" href="#">PET LUXURY</a>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-6">Định hình tiêu chuẩn mới trong việc chăm sóc và nuôi dưỡng thú cưng tại Việt Nam.</p>
+      <div class="flex space-x-4 text-primary">
+        <a class="hover:text-primary-fixed-dim transition-colors hover:scale-110 block duration-300" href="#"><span class="material-symbols-outlined">share</span></a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-label-md text-label-md uppercase tracking-wider mb-6 text-on-background">Dịch Vụ</h4>
+      <ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+        <li><a class="hover:text-primary transition-colors hover:underline" href="services_use.html">Spa & Grooming</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="services_use.html">Tắm & Sấy Lông</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="services_use.html">Khám Thú Y</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="services_use.html">Tiêm Phòng</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="services_use.html">Khách Sạn</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="services_use.html">Huấn Luyện</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-md text-label-md uppercase tracking-wider mb-6 text-on-background">Chính Sách</h4>
+      <ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+        <li><a class="hover:text-primary transition-colors hover:underline" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="#">Shipping Info</a></li>
+        <li><a class="hover:text-primary transition-colors hover:underline" href="#">Returns</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-md text-label-md uppercase tracking-wider mb-6 text-on-background">Đăng Ký Nhận Tin</h4>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-4">Nhận những ưu đãi đặc quyền dành riêng cho thành viên.</p>
+      <div class="flex border-b border-outline-variant focus-within:border-primary-container pb-2 transition-colors">
+        <input class="bg-transparent border-none focus:ring-0 w-full p-0 font-body-md text-body-md text-on-background placeholder-on-surface-variant/50 outline-none" placeholder="Email của bạn..." type="email">
+        <button class="text-primary hover:text-primary-fixed-dim transition-transform hover:translate-x-1 duration-300"><span class="material-symbols-outlined">arrow_forward</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant/30 text-center px-margin-mobile md:px-margin-desktop fade-up">
+    <p class="font-body-md text-body-md text-on-surface-variant">© 2025 PET LUXURY. All rights reserved. · Designed with ♥ in Saigon</p>
+  </div>
+</footer>
+
+<script>
+const STAFF_ROLES = ['Admin','Manager','Employee'];
+
+// ── Auth / Nav ──────────────────────────────────────────────
+function renderNav() {
+  const token = localStorage.getItem('token');
+  const userData = JSON.parse(localStorage.getItem('user') || 'null');
+  const btnLogin = document.getElementById('btn-login');
+  const btnLoginMobile = document.getElementById('btn-login-mobile');
+  const avatarWrapper = document.getElementById('avatar-wrapper');
+  const avatarCircle = document.getElementById('avatar-circle');
+  const avatarName = document.getElementById('avatar-name');
+  const dropUser = document.getElementById('dropdown-username');
+  const dropRole = document.getElementById('dropdown-role');
+  const navDash = document.getElementById('nav-dashboard');
+  const dropDash = document.getElementById('dropdown-dashboard');
+  const mobDash = document.getElementById('mobile-dashboard');
+
+  if (token && userData) {
+    btnLogin.style.display = 'none';
+    if (btnLoginMobile) btnLoginMobile.style.display = 'none';
+    avatarWrapper.style.display = 'flex'; avatarWrapper.style.alignItems = 'center';
+    const name = userData.fullName || userData.username || userData.name || 'U';
+    avatarCircle.textContent = name.charAt(0).toUpperCase();
+    avatarName.textContent = name.length > 16 ? name.slice(0,14)+'…' : name;
+    dropUser.textContent = userData.username || userData.email || name;
+    dropRole.textContent = userData.role ? 'Vai trò: '+userData.role : '';
+    const role = userData.role || '';
+    if (STAFF_ROLES.includes(role)) {
+      navDash.classList.remove('hidden'); navDash.style.display = 'inline-flex';
+      dropDash.classList.remove('hidden'); dropDash.style.display = 'flex';
+      if (mobDash) { mobDash.classList.remove('hidden'); mobDash.style.display = 'flex'; }
+    }
+  } else {
+    btnLogin.style.display = 'inline-flex';
+    if (btnLoginMobile) btnLoginMobile.style.display = 'inline-flex';
+    avatarWrapper.style.display = 'none';
+  }
+}
+
+// ── Avatar dropdown ──────────────────────────────────────────
+const avatarBtn = document.getElementById('avatar-btn');
+const dropdownEl = document.getElementById('avatar-dropdown');
+const chevronEl = document.getElementById('avatar-chevron');
+let dropOpen = false;
+function openDrop() { dropOpen=true; dropdownEl.classList.remove('av-hidden'); dropdownEl.classList.add('av-visible'); chevronEl.style.transform='rotate(180deg)'; }
+function closeDrop() { dropOpen=false; dropdownEl.classList.remove('av-visible'); dropdownEl.classList.add('av-hidden'); chevronEl.style.transform='rotate(0deg)'; }
+avatarBtn.addEventListener('click', e => { e.stopPropagation(); dropOpen ? closeDrop() : openDrop(); });
+document.addEventListener('click', e => { if (!document.getElementById('avatar-wrapper').contains(e.target)) closeDrop(); });
+document.getElementById('btn-logout').addEventListener('click', () => { localStorage.removeItem('token'); localStorage.removeItem('user'); closeDrop(); window.location.href='login.html'; });
+
+// ── Mobile submenu toggle ────────────────────────────────────
+function toggleMobileMenu(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// ── Intersection observer (fade-up) ─────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Navbar scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) { nav.classList.add('nav-scrolled'); nav.classList.remove('bg-surface/40','border-transparent'); }
+    else { nav.classList.remove('nav-scrolled'); nav.classList.add('bg-surface/40','border-transparent'); }
+  }, { passive: true });
+
+  // Counter animation
+  const counterObs = new IntersectionObserver((entries, o) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-number').forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const suffix = counter.getAttribute('data-suffix') || '';
+          const speed = 180;
+          const updateCount = () => {
+            const current = +counter.innerText.replace(/\D/g,'');
+            const inc = target / speed;
+            if (current < target) { counter.innerText = Math.ceil(current + inc) + suffix; setTimeout(updateCount, 12); }
+            else { counter.innerText = (target >= 1000 ? target.toLocaleString('vi-VN').replace(/,/g,'.') : target) + suffix; }
+          };
+          updateCount();
+        });
+        o.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  const statsSection = document.getElementById('stats');
+  if (statsSection) counterObs.observe(statsSection);
+
+  renderNav();
+  updateNavbarCartBadge();
+  loadAndRenderFeaturedProducts();
+});
+
+const API_BASE = 'http://localhost:8080/api/products';
+const STORAGE_KEY = 'petshop_products';
+
+const DEFAULT_PRODUCTS = [
+  { id: 1,  categoryId: 1, productName: 'Royal Canin Adult Dog 10kg', price: 850000, stockQuantity: 50,  unit: 'túi',  description: 'Thức ăn cao cấp cho chó trưởng thành, công thức cân bằng dinh dưỡng tối ưu.', img: 'https://npet.com.vn/wp-content/uploads/2023/11/thuc-an-cho-cho-4.jpg' },
+  { id: 2,  categoryId: 1, productName: 'Pedigree Puppy 3kg',          price: 180000, stockQuantity: 80,  unit: 'túi',  description: 'Thức ăn dinh dưỡng cho chó con, giàu DHA hỗ trợ phát triển não bộ.',         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJOUB9X1yuSY3w2Q6puFgy1gkihZKfc23MgA&s' },
+  { id: 3,  categoryId: 2, productName: 'Whiskas Adult Cat 1.2kg',     price: 120000, stockQuantity: 60,  unit: 'túi',  description: 'Dinh dưỡng hoàn chỉnh cho mèo trưởng thành, hương vị cá hấp dẫn.',            img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8tGAXywsx1QkHoBaat_2HsRHwOj9jqWwLFWDp8auU6ifLsx1nD24ejOINxAz6IryUsicyWIEWXb5hihSuEJ3JjP75dOMO_FxZc9iopk9s6hKvjocbXmuRPL-kvBS8EiBqQ8tjTGEVQdvtCtu-VXcYDmAJWOgysbmvvtXAMZpwM6iCdVuVC0QRt_WTKS9vlTXsTG4otshSjMF39aLizwZPTqsq9l9ym0ved0aUzm85LHn1xhCsR69jTevokxL0rabBcRECr83zwXg' },
+  { id: 4,  categoryId: 2, productName: 'Royal Canin Kitten 400g',     price:  95000, stockQuantity: 70,  unit: 'túi',  description: 'Dinh dưỡng đặc biệt cho mèo con đang phát triển, tăng cường miễn dịch.',       img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDd72hrYWYQmbhKzm5n2_WQk0b8Ei7mOCtsG8exninnousF-gGgSuKcaNoHYWqg3u1w6efz-MUTG18bNUEUJcUsdDlfuRTilaif7rvV3uK79YI2Gib_QCKUHFTWwuAPC4ehBbTfutU77W00CD6YfjRNc0CSmUkcuwmYNrOH2fngOgilHp0F5HnCcE3Yr59Yza2NTQp1d-0OE23gLpjN6zFYGGnNBdHPGp5mL03y5mjH8c3MoIvDAL8UFp1x28QUs851_ZWXe_kcv44' },
+  { id: 5,  categoryId: 3, productName: 'Vòng cổ da',                  price:  95000, stockQuantity: 40,  unit: 'cái',  description: 'Vòng cổ da thật cao cấp, khóa kim loại chắc chắn, nhiều màu sắc thời trang.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwNVbQjcIqhaCIxyiwg70zpIu2uNWHTahdNg&s' },
+  { id: 6,  categoryId: 3, productName: 'Dây dắt tự thu 5m',          price: 185000, stockQuantity: 30,  unit: 'cái',  description: 'Dây dắt tự thu hiện đại dài 5m, thiết kế ergonomic thoải mái khi cầm nắm.',  img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKojqFd-TqOCMk2kqsEyfdONMPecJFyK9aOQ&s' },
+  { id: 7,  categoryId: 4, productName: 'Dầu gội thú cưng 500ml',     price: 125000, stockQuantity: 100, unit: 'chai', description: 'Dầu gội nhẹ nhàng, pH cân bằng cho da thú cưng. Hương thơm tự nhiên.',         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnNDrxTO_0IYmwXvlQvA0dtkhzJdla2HRGSA&s' },
+  { id: 8,  categoryId: 4, productName: 'Lược chải lông',              price:  75000, stockQuantity: 45,  unit: 'cái',  description: 'Lược chải lông chuyên nghiệp, tay cầm ergonomic, không gây đau cho thú cưng.',  img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTigj666i-xrV_Afly287GL36vCd9P0ZAWPKg&s' },
+  { id: 9,  categoryId: 5, productName: 'Dầu cá Omega-3 60 viên',     price: 220000, stockQuantity: 35,  unit: 'chai', description: 'Viên dầu cá Omega-3 cho thú cưng, giúp lông bóng mượt và tăng cường sức đề kháng.', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBity2wZZMq69kipbb2oKed2TV9nEJSRCNDP1RSabIlWv5cebZMnuYAd4ZdZvsrooGJjSNewwQBkdaalI9hW49-iycTjxr4HxhMftyRKUv3_-m__6k6r6tnEZFMsMybvtVbzQsR8yvCYWKTIWm0r14fSQZ1bb8trXvIDoDNzR5sp-UiJG5RyfkGC91bSnvLCujqEeiWxUyCtTJnNrMC_bbOL6Z8G6kdKhBkz2culnxLiaw4-VyuNukwRjc_Y6AY4HoD5F5BJJOOOkk' },
+  { id: 10, categoryId: 5, productName: 'Vitamin C 100 viên',          price:  85000, stockQuantity: 55,  unit: 'chai', description: 'Vitamin C tổng hợp cho thú cưng, tăng sức đề kháng và hỗ trợ hệ miễn dịch.',   img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEqlqFDs_lN1YWKewSvykI_S68yjPSHkN2rQ&s' },
+];
+
+const DEFAULT_PRODUCT_IMAGES = DEFAULT_PRODUCTS.reduce((images, product) => {
+  images.byId[product.id] = product.img;
+  images.byName[product.productName.toLowerCase()] = product.img;
+  return images;
+}, { byId: {}, byName: {} });
+
+function normalizeImageUrl(url) {
+  if (!url) return '';
+  const value = String(url).trim();
+  return value.startsWith('/') ? `http://localhost:8080${value}` : value;
+}
+
+function getDefaultProductImage(product) {
+  const id = Number(product.id);
+  const name = String(product.productName || '').toLowerCase();
+  return DEFAULT_PRODUCT_IMAGES.byId[id] || DEFAULT_PRODUCT_IMAGES.byName[name] || '';
+}
+
+function normalizeProduct(product) {
+  const img = normalizeImageUrl(product.img || product.imageUrl || getDefaultProductImage(product));
+  return {
+    ...product,
+    id: Number(product.id),
+    categoryId: Number(product.categoryId),
+    price: Number(product.price) || 0,
+    stockQuantity: Number(product.stockQuantity) || 0,
+    unit: product.unit || 'cái',
+    description: product.description || '',
+    img,
+    imageUrl: img,
+    isActive: product.isActive !== false,
+  };
+}
+
+function getLocalProducts() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) return parsed.map(normalizeProduct).filter(p => p.isActive !== false);
+    }
+  } catch (e) {}
+  return DEFAULT_PRODUCTS.map(normalizeProduct);
+}
+
+function saveProducts(products) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+}
+
+function getProductTime(product) {
+  return Date.parse(product.updatedAt || product.createdAt || '') || 0;
+}
+
+function mergeProducts(apiProducts, localProducts) {
+  const byId = new Map();
+  [...apiProducts, ...localProducts].map(normalizeProduct).forEach(product => {
+    const current = byId.get(product.id);
+    if (!current || getProductTime(product) > getProductTime(current)) {
+      byId.set(product.id, product);
+    }
+  });
+  return [...byId.values()].filter(p => p.isActive !== false);
+}
+
+async function loadProducts() {
+  const localProducts = getLocalProducts();
+  let productsList = localProducts;
+
+  try {
+    const res = await fetch(`${API_BASE}?active=true`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!res.ok) throw new Error('API error');
+
+    const data = await res.json();
+    if (Array.isArray(data) && data.length) {
+      productsList = mergeProducts(data, localProducts);
+      saveProducts(productsList);
+    }
+  } catch (e) {
+    // Backend chua chay thi dung du lieu admin da luu trong localStorage.
+  }
+  return productsList;
+}
+
+function fmtPrice(p) {
+  return p.toLocaleString('vi-VN') + '₫';
+}
+
+async function loadAndRenderFeaturedProducts() {
+  const grid = document.getElementById('featured-products-grid');
+  if (!grid) return;
+
+  const allProducts = await loadProducts();
+  // Lọc sản phẩm còn hàng (stockQuantity > 0)
+  const inStockProducts = allProducts.filter(p => p.stockQuantity > 0);
+
+  if (!inStockProducts.length) {
+    grid.innerHTML = `<div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center py-12 text-on-surface-variant font-body-md">Hiện tại chưa có sản phẩm nào nổi bật hoặc tất cả sản phẩm đều đã hết hàng.</div>`;
+    return;
+  }
+
+  // Lấy tối đa 8 sản phẩm nổi bật đầu tiên
+  const featured = inStockProducts.slice(0, 8);
+
+  grid.innerHTML = featured.map((p, idx) => {
+    const delay = idx * 80;
+    return `
+      <div class="product-card glassmorphism rounded-2xl p-5 ambient-shadow border border-outline-variant/30 fade-up animate-fade-in" style="transition-delay:${delay}ms">
+        <div class="aspect-square bg-surface-container-low rounded-xl mb-4 overflow-hidden">
+          <img alt="${p.productName}" class="product-img w-full h-full object-cover" src="${p.img}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23e9f0e2%22 width=%22200%22 height=%22200%22/><text y=%22110%22 x=%22100%22 text-anchor=%22middle%22 font-size=%2240%22>🐾</text></svg>'">
+        </div>
+        <h3 class="font-headline-md text-on-surface mb-1 text-base truncate" title="${p.productName}">${p.productName}</h3>
+        <p class="text-sm text-on-surface-variant mb-4 line-clamp-2 h-10">${p.description || 'Chưa có mô tả cho sản phẩm này.'}</p>
+        <div class="flex justify-between items-center">
+          <span class="font-display-lg text-xl text-primary font-bold">${fmtPrice(p.price)}</span>
+          <button onclick="addHomeProductToCart(${p.id})" class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Kích hoạt lại Fade-up animation cho các phần tử mới được thêm
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  grid.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}
+
+function addHomeProductToCart(productId) {
+  try {
+    let cart = {};
+    const savedCart = localStorage.getItem('petshop_cart');
+    if (savedCart) cart = JSON.parse(savedCart);
+    cart[productId] = (cart[productId] || 0) + 1;
+    localStorage.setItem('petshop_cart', JSON.stringify(cart));
+    window.location.href = 'product_use.html?openCart=true';
+  } catch(e) {
+    window.location.href = 'product_use.html';
+  }
+}
+
+function updateNavbarCartBadge() {
+  try {
+    const savedCart = localStorage.getItem('petshop_cart');
+    if (savedCart) {
+      const cart = JSON.parse(savedCart);
+      const count = Object.values(cart).reduce((a, b) => a + b, 0);
+      const badge = document.getElementById('cartBadge');
+      if (badge) {
+        if (count > 0) {
+          badge.textContent = count;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    }
+  } catch(e) {}
+}
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>
