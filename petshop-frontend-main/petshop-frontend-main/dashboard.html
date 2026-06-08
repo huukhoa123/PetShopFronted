@@ -1204,48 +1204,87 @@ async function loadRevenueChart(){
 function drawLineChart(svg, data, days){
   const vals=data.map(d=>Number(d.totalrevenue||d.tongDoanhThu||d.revenue||0));
   const maxV=Math.max(...vals,1);
-  const W=100,H=85; // viewBox units (leave 15 for x-labels)
+  const W=100,H=85; // viewBox units
 
   // Y axis
   const yEl=document.getElementById('yAxis');
   const ySteps=[1,0.75,0.5,0.25,0].map(p=>maxV*p);
   yEl.innerHTML=ySteps.map(v=>`<span>${fmtVND(v).replace(' Tr ₫','M').replace(' Tỷ ₫','B').replace(' ₫','')}</span>`).join('');
 
-  // X labels - show up to 8
+  // X labels - show up to 8 (Fix date parsing lowercase)
   const xEl=document.getElementById('xAxis');
   const step=Math.max(1,Math.ceil(data.length/8));
   xEl.innerHTML=data.map((d,i)=>{
     if(i%step!==0&&i!==data.length-1) return '<span></span>';
-    const dt=new Date(d.orderDate||d.ngayDoanhThu||d.date||'');
+    const dt=new Date(d.orderdate||d.orderDate||d.ngayDoanhThu||d.date||'');
     const lbl=days<=30?`${dt.getDate()}/${dt.getMonth()+1}`:`T${dt.getMonth()+1}`;
     return `<span>${lbl}</span>`;
   }).join('');
 
-  const pts=vals.map((v,i)=>{
-    const x=(vals.length===1)?50:(i/(vals.length-1))*W;
-    const y=H-(v/maxV)*H;
-    return `${x},${y}`;
-  }).join(' ');
+  // Tạo tọa độ các điểm (x, y)
+  const points = vals.map((v, i) => {
+    const x = (vals.length === 1) ? 50 : (i / (vals.length - 1)) * W;
+    const y = H - (v / maxV) * H;
+    return { x, y };
+  });
 
-  const areaClose=vals.length===1?` ${(0/(vals.length-1))*W},${H}`:'';
-  const areaPath=`M0,${H} ${pts.split(' ').map(p=>`L${p}`).join(' ')} L${W},${H} Z`;
+  // Thuật toán vẽ đường cong Bezier mượt mà (Smooth Curve)
+  let linePath = "";
+  let areaPath = "";
+
+  if (points.length > 0) {
+    // Nét vẽ chính
+    linePath = `M ${points[0].x} ${points[0].y}`;
+    // Vùng phủ diện tích phía dưới
+    areaPath = `M ${points[0].x} ${H} L ${points[0].x} ${points[0].y}`;
+
+    if (points.length === 1) {
+      linePath += ` L ${W} ${points[0].y}`;
+      areaPath += ` L ${W} ${points[0].y} L ${W} ${H} Z`;
+    } else {
+      for (let i = 0; i < points.length - 1; i++) {
+        const curr = points[i];
+        const next = points[i + 1];
+        // Tính điểm điều khiển (control points) ở giữa
+        const cpX1 = curr.x + (next.x - curr.x) / 2;
+        const cpY1 = curr.y;
+        const cpX2 = curr.x + (next.x - curr.x) / 2;
+        const cpY2 = next.y;
+
+        linePath += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${next.x} ${next.y}`;
+        areaPath += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${next.x} ${next.y}`;
+      }
+      areaPath += ` L ${points[points.length - 1].x} ${H} Z`;
+    }
+  }
 
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   svg.innerHTML=`
     <defs>
-      <linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#007517" stop-opacity="0.22"/>
-        <stop offset="100%" stop-color="#007517" stop-opacity="0.02"/>
+      <!-- Hiệu ứng đổ màu Gradient mờ tuyệt đẹp cho vùng phủ diện tích -->
+      <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#10b981" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#10b981" stop-opacity="0.00"/>
       </linearGradient>
+      <!-- Bóng mờ nhẹ tạo cảm giác 3D cho nét vẽ -->
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#10b981" flood-opacity="0.3"/>
+      </filter>
     </defs>
-    ${[0.25,0.5,0.75].map(p=>`<line x1="0" y1="${H-p*H}" x2="${W}" y2="${H-p*H}" stroke="#adc500" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>`).join('')}
-    <path d="${areaPath}" fill="url(#lg2)"/>
-    <polyline points="${pts}" fill="none" stroke="#007517" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
-    ${vals.slice(-3).map((v,i)=>{
-      const idx=vals.length-3+i;
-      const x=(vals.length===1)?50:(idx/(vals.length-1))*W;
-      const y=H-(v/maxV)*H;
-      return `<circle cx="${x}" cy="${y}" r="2" fill="white" stroke="#007517" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
+    
+    <!-- Các đường lưới tọa độ nền nét đứt thanh lịch -->
+    ${[0.25,0.5,0.75].map(p=>`<line x1="0" y1="${H-p*H}" x2="${W}" y2="${H-p*H}" stroke="#e2e8f0" stroke-width="0.3" stroke-dasharray="2 3"/>`).join('')}
+    
+    <!-- Vẽ vùng phủ Gradient mượt mà -->
+    ${areaPath ? `<path d="${areaPath}" fill="url(#chartGradient)"/>` : ''}
+    
+    <!-- Vẽ đường cong mượt với hiệu ứng Glow -->
+    ${linePath ? `<path d="${linePath}" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" vector-effect="non-scaling-stroke"/>` : ''}
+    
+    <!-- Vẽ các điểm tròn Glow tại mỗi điểm mốc tọa độ -->
+    ${points.map((p, idx) => {
+      // Chỉ vẽ điểm tròn tại điểm đầu, điểm cuối hoặc mốc thay đổi lớn để tránh rối mắt
+      return `<circle cx="${p.x}" cy="${p.y}" r="1.2" fill="#ffffff" stroke="#10b981" stroke-width="1.2" vector-effect="non-scaling-stroke" style="transition: all 0.2s; cursor: pointer;"/>`;
     }).join('')}
   `;
 }
