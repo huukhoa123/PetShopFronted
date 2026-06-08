@@ -426,7 +426,7 @@ try {
 } catch(e){}
 
 // ─── CONFIG ───────────────────────────────────────────
-const API_BASE = 'http://localhost:8080/api/products';
+const API_BASE = 'http:///api/products';
 const STORAGE_KEY = 'petshop_products'; // shared với product_use.html
 
 // ─── CATEGORIES ───────────────────────────────────────
@@ -468,7 +468,7 @@ let newImageData = null; // base64 hoặc URL cho upload
 function normalizeImageUrl(url) {
   if (!url) return '';
   const value = String(url).trim();
-  return value.startsWith('/') ? `http://localhost:8080${value}` : value;
+  return value.startsWith('/') ? `http://${value}` : value;
 }
 
 function getDefaultProductImage(product) {
@@ -981,3 +981,4 @@ filterTable();
 <script src="i18n.js"></script>
 </body>
 </html>
+

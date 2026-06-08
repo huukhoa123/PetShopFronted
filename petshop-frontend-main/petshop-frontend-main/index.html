@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAndRenderFeaturedProducts();
 });
 
-const API_BASE = 'http://localhost:8080/api/products';
+const API_BASE = 'http:///api/products';
 const STORAGE_KEY = 'petshop_products';
 
 const DEFAULT_PRODUCTS = [
@@ -628,7 +628,7 @@ const DEFAULT_PRODUCT_IMAGES = DEFAULT_PRODUCTS.reduce((images, product) => {
 function normalizeImageUrl(url) {
   if (!url) return '';
   const value = String(url).trim();
-  return value.startsWith('/') ? `http://localhost:8080${value}` : value;
+  return value.startsWith('/') ? `http://${value}` : value;
 }
 
 function getDefaultProductImage(product) {
@@ -785,3 +785,4 @@ function updateNavbarCartBadge() {
 <script src="i18n.js"></script>
 </body>
 </html>
+
