@@ -512,15 +512,15 @@ async function fetchDashboardSummary(){
     const j=await fetch(`${API}/statistics/dashboard`,{headers:H()}).then(r=>r.json());
     const s=j.data||j||{};
     dashboardSummary=s;
-    document.getElementById('cardRevenue').textContent=fmtVND(s.totalRevenue||0);
+    document.getElementById('cardRevenue').textContent=fmtVND(s.totalrevenue||0);
     document.getElementById('cardRevenueSubTxt').textContent=
-      `Hôm nay: ${fmtVND(s.todayRevenue||0)} | Tháng: ${fmtVND(s.monthRevenue||0)}`;
-    document.getElementById('cardOrders').textContent=(s.totalOrders||0).toLocaleString();
-    document.getElementById('cardOrdersSub').textContent=`${s.pendingOrders||0} đang chờ xử lý`;
-    document.getElementById('cardCustomers').textContent=(s.totalCustomers||0).toLocaleString();
-    document.getElementById('cardCustomersSub').textContent=`${s.goldPlusCustomers||0} hạng Gold+`;
-    document.getElementById('cardServices').textContent=(s.totalServices||0).toLocaleString();
-    document.getElementById('cardServicesSub').textContent=`${s.totalServices||0} dịch vụ hiện có`;
+      `Hôm nay: ${fmtVND(s.todayrevenue||0)} | Tháng: ${fmtVND(s.monthrevenue||0)}`;
+    document.getElementById('cardOrders').textContent=(s.totalorders||0).toLocaleString();
+    document.getElementById('cardOrdersSub').textContent=`${s.pendingorders||0} đang chờ xử lý`;
+    document.getElementById('cardCustomers').textContent=(s.totalcustomers||0).toLocaleString();
+    document.getElementById('cardCustomersSub').textContent=`${s.goldpluscustomers||0} hạng Gold+`;
+    document.getElementById('cardServices').textContent=(s.totalservices||0).toLocaleString();
+    document.getElementById('cardServicesSub').textContent=`${s.totalservices||0} dịch vụ hiện có`;
 
   }catch(e){
     console.warn('[Dashboard] fetchDashboardSummary lỗi, fallback localStorage:', e);
@@ -546,7 +546,7 @@ async function fetchDashboardSummary(){
         `Hôm nay: ${fmtVND(todayRevenue)} | Tháng: ${fmtVND(monthRevenue)}`;
       document.getElementById('cardOrders').textContent = paid.length;
       document.getElementById('cardOrdersSub').textContent = `${paid.length} đơn đã thanh toán`;
-      dashboardSummary={totalRevenue,todayRevenue,monthRevenue,totalOrders:paid.length,totalPayments:paid.length};
+      dashboardSummary={totalrevenue, todayrevenue,monthRevenue,totalOrders:paid.length,totalPayments:paid.length};
     } catch(e2) { console.warn('Fallback localStorage lỗi:', e2); }
   }
 }
@@ -908,10 +908,10 @@ function buildExcelWorkbook(dailyRevenue=[]){
 
   // KPI matrix — chỉ giữ số liệu quan trọng, bỏ tier
   const kpis=[
-    {label:'Tổng doanh thu',    val:Number(S.totalRevenue||0), nf:moneyFmt(), primary:true},
-    {label:'Doanh thu tháng',   val:Number(S.monthRevenue||0), nf:moneyFmt()},
-    {label:'Doanh thu hôm nay', val:Number(S.todayRevenue||0), nf:moneyFmt()},
-    {label:'Tổng đơn hàng',     val:Number(S.totalOrders||allOrders.length), nf:numFmt()},
+    {label:'Tổng doanh thu',    val:Number(S.totalrevenue||0), nf:moneyFmt(), primary:true},
+    {label:'Doanh thu tháng',   val:Number(S.monthrevenue||0), nf:moneyFmt()},
+    {label:'Doanh thu hôm nay', val:Number(S.todayrevenue||0), nf:moneyFmt()},
+    {label:'Tổng đơn hàng',     val:Number(S.totalorders||allOrders.length), nf:numFmt()},
     {label:'Tổng khách hàng',   val:allCustomers.length, nf:numFmt()},
     {label:'Đơn bị hủy',        val:allOrders.filter(o=>o.status==='Cancelled').length, nf:numFmt()},
   ];
@@ -972,10 +972,10 @@ function buildExcelWorkbook(dailyRevenue=[]){
   });
 
   kpiRow(ws2,[
-    {label:'Tổng doanh thu', value:Number(S.totalRevenue||0), fmt:moneyFmt(), primary:true},
-    {label:'Tháng này',      value:Number(S.monthRevenue||0), fmt:moneyFmt()},
-    {label:'Hôm nay',        value:Number(S.todayRevenue||0), fmt:moneyFmt()},
-    {label:'Số đơn',         value:Number(S.totalOrders||allOrders.length), fmt:numFmt()},
+    {label:'Tổng doanh thu', value:Number(S.totalrevenue||0), fmt:moneyFmt(), primary:true},
+    {label:'Tháng này',      value:Number(S.monthrevenue||0), fmt:moneyFmt()},
+    {label:'Hôm nay',        value:Number(S.todayrevenue||0), fmt:moneyFmt()},
+    {label:'Số đơn',         value:Number(S.totalorders||allOrders.length), fmt:numFmt()},
   ],7);
 
   ws2.getRow(7).height=12;
@@ -1000,8 +1000,8 @@ function buildExcelWorkbook(dailyRevenue=[]){
     [...revenueMonthly]
       .sort((a,b)=>(+a.year-+b.year)||(+a.month-+b.month))
       .map(m=>[
-        +m.year, `Tháng ${m.month}`, +m.totalOrders||0,
-        Number(m.totalRevenue||0), +m.avgOrderValue||0,
+        +m.year, `Tháng ${m.month}`, +m.totalorders||0,
+        Number(m.totalrevenue||0), +m.avgOrderValue||0,
       ]),
     {3:{nf:moneyFmt(),align:'right'},4:{nf:moneyFmt(),align:'right',total:false}}
   )+1;
@@ -1014,8 +1014,8 @@ function buildExcelWorkbook(dailyRevenue=[]){
     [...dailyRevenue]
       .sort((a,b)=>String(a.orderDate).localeCompare(String(b.orderDate)))
       .map(d=>[
-        dateVal(d.orderDate), +d.totalOrders||0,
-        Number(d.totalRevenue||0), +d.uniqueCustomers||0,
+        dateVal(d.orderDate), +d.totalorders||0,
+        Number(d.totalrevenue||0), +d.uniqueCustomers||0,
       ]),
     {0:{nf:dateFmt(),align:'center'},2:{nf:moneyFmt(),align:'right'}}
   );
@@ -1202,7 +1202,7 @@ async function loadRevenueChart(){
 }
 
 function drawLineChart(svg, data, days){
-  const vals=data.map(d=>Number(d.totalRevenue||d.tongDoanhThu||d.revenue||0));
+  const vals=data.map(d=>Number(d.totalrevenue||d.tongDoanhThu||d.revenue||0));
   const maxV=Math.max(...vals,1);
   const W=100,H=85; // viewBox units (leave 15 for x-labels)
 
@@ -1294,9 +1294,9 @@ function renderMonthlyRevenue(){
   const el=document.getElementById('monthlyList');
   if(!revenueMonthly.length){ el.innerHTML='<p class="text-xs text-slate-300">Chưa có dữ liệu</p>'; return; }
   const data=revenueMonthly.slice(-6);
-  const max=Math.max(...data.map(d=>Number(d.totalRevenue||d.tongDoanhThu||0)),1);
+  const max=Math.max(...data.map(d=>Number(d.totalrevenue||d.tongDoanhThu||0)),1);
   el.innerHTML=data.map(d=>{
-    const v=Number(d.totalRevenue||d.tongDoanhThu||0);
+    const v=Number(d.totalrevenue||d.tongDoanhThu||0);
     const pct=Math.round(v/max*100);
     const lbl=d.month?`Tháng ${d.month}`:(d.thang?`Tháng ${d.thang}`:'—');
     return `<div>
