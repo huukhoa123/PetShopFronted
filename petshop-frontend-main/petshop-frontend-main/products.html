@@ -98,7 +98,12 @@
 
   <!-- TopAppBar -->
   <header class="sticky top-0 z-40 flex items-center justify-between px-8 py-4 bg-white/80 backdrop-blur-md w-full border-b border-slate-100 shadow-sm">
-    <h2 class="text-lg font-bold text-slate-900">Danh sách Sản phẩm</h2>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleSidebar()" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 mr-2">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <h2 class="text-lg font-bold text-slate-900">Danh sách Sản phẩm</h2>
+    </div>
     <div class="flex items-center gap-4 text-slate-500">
       <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">notifications</span></button>
       <button class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100"><span class="material-symbols-outlined">help_outline</span></button>

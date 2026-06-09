@@ -76,7 +76,12 @@
 <div class="ml-0 md:ml-64 flex-1 flex flex-col min-h-screen">
   <!-- TopNavBar -->
   <header class="fixed top-0 right-0 left-0 md:left-64 h-16 flex justify-between items-center px-6 z-40 bg-white border-b border-slate-200">
-    <div class="text-xl font-bold text-slate-900">Quản lý Dịch vụ</div>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleSidebar()" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 mr-2">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <div class="text-xl font-bold text-slate-900">Quản lý Dịch vụ</div>
+    </div>
     <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:block">
       <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
       <input id="searchInput" class="pl-10 pr-4 py-2 bg-slate-50 border-none rounded-full text-sm focus:ring-2 focus:ring-blue-500 w-64 outline-none text-slate-600" placeholder="Tìm kiếm dịch vụ..." type="text" oninput="filterTable()"/>
