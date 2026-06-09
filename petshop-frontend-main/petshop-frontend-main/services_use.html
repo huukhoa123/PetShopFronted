@@ -1395,7 +1395,7 @@ function validateEmail(email) {
 // ─── TOAST ───
 function showToast(msg, isError = false) {
   const toast = document.getElementById('toast');
-  document.getElementById('toast-text').textContent = msg;
+  document.getElementById('toast-text').textContent = typeof _t === 'function' ? _t(msg) : msg;
   document.getElementById('toast-icon').textContent = isError ? 'error' : 'check_circle';
   toast.style.background = isError ? '#ba1a1a' : '';
   toast.style.color = isError ? '#fff' : '';

@@ -251,7 +251,7 @@ function setMethod(method) {
 
 function showToast(message) {
   const toast = document.getElementById('toast');
-  toast.textContent = message;
+  toast.textContent = typeof _t === 'function' ? _t(message) : message;
   toast.style.opacity = '1';
   setTimeout(() => { toast.style.opacity = '0'; }, 2500);
 }

@@ -1018,7 +1018,7 @@ function focusSearch() {
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
-  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toastMsg').textContent = typeof _t === 'function' ? _t(msg) : msg;
   t.style.opacity = '1';
   t.style.transform = 'translateX(-50%) translateY(0)';
   clearTimeout(toastTimer);
