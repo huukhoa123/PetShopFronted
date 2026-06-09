@@ -435,6 +435,11 @@ try {
 const API_BASE = 'https://petshop-api.ddnsfree.com/api/products';
 const STORAGE_KEY = 'petshop_products'; // shared với product_use.html
 
+const H = () => {
+  const t = localStorage.getItem('token');
+  return { 'Content-Type': 'application/json', ...(t ? { 'Authorization': `Bearer ${t}` } : {}) };
+};
+
 // ─── CATEGORIES ───────────────────────────────────────
 const CATEGORIES = {
   1: { name: 'Chó',      cls: 'bg-secondary-container text-on-secondary-container' },
@@ -514,7 +519,7 @@ function loadProducts() {
   }
 
   // Đồng bộ stockQuantity & isActive từ API (nếu backend đang chạy)
-  fetch(API_BASE, { signal: AbortSignal.timeout(3000) })
+  fetch(API_BASE, { headers: H(), signal: AbortSignal.timeout(3000) })
     .then(r => r.ok ? r.json() : null)
     .then(apiProducts => {
       if (!Array.isArray(apiProducts)) return;
@@ -523,11 +528,20 @@ function loadProducts() {
         const idx = PRODUCTS.findIndex(p => p.id === ap.id);
         if (idx !== -1) {
           const prev = PRODUCTS[idx];
-          if (prev.stockQuantity !== ap.stockQuantity || prev.isActive !== ap.isActive) {
-            PRODUCTS[idx].stockQuantity = ap.stockQuantity;
-            PRODUCTS[idx].isActive = ap.isActive;
-            changed = true;
-          }
+          let updated = false;
+          if (prev.productName !== ap.productName) { prev.productName = ap.productName; updated = true; }
+          if (prev.categoryId !== ap.categoryId) { prev.categoryId = ap.categoryId; updated = true; }
+          if (prev.price !== ap.price) { prev.price = ap.price; updated = true; }
+          if (prev.stockQuantity !== ap.stockQuantity) { prev.stockQuantity = ap.stockQuantity; updated = true; }
+          if (prev.unit !== ap.unit) { prev.unit = ap.unit; updated = true; }
+          if (prev.description !== ap.description) { prev.description = ap.description; updated = true; }
+          if (prev.isActive !== ap.isActive) { prev.isActive = ap.isActive; updated = true; }
+          const apiImg = ap.imageUrl || ap.img;
+          if (apiImg && prev.img !== apiImg) { prev.img = apiImg; prev.imageUrl = apiImg; updated = true; }
+          if (updated) changed = true;
+        } else {
+          PRODUCTS.push(normalizeProduct(ap));
+          changed = true;
         }
       });
       if (changed) {
@@ -769,6 +783,7 @@ function submitAddProduct() {
 
 async function tryCallAPI(product) {
   // Attempt POST /api/products
+  const isBase64 = product.imageUrl && product.imageUrl.startsWith('data:');
   const body = {
     categoryId:    product.categoryId,
     productName:   product.productName,
@@ -776,18 +791,39 @@ async function tryCallAPI(product) {
     price:         product.price,
     stockQuantity: product.stockQuantity,
     unit:          product.unit,
-    imageUrl:      product.imageUrl,
+    imageUrl:      isBase64 ? '' : product.imageUrl,
     isActive:      true,
   };
   const res = await fetch(API_BASE, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: H(),
     body: JSON.stringify(body),
     signal: AbortSignal.timeout(3000),
   });
   if (!res.ok) throw new Error('API error');
   const data = await res.json();
-  return { ...product, id: data.id || product.id };
+  const newId = data.id || product.id;
+
+  if (isBase64) {
+    try {
+      const imgRes = await uploadImageAPI(newId, product.imageUrl);
+      if (imgRes.ok) {
+        const imgData = await imgRes.json();
+        if (imgData.imageUrl) {
+          product.imageUrl = imgData.imageUrl;
+          product.img = imgData.imageUrl;
+        }
+      }
+    } catch(err) {
+      console.error('Failed to upload product image on creation:', err);
+    }
+  } else {
+    if (data.imageUrl) {
+      product.imageUrl = data.imageUrl;
+      product.img = data.imageUrl;
+    }
+  }
+  return { ...product, id: newId };
 }
 
 function showFormError(msg) {
@@ -824,7 +860,7 @@ function confirmDelete() {
   const p  = PRODUCTS.find(x => x.id === id);
 
   // Gọi API soft-delete hoặc xử lý local
-  fetch(`${API_BASE}/${id}`, { method: 'DELETE', signal: AbortSignal.timeout(3000) })
+  fetch(`${API_BASE}/${id}`, { method: 'DELETE', headers: H(), signal: AbortSignal.timeout(3000) })
     .catch(() => {}) // silent fail nếu backend chưa chạy
     .finally(() => {
       // Luôn cập nhật local state
@@ -922,23 +958,41 @@ function saveImage() {
       ? uploadImageAPI(imgModalProductId, finalImg)
       : fetch(`${API_BASE}/${imgModalProductId}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageUrl: finalImg }),
+          headers: H(),
+          body: JSON.stringify({
+            categoryId: p.categoryId,
+            productName: p.productName,
+            description: p.description,
+            price: p.price,
+            stockQuantity: p.stockQuantity,
+            unit: p.unit,
+            imageUrl: finalImg,
+            isActive: p.isActive,
+          }),
           signal: AbortSignal.timeout(3000),
         });
 
-    apiFetch.catch(() => {}).finally(() => {
-      const idx = PRODUCTS.findIndex(x => x.id === imgModalProductId);
-      if (idx !== -1) {
-        PRODUCTS[idx].img = finalImg;
-        PRODUCTS[idx].imageUrl = finalImg;
-        PRODUCTS[idx].updatedAt = new Date().toISOString();
-      }
-      saveProducts();
-      closeImageModal();
-      filterTable();
-      showToast('🖼️ Đã cập nhật ảnh sản phẩm', 'image', true);
-    });
+    apiFetch
+      .then(async (res) => {
+        if (res.ok) {
+          const data = await res.json();
+          return data.imageUrl || finalImg;
+        }
+        return finalImg;
+      })
+      .catch(() => finalImg)
+      .then((savedImgUrl) => {
+        const idx = PRODUCTS.findIndex(x => x.id === imgModalProductId);
+        if (idx !== -1) {
+          PRODUCTS[idx].img = savedImgUrl;
+          PRODUCTS[idx].imageUrl = savedImgUrl;
+          PRODUCTS[idx].updatedAt = new Date().toISOString();
+        }
+        saveProducts();
+        closeImageModal();
+        filterTable();
+        showToast('🖼️ Đã cập nhật ảnh sản phẩm', 'image', true);
+      });
   }
 }
 
@@ -948,8 +1002,11 @@ async function uploadImageAPI(id, base64) {
   const blob = await res.blob();
   const form = new FormData();
   form.append('file', blob, 'product_image.jpg');
+  const token = localStorage.getItem('token');
+  const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
   return fetch(`${API_BASE}/${id}/image`, {
     method: 'POST',
+    headers: headers,
     body: form,
     signal: AbortSignal.timeout(5000),
   });
