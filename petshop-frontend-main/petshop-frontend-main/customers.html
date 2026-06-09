@@ -333,7 +333,7 @@ function tierBadge(tier){
 }
 
 function logout(){
-  if(!confirm('Đăng xuất?')) return;
+  if(!confirm(_t('Đăng xuất?'))) return;
   localStorage.clear(); location.href='login.html';
 }
 
@@ -519,7 +519,7 @@ async function updateItem(id, payload){
 
 // ── DELETE ITEM ──
 async function deleteItem(id, name){
-  if(!confirm(`Xóa khách hàng "${name}"?\nThao tác này không thể hoàn tác.`)) return;
+  if(!confirm(_t(`Xóa khách hàng "${name}"?\nThao tác này không thể hoàn tác.`))) return;
   loading(true);
   try {
     const res = await fetch(`${API}/customers/${id}`, { method:'DELETE', headers:H() });

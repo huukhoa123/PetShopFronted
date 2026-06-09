@@ -470,7 +470,7 @@ async function saveEmployee() {
 
 // ── DEACTIVATE ──
 async function deactivate(id) {
-  if (!confirm('Vô hiệu hóa nhân viên này?')) return;
+  if (!confirm(_t('Vô hiệu hóa nhân viên này?'))) return;
   try {
     showLoading(true);
     const res = await fetch(`${BASE}/employees/${id}/deactivate`, { method: 'PATCH' });
@@ -486,7 +486,7 @@ async function deactivate(id) {
 
 // ── DELETE ──
 async function deleteItem(id) {
-  if (!confirm('Xóa vĩnh viễn nhân viên này? Hành động không thể hoàn tác.')) return;
+  if (!confirm(_t('Xóa vĩnh viễn nhân viên này? Hành động không thể hoàn tác.'))) return;
   try {
     showLoading(true);
     const res = await fetch(`${BASE}/employees/${id}`, { method: 'DELETE' });
@@ -519,6 +519,11 @@ function showToast(msg, type = 'success') {
   inner.innerHTML = `<span class="material-symbols-outlined text-sm">${type === 'success' ? 'check_circle' : 'error'}</span>${msg}`;
   toast.classList.remove('hidden');
   setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+
+function logout(){
+  if(!confirm(_t('Đăng xuất?'))) return;
+  localStorage.clear(); location.href='login.html';
 }
 
 function toggleSidebar() {

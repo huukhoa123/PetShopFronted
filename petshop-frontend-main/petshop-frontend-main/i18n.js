@@ -339,7 +339,103 @@
       "giờ kết thúc": "End Time",
       "giờ kết thúc *": "End Time *",
       "chọn nhân viên *": "Select Employee *",
-      "chưa có lịch làm việc nào.": "No work schedules found."
+      "chưa có lịch làm việc nào.": "No work schedules found.",
+
+      // --- Customer Page (customers.html) ---
+      "quản lý khách hàng": "Manage Customers",
+      "danh sách khách hàng": "Customer List",
+      "quản lý thông tin và hồ sơ khách hàng": "Manage customer information and profiles",
+      "thêm khách hàng": "Add Customer",
+      "tìm kiếm khách hàng...": "Search customers...",
+      "mã kh": "Customer ID",
+      "họ tên": "Full Name",
+      "điện thoại": "Phone",
+      "chi tiết khách hàng": "Customer Details",
+      "chọn một khách hàng để xem chi tiết": "Select a customer to view details",
+      "thống kê nhanh": "Quick Stats",
+      "tổng kh": "Total Customers",
+      "đang hoạt động": "Active",
+      "hạng gold+": "Gold+ Tier",
+      "tb điểm tích lũy": "Avg. Loyalty Points",
+      "thêm khách hàng mới": "Add New Customer",
+      "chỉnh sửa khách hàng": "Edit Customer",
+      "họ và tên *": "Full Name *",
+      "nguyễn văn a": "John Doe",
+      "ngày sinh": "Date of Birth",
+      "địa chỉ": "Address",
+      "123 đường abc, quận 1, tp.hcm": "123 ABC Street, District 1, HCMC",
+      "không thể tải danh sách khách hàng!": "Unable to load customer list!",
+      "điểm tích lũy": "Loyalty Points",
+      "xem thú cưng của kh này →": "View pets of this customer →",
+      "không thể xóa khách hàng!": "Unable to delete customer!",
+      "vui lòng nhập họ tên!": "Please enter full name!",
+      "cập nhật khách hàng thành công! ✅": "Customer updated successfully! ✅",
+      "thêm khách hàng thành công! 🎉": "Customer added successfully! 🎉",
+      "chọn khách hàng để xem chi tiết": "Select a customer to view details",
+      "đang lưu...": "Saving...",
+      "hạng đồng": "Bronze Tier",
+      "hạng bạc": "Silver Tier",
+      "hạng vàng": "Gold Tier",
+      "hạng bạch kim": "Platinum Tier",
+
+      // --- Employee Page (employees.html) ---
+      "quản lý nhân viên - petshop admin": "Employee Management - PetShop Admin",
+      "quản lý nhân viên": "Manage Employees",
+      "tìm kiếm nhanh...": "Quick Search...",
+      "tìm tên, sđt, email...": "Search name, phone, email...",
+      "tất cả vị trí": "All Positions",
+      "bác sĩ thú y": "Veterinarian",
+      "nhân viên chăm sóc": "Pet Care Staff",
+      "lễ tân": "Receptionist",
+      "groomer": "Groomer",
+      "tất cả trạng thái": "All Statuses",
+      "đang làm việc": "Active",
+      "đã nghỉ": "Inactive",
+      "thêm nhân viên mới": "Add New Employee",
+      "tổng nhân viên": "Total Employees",
+      "vị trí": "Position",
+      "số điện thoại": "Phone Number",
+      "lương": "Salary",
+      "lương (vnđ)": "Salary (VND)",
+      "lương (vnd)": "Salary (VND)",
+      "ngày bắt đầu": "Start Date",
+      "thêm nhân viên": "Add Employee",
+      "chỉnh sửa nhân viên": "Edit Employee",
+      "nhập họ và tên": "Enter full name",
+      "chọn vị trí": "Select position",
+      "nhập mức lương": "Enter salary",
+      "hủy bỏ": "Cancel",
+      "lưu thông tin": "Save Information",
+      "không tìm thấy nhân viên nào.": "No employees found.",
+      "vô hiệu hóa nhân viên này?": "Deactivate this employee?",
+      "xóa vĩnh viễn nhân viên này? hành động không thể hoàn tác.": "Permanently delete this employee? This action cannot be undone.",
+      "không thể kết nối api: ": "Unable to connect to API: ",
+      "lỗi kết nối: ": "Connection error: ",
+      "cập nhật nhân viên thành công!": "Employee updated successfully!",
+      "thêm nhân viên thành công!": "Employee added successfully!",
+      "đã vô hiệu hóa nhân viên!": "Employee deactivated!",
+      "đã xóa nhân viên!": "Employee deleted!",
+      "vui lòng điền họ tên, email và vị trí!": "Please fill in Full Name, Email and Position!",
+
+      // --- Dashboard / Overview (dashboard.html) ---
+      "làm mới": "Refresh",
+      "cập nhật:": "Updated:",
+      "doanh thu": "Revenue",
+      "tổng dịch vụ": "Total Services",
+      "chuyển khoản": "Bank Transfer",
+      "tiền mặt": "Cash",
+      "qr code": "QR Code",
+      "cod": "COD",
+      "vnpay": "VNPay",
+      "momo": "MoMo",
+      "kh": "customers",
+      "chào buổi sáng": "Good morning",
+      "chào buổi chiều": "Good afternoon",
+      "chào buổi tối": "Good evening",
+      "🥉 đồng": "🥉 Bronze",
+      "🥈 bạc": "🥈 Silver",
+      "🥇 vàng": "🥇 Gold",
+      "💎 bạch kim": "💎 Platinum"
     }
   };
 
@@ -402,6 +498,89 @@
     if (/^mã lịch hẹn:\s*(#lh\d+)$/i.test(lowerText)) {
       const match = cleanText.match(/^mã lịch hẹn:\s*(#lh\d+)$/i);
       return `Booking ID: ${match[1]}`;
+    }
+    // 6. "Hiển thị X–Y / Z khách hàng" -> "Showing X–Y / Z customers"
+    if (/^hiển thị\s+\d+[-–]\d+\s*\/\s*\d+\s+khách hàng$/i.test(lowerText)) {
+      return cleanText
+        .replace(/hiển thị/i, 'Showing')
+        .replace(/khách hàng/i, 'customers');
+    }
+    // 7. "Hiển thị X–Y của Z nhân viên" -> "Showing X–Y of Z employees"
+    if (/^hiển thị\s+\d+[-–]\d+\s+của\s+\d+\s+nhân viên$/i.test(lowerText)) {
+      return cleanText
+        .replace(/hiển thị/i, 'Showing')
+        .replace(/của/i, 'of')
+        .replace(/nhân viên/i, 'employees');
+    }
+    // 8. "Hôm nay: X | Tháng: Y" -> "Today: X | Month: Y"
+    if (/^hôm nay:\s*(.*?)\s*\|\s*tháng:\s*(.*?)$/i.test(lowerText)) {
+      return cleanText
+        .replace(/hôm nay:/i, 'Today:')
+        .replace(/tháng:/i, 'Month:');
+    }
+    // 9. "X đang chờ xử lý" -> "X pending"
+    if (/^\d+\s+đang chờ xử lý$/i.test(lowerText)) {
+      return cleanText.replace(/đang chờ xử lý/i, 'pending');
+    }
+    // 10. "X hạng Gold+" -> "X Gold+ tier"
+    if (/^\d+\s+hạng gold\+$/i.test(lowerText)) {
+      return cleanText.replace(/hạng gold\+/i, 'Gold+ tier');
+    }
+    // 11. "X dịch vụ hiện có" -> "X services available"
+    if (/^\d+\s+dịch vụ hiện có$/i.test(lowerText)) {
+      return cleanText.replace(/dịch vụ hiện có/i, 'services available');
+    }
+    // 12. "X đơn đã thanh toán" -> "X paid orders"
+    if (/^\d+\s+đơn đã thanh toán$/i.test(lowerText)) {
+      return cleanText.replace(/đơn đã thanh toán/i, 'paid orders');
+    }
+    // 13. Confirm delete customer: "Xóa khách hàng \"{name}\"? Thao tác này không thể hoàn tác." -> "Delete customer \"{name}\"?\nThis action cannot be undone."
+    if (/^xóa khách hàng\s+"([\s\S]*?)"\?\s*thao tác này không thể hoàn tác\.$/i.test(lowerText)) {
+      const match = cleanText.match(/^xóa khách hàng\s+"([\s\S]*?)"\?\s*thao tác này không thể hoàn tác\.$/i);
+      return `Delete customer "${match[1]}"?\nThis action cannot be undone.`;
+    }
+    // 14. Toast deleted customer: "Đã xóa khách hàng \"{name}\"" -> "Deleted customer \"{name}\""
+    if (/^đã xóa khách hàng\s+"(.*)"$/i.test(lowerText)) {
+      const match = cleanText.match(/^đã xóa khách hàng\s+"(.*)"$/i);
+      return `Deleted customer "${match[1]}"`;
+    }
+    // 15. Translate currency suffix: "X Tr ₫" -> "X M ₫", "X Tỷ ₫" -> "X B ₫"
+    if (currentLang === 'en') {
+      if (/^[\d,.]+\s*tr\s*₫$/i.test(lowerText)) {
+        return cleanText.replace(/tr\s*₫/i, 'M ₫');
+      }
+      if (/^[\d,.]+\s*tỷ\s*₫$/i.test(lowerText)) {
+        return cleanText.replace(/tỷ\s*₫/i, 'B ₫');
+      }
+    }
+    // 16. Dynamic "Cập nhật: X" -> "Updated: X"
+    if (/^cập nhật:\s*(.*?)$/i.test(lowerText)) {
+      const match = cleanText.match(/^cập nhật:\s*(.*?)$/i);
+      return `Updated: ${match[1]}`;
+    }
+    // 17. Dynamic greetings
+    if (/^(chào buổi sáng|chào buổi chiều|chào buổi tối),\s*(.*?)\s*👋$/i.test(lowerText)) {
+      const match = cleanText.match(/^(chào buổi sáng|chào buổi chiều|chào buổi tối),\s*(.*?)\s*👋$/i);
+      const greeting = match[1].toLowerCase();
+      let engGreeting = 'Hello';
+      if (greeting.includes('sáng')) engGreeting = 'Good morning';
+      else if (greeting.includes('chiều')) engGreeting = 'Good afternoon';
+      else if (greeting.includes('tối')) engGreeting = 'Good evening';
+      return `${engGreeting}, ${match[2]} 👋`;
+    }
+    // 18. Collision resolution for "Quản lý" (Dashboard/Management vs Manager position)
+    if (lowerText === 'quản lý') {
+      const isClientPage = !location.pathname.includes('employees.html') && 
+                           !location.pathname.includes('schedules.html') && 
+                           !location.pathname.includes('bookings.html') &&
+                           !location.pathname.includes('dashboard.html') &&
+                           !location.pathname.includes('customers.html') &&
+                           !location.pathname.includes('pets.html') &&
+                           !location.pathname.includes('products.html') &&
+                           !location.pathname.includes('orders.html') &&
+                           !location.pathname.includes('services.html') &&
+                           !location.pathname.includes('payments.html');
+      return isClientPage ? 'Dashboard' : 'Manager';
     }
 
     const dict = translations[currentLang];

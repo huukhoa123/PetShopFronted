@@ -455,7 +455,7 @@ function toast(msg,type='ok'){
   document.getElementById('toast').style.display='block';
   setTimeout(()=>document.getElementById('toast').style.display='none',3000);
 }
-function logout(){ if(!confirm('Đăng xuất?'))return; localStorage.clear(); location.href='login.html'; }
+function logout(){ if(!confirm(_t('Đăng xuất?')))return; localStorage.clear(); location.href='login.html'; }
 
 function statusBadge(s){
   const l={Pending:'Chờ xử lý',Confirmed:'Xác nhận',Processing:'Đang xử lý',Delivered:'Đã giao',Completed:'Hoàn thành',Cancelled:'Đã hủy',Scheduled:'Đã đặt',Done:'Hoàn thành'};
