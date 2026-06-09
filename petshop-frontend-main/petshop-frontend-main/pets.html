@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8"/>
@@ -372,7 +372,7 @@ function toast(msg, type='ok'){
 
 function logout(){
   if(!confirm(_t('Đăng xuất?'))) return;
-  localStorage.clear(); location.href='login.html';
+  ['token','user','petshop_cart'].forEach(k => localStorage.removeItem(k)); location.href='login.html';
 }
 
 function speciesBadge(sp){

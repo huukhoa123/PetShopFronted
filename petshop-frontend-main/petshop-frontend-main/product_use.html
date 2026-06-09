@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="vi">
 <head>
 <meta charset="utf-8"/>
@@ -611,22 +611,25 @@ function mergeProducts(apiProducts, localProducts) {
 }
 
 async function loadProducts() {
+  // Hien thi ngay tu localStorage hoac DEFAULT khi cho API
   const localProducts = getLocalProducts();
   PRODUCTS = localProducts;
 
   try {
     const res = await fetch(`${API_BASE}?active=true`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) throw new Error('API error');
 
     const data = await res.json();
     if (Array.isArray(data) && data.length) {
-      PRODUCTS = mergeProducts(data, localProducts);
+      // API la primary source - luon uu tien du lieu tu database
+      PRODUCTS = data.map(normalizeProduct).filter(p => p.isActive !== false);
       saveProducts();
     }
   } catch (e) {
-    // Backend chua chay thi dung du lieu admin da luu trong localStorage.
+    // Backend chua chay thi dung du lieu da luu trong localStorage.
+    PRODUCTS = localProducts;
   }
 }
 

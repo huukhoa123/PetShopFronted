@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8"/>
@@ -505,53 +505,33 @@ function normalizeProduct(product) {
 }
 
 function loadProducts() {
+  // Hien thi ngay tu localStorage hoac DEFAULT khi cho API
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       PRODUCTS = JSON.parse(saved).map(normalizeProduct);
-      saveProducts();
     } else {
       PRODUCTS = DEFAULT_PRODUCTS.map(normalizeProduct);
-      saveProducts();
     }
   } catch(e) {
     PRODUCTS = DEFAULT_PRODUCTS.map(normalizeProduct);
   }
+  filterTable();
 
-  // Đồng bộ stockQuantity & isActive từ API (nếu backend đang chạy)
-  fetch(API_BASE, { headers: H(), signal: AbortSignal.timeout(3000) })
+  // Luon fetch tu API de lay du lieu moi nhat (uu tien database hon localStorage)
+  fetch(API_BASE, { headers: H(), signal: AbortSignal.timeout(5000) })
     .then(r => r.ok ? r.json() : null)
     .then(apiProducts => {
-      if (!Array.isArray(apiProducts)) return;
-      let changed = false;
-      apiProducts.forEach(ap => {
-        const idx = PRODUCTS.findIndex(p => p.id === ap.id);
-        if (idx !== -1) {
-          const prev = PRODUCTS[idx];
-          let updated = false;
-          if (prev.productName !== ap.productName) { prev.productName = ap.productName; updated = true; }
-          if (prev.categoryId !== ap.categoryId) { prev.categoryId = ap.categoryId; updated = true; }
-          if (prev.price !== ap.price) { prev.price = ap.price; updated = true; }
-          if (prev.stockQuantity !== ap.stockQuantity) { prev.stockQuantity = ap.stockQuantity; updated = true; }
-          if (prev.unit !== ap.unit) { prev.unit = ap.unit; updated = true; }
-          if (prev.description !== ap.description) { prev.description = ap.description; updated = true; }
-          if (prev.isActive !== ap.isActive) { prev.isActive = ap.isActive; updated = true; }
-          const apiImg = ap.imageUrl || ap.img;
-          if (apiImg && prev.img !== apiImg) { prev.img = apiImg; prev.imageUrl = apiImg; updated = true; }
-          if (updated) changed = true;
-        } else {
-          PRODUCTS.push(normalizeProduct(ap));
-          changed = true;
-        }
-      });
-      if (changed) {
-        saveProducts();
-        filterTable();
-      }
+      if (!Array.isArray(apiProducts) || !apiProducts.length) return;
+      // API la primary source - luan uu tien du lieu tu database
+      const apiIds = new Set(apiProducts.map(p => p.id));
+      const localOnly = PRODUCTS.filter(p => !apiIds.has(p.id));
+      PRODUCTS = [...apiProducts.map(normalizeProduct), ...localOnly];
+      saveProducts();
+      filterTable();
     })
-    .catch(() => {}); // silent nếu backend chưa chạy
+    .catch(() => {}); // silent neu backend chua chay
 }
-
 function saveProducts() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(PRODUCTS));
 }
@@ -1049,7 +1029,7 @@ function toggleSidebar() {
 }
 function logout(){
   if(!confirm(_t('Đăng xuất?'))) return;
-  localStorage.clear(); location.href='login.html';
+  ['token','user','petshop_cart'].forEach(k => localStorage.removeItem(k)); location.href='login.html';
 }
 </script>
 <script src="i18n.js"></script>
