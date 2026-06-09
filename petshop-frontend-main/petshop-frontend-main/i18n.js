@@ -239,6 +239,21 @@
       "viên dầu cá omega-3 cho thú cưng, giúp lông bóng mượt và tăng cường sức đề kháng.": "Omega-3 fish oil capsules for pets, helps shiny coat and boosts resistance.",
       "vitamin c tổng hợp cho thú cưng, tăng sức đề kháng và hỗ trợ hệ miễn dịch.": "Synthetic Vitamin C for pets, boosts resistance and supports the immune system.",
 
+      // --- Database-specific Product Descriptions ---
+      "sản phẩm thức ăn cho chó trưởng thành": "Premium food for adult dogs",
+      "sản phẩm thức ăn cho chó con": "Nutritional food for puppies",
+      "sản phẩm thức ăn cho mèo trưởng thành": "Complete nutrition for adult cats",
+      "sản phẩm thức ăn cho mèo con": "Special nutrition for kittens",
+      "vòng cổ bằng da cho thú cưng": "Leather collar for pets",
+      "dây dắt tự co giãn cho thú cưng": "Self-retracting leash for pets",
+      "dầu gội dưỡng lông cho chó mèo": "Nourishing shampoo for dogs and cats",
+      "lược chải lông giảm rụng cho chó mèo": "Professional de-shedding brush for dogs and cats",
+      "dầu cá bổ sung mượt lông": "Fish oil for shiny coat",
+      "vitamin tăng sức đề kháng": "Vitamins for immune support",
+      "thức ăn cho mèo anh lông ngắn trưởng thành": "Food for adult British Shorthair cats",
+      "sieu mềm min": "Super soft and smooth",
+      "siêu mịn": "Super smooth",
+
       // --- Messages & Alerts ---
       "vui lòng nhập đầy đủ thông tin!": "Please fill in all information!",
       "không kết nối được server!": "Cannot connect to server!",
