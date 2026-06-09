@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8"/>
@@ -479,7 +479,15 @@ let newImageData = null; // base64 hoặc URL cho upload
 function normalizeImageUrl(url) {
   if (!url) return '';
   const value = String(url).trim();
-  return value.startsWith('/') ? `http://${value}` : value;
+  if (value.startsWith('/')) {
+    try {
+      const origin = new URL(API_BASE).origin;
+      return `${origin}${value}`;
+    } catch (e) {
+      return `https://petshop-api.ddnsfree.com${value}`;
+    }
+  }
+  return value;
 }
 
 function getDefaultProductImage(product) {
@@ -746,14 +754,16 @@ function submitAddProduct() {
 
   // Thử gọi API backend (nếu có), fallback sang localStorage
   tryCallAPI(product).then(savedProduct => {
-    PRODUCTS.push(savedProduct || product);
+    const normalized = normalizeProduct(savedProduct || product);
+    PRODUCTS.push(normalized);
     saveProducts();
     closeAddModal();
     filterTable();
     showToast('✅ Đã thêm sản phẩm "' + name + '"', 'check_circle', true);
   }).catch(() => {
     // Fallback: chỉ lưu localStorage (backend chưa chạy)
-    PRODUCTS.push(product);
+    const normalized = normalizeProduct(product);
+    PRODUCTS.push(normalized);
     saveProducts();
     closeAddModal();
     filterTable();
@@ -967,6 +977,7 @@ function saveImage() {
           PRODUCTS[idx].img = savedImgUrl;
           PRODUCTS[idx].imageUrl = savedImgUrl;
           PRODUCTS[idx].updatedAt = new Date().toISOString();
+          PRODUCTS[idx] = normalizeProduct(PRODUCTS[idx]);
         }
         saveProducts();
         closeImageModal();

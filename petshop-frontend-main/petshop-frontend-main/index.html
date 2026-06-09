@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="scroll-smooth" lang="vi">
 <head>
 <meta charset="utf-8">
@@ -628,7 +628,15 @@ const DEFAULT_PRODUCT_IMAGES = DEFAULT_PRODUCTS.reduce((images, product) => {
 function normalizeImageUrl(url) {
   if (!url) return '';
   const value = String(url).trim();
-  return value.startsWith('/') ? `http://${value}` : value;
+  if (value.startsWith('/')) {
+    try {
+      const origin = new URL(API_BASE).origin;
+      return `${origin}${value}`;
+    } catch (e) {
+      return `https://petshop-api.ddnsfree.com${value}`;
+    }
+  }
+  return value;
 }
 
 function getDefaultProductImage(product) {
