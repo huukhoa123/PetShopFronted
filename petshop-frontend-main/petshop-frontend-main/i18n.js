@@ -860,7 +860,10 @@
       "không tìm thấy hồ sơ": "Profile not found",
       "không khớp tài khoản với dữ liệu khách hàng.": "Account does not match customer records.",
       "vui lòng liên hệ cửa hàng để được hỗ trợ.": "Please contact the store for assistance.",
-      "liên hệ hỗ trợ": "Contact Support"
+      "liên hệ hỗ trợ": "Contact Support",
+      "theo dõi toàn bộ đơn hàng mua sắm và lịch sử thanh toán của bạn.": "Track all your shopping orders and payment history.",
+      "tìm kiếm đơn hàng...": "Search orders...",
+      "xem chi tiết": "View details"
     }
   };
 
@@ -984,8 +987,8 @@
       return `Updated: ${match[1]}`;
     }
     // 17. Dynamic greetings
-    if (/^(chào buổi sáng|chào buổi chiều|chào buổi tối),\s*(.*?)\s*👋$/i.test(lowerText)) {
-      const match = cleanText.match(/^(chào buổi sáng|chào buổi chiều|chào buổi tối),\s*(.*?)\s*👋$/i);
+    if (/^(chào buổi sáng|chào buổi chiều|chào buổi tối|xin chào),\s*(.*?)\s*👋$/i.test(lowerText)) {
+      const match = cleanText.match(/^(chào buổi sáng|chào buổi chiều|chào buổi tối|xin chào),\s*(.*?)\s*👋$/i);
       const greeting = match[1].toLowerCase();
       let engGreeting = 'Hello';
       if (greeting.includes('sáng')) engGreeting = 'Good morning';
@@ -1067,6 +1070,18 @@
     if (/^thêm vào giỏ hàng\s*[-—]\s*(.*)$/i.test(lowerText)) {
       const match = cleanText.match(/^thêm vào giỏ hàng\s*[-—]\s*(.*)$/i);
       return `Add to cart — ${match[1]}`;
+    }
+
+    // 30. "X mặt hàng" -> "X items" (dynamic item count translation)
+    if (/^\d+\s*mặt hàng$/i.test(lowerText)) {
+      const match = cleanText.match(/^(\d+)\s*mặt hàng$/i);
+      const count = parseInt(match[1]);
+      return `${count} ${count === 1 ? 'item' : 'items'}`;
+    }
+
+    // 31. "+X sản phẩm" suffix in order items list (e.g. "Royal Canin +1 sản phẩm" -> "Royal Canin +1 products")
+    if (/\b\+\d+\s+sản phẩm$/i.test(lowerText)) {
+      return cleanText.replace(/sản phẩm/gi, 'products');
     }
 
     const dict = translations[currentLang];
