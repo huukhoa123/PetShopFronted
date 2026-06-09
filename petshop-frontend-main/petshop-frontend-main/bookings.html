@@ -549,7 +549,7 @@ function renderTable(list) {
       <td class="p-4">${b.serviceName || '-'}</td>
       <td class="p-4">${fmtTime(b)}</td>
       <td class="p-4">${statusBadge(b.status)}</td>
-      <td class="p-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+      <td class="p-4 text-right opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
         <div class="flex justify-end gap-2">
           <button onclick="openStatusModal(${b.id})" class="p-1.5 text-on-surface-variant hover:text-secondary transition-colors" title="Cập nhật trạng thái">
             <span class="material-symbols-outlined text-sm">edit</span>
