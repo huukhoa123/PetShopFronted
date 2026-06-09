@@ -603,7 +603,12 @@
       "trạng thái hoạt động": "Active Status",
       "cho phép khách hàng đặt lịch dịch vụ này": "Allow customers to book this service",
       "xác nhận xóa?": "Confirm Delete?",
-      "dịch vụ sẽ bị ngừng hoạt động. hành động này không thể hoàn tác.": "The service will be deactivated. This action cannot be undone."
+      "dịch vụ sẽ bị ngừng hoạt động. hành động này không thể hoàn tác.": "The service will be deactivated. This action cannot be undone.",
+
+      // --- Customer Client Index Page (index.html) ---
+      "đã đăng nhập với": "Logged in as",
+      "quản lý cửa hàng": "Store Manager",
+      "cài đặt": "Settings"
     }
   };
 
