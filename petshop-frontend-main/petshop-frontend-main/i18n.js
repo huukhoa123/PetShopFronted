@@ -978,6 +978,11 @@
       const match = cleanText.match(/^⚠️\s*"(.*?)"\s*chỉ còn\s+(\d+)\s+(.*?)!$/i);
       return `⚠️ "${match[1]}" only has ${match[2]} ${match[3]} left!`;
     }
+    // 24. "Vai trò: X" -> "Role: X"
+    if (/^vai trò:\s*(.*)$/i.test(lowerText)) {
+      const match = cleanText.match(/^vai trò:\s*(.*)$/i);
+      return `Role: ${match[1]}`;
+    }
 
     const dict = translations[currentLang];
     
@@ -1056,6 +1061,8 @@
     if (oldContainer) oldContainer.remove();
     const oldFlagContainer = document.getElementById('i18n-flag-container');
     if (oldFlagContainer) oldFlagContainer.remove();
+    const oldMobileFlagContainer = document.getElementById('i18n-flag-container-mobile');
+    if (oldMobileFlagContainer) oldMobileFlagContainer.remove();
 
     // Xác định xem có phải trang Admin Dashboard hay trang khách hàng để chọn màu nền phù hợp
     const isAdmin = !!(document.getElementById('dash-username') || document.getElementById('dash-avatar') || document.querySelector('aside') || document.querySelector('header div.rounded-full'));
@@ -1187,6 +1194,7 @@
     const loginBtnMobile = document.getElementById('btn-login-mobile');
     if (loginBtnMobile && loginBtnMobile.parentNode) {
       const mobileFlagContainer = flagContainer.cloneNode(true);
+      mobileFlagContainer.id = 'i18n-flag-container-mobile'; // Set unique ID
       const clonedBtns = mobileFlagContainer.querySelectorAll('button');
       if (clonedBtns.length === 2) {
         clonedBtns[0].addEventListener('click', () => {
@@ -1198,13 +1206,119 @@
         
         mobileFlagContainer.style.marginLeft = '16px';
         mobileFlagContainer.style.display = 'inline-flex';
+
+        const token = localStorage.getItem('token');
+        const userData = JSON.parse(localStorage.getItem('user') || 'null');
+        mobileFlagContainer.style.marginTop = token && userData ? '12px' : '0px';
+
         loginBtnMobile.parentNode.insertBefore(mobileFlagContainer, loginBtnMobile.nextSibling);
       }
     }
   }
 
+  function renderMobileUserMenu() {
+    // 1. Inject responsive CSS to hide desktop buttons and show mobile drawer properly
+    const styleId = 'mobile-responsive-styles';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = `
+        @media (max-width: 767px) {
+          #btn-login,
+          #avatar-wrapper,
+          #i18n-flag-container {
+            display: none !important;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (!mobileMenu) return;
+
+    // Remove old mobile user card if any
+    const oldCard = document.getElementById('mobile-user-wrapper');
+    if (oldCard) oldCard.remove();
+
+    const token = localStorage.getItem('token');
+    const userData = JSON.parse(localStorage.getItem('user') || 'null');
+    const loginBtnMobile = document.getElementById('btn-login-mobile');
+
+    if (token && userData) {
+      // Hide mobile login button
+      if (loginBtnMobile) loginBtnMobile.style.display = 'none';
+
+      const name = userData.fullName || userData.username || userData.name || 'User';
+      const avatarLetter = name.charAt(0).toUpperCase();
+      const role = userData.role || '';
+      const STAFF_ROLES = ['Admin', 'Manager', 'Employee'];
+      const isStaff = STAFF_ROLES.includes(role);
+
+      // Determine texts to use (English or Vietnamese)
+      const loggedInAsText = currentLang === 'en' ? 'Logged in as' : 'Đã đăng nhập với';
+      const roleText = role ? (currentLang === 'en' ? 'Role: ' + role : 'Vai trò: ' + role) : '';
+      const adminPortalText = currentLang === 'en' ? 'Store Manager' : 'Quản lý cửa hàng';
+      const settingsText = currentLang === 'en' ? 'Settings' : 'Cài đặt';
+      const logoutText = currentLang === 'en' ? 'Logout' : 'Đăng xuất';
+
+      // Create mobile user card element
+      const userCard = document.createElement('div');
+      userCard.id = 'mobile-user-wrapper';
+      userCard.className = 'mt-4 p-4 border border-outline-variant/30 rounded-2xl bg-surface-container-low/50 space-y-3';
+      userCard.innerHTML = `
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg ring-2 ring-primary/20">
+            ${avatarLetter}
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-xs text-on-surface-variant font-medium">${loggedInAsText}</p>
+            <h4 class="text-sm font-bold text-on-surface truncate">${name}</h4>
+            <p class="text-xs text-primary font-semibold mt-0.5">${roleText}</p>
+          </div>
+        </div>
+        <div class="border-t border-outline-variant/30 pt-2 flex flex-col gap-1.5">
+          ${isStaff ? `
+          <a href="dashboard.html" class="flex items-center gap-2.5 py-2 px-3 rounded-lg text-sm font-semibold text-secondary hover:bg-primary/5 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">storefront</span> ${adminPortalText}
+          </a>
+          ` : ''}
+          <a href="#" class="flex items-center gap-2.5 py-2 px-3 rounded-lg text-sm text-on-surface hover:bg-surface-container-low transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">settings</span> ${settingsText}
+          </a>
+          <button id="btn-logout-mobile" class="w-full flex items-center gap-2.5 py-2 px-3 rounded-lg text-sm text-error font-medium hover:bg-error-container/30 transition-colors text-left">
+            <span class="material-symbols-outlined text-[18px]">logout</span> ${logoutText}
+          </button>
+        </div>
+      `;
+
+      if (loginBtnMobile && loginBtnMobile.parentNode) {
+        loginBtnMobile.parentNode.insertBefore(userCard, loginBtnMobile.nextSibling);
+      } else {
+        const submenuContainer = mobileMenu.querySelector('.py-4.space-y-1');
+        if (submenuContainer) {
+          submenuContainer.appendChild(userCard);
+        }
+      }
+
+      // Add event listener to mobile logout button
+      const logoutBtn = document.getElementById('btn-logout-mobile');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        });
+      }
+    } else {
+      // If not logged in, make sure login button is visible
+      if (loginBtnMobile) loginBtnMobile.style.display = 'inline-flex';
+    }
+  }
+
   function init() {
     injectLanguageSelector();
+    renderMobileUserMenu();
     if (currentLang !== 'vi') {
       translatePage();
       
