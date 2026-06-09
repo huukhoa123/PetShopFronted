@@ -347,9 +347,8 @@
     <div class="relative max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div class="fade-in">
-          <span class="font-label-md text-label-md text-primary tracking-widest uppercase mb-3 block">Lịch Sử Giao Dịch</span>
           <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-3">Đơn Hàng Của Tôi</h1>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">Theo dõi toàn bộ đơn mua sắm, lịch hẹn dịch vụ và lịch sử thanh toán của bạn.</p>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">Theo dõi toàn bộ đơn hàng mua sắm và lịch sử thanh toán của bạn.</p>
           <!-- Tên khách hàng hiển thị sau khi load -->
           <p id="customer-greeting" class="hidden mt-2 text-sm text-primary font-semibold"></p>
         </div>
@@ -376,7 +375,7 @@
     <div class="max-w-md mx-auto">
       <div class="empty-paw text-7xl mb-6">🐾</div>
       <h2 class="font-headline-md text-headline-md text-on-surface mb-3">Vui lòng đăng nhập</h2>
-      <p class="text-on-surface-variant font-body-md mb-8">Đăng nhập để xem lịch sử đơn hàng và lịch hẹn dịch vụ của bạn.</p>
+      <p class="text-on-surface-variant font-body-md mb-8">Đăng nhập để xem lịch sử đơn hàng của bạn.</p>
       <a href="login.html" class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-4 rounded-full font-label-md hover:scale-95 transition-all shadow-lg">
         <span class="material-symbols-outlined">login</span> Đăng nhập ngay
       </a>
@@ -388,14 +387,14 @@
 
     <!-- Filter + Search Bar -->
     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-8 slide-up stagger-1">
-      <div class="flex gap-2 flex-wrap">
+      <div class="flex gap-2 flex-wrap hidden">
         <button onclick="setFilter('all')" id="tab-all" class="tab-btn active font-label-md text-label-md px-5 py-2.5 rounded-full border border-outline-variant transition-all">Tất cả</button>
         <button onclick="setFilter('order')" id="tab-order" class="tab-btn font-label-md text-label-md px-5 py-2.5 rounded-full border border-outline-variant bg-surface hover:bg-primary/5 transition-all">🛍️ Đơn hàng</button>
         <button onclick="setFilter('booking')" id="tab-booking" class="tab-btn font-label-md text-label-md px-5 py-2.5 rounded-full border border-outline-variant bg-surface hover:bg-primary/5 transition-all">📅 Lịch hẹn</button>
       </div>
       <div class="relative w-full sm:w-64">
         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size:18px;">search</span>
-        <input id="search-input" oninput="doSearch()" type="text" placeholder="Tìm mã đơn, dịch vụ..."
+        <input id="search-input" oninput="doSearch()" type="text" placeholder="Tìm kiếm đơn hàng..."
           class="search-input w-full pl-10 pr-4 py-2.5 rounded-full border border-outline-variant bg-surface text-on-surface text-sm focus:outline-none focus:border-primary transition-all font-body-md"/>
       </div>
     </div>
@@ -423,13 +422,10 @@
     <div id="empty-state" class="hidden text-center py-20">
       <div class="empty-paw text-6xl mb-4">🛒</div>
       <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Chưa có đơn hàng nào</h3>
-      <p class="text-on-surface-variant font-body-md mb-6">Hãy đặt dịch vụ hoặc mua sản phẩm để bắt đầu!</p>
+      <p class="text-on-surface-variant font-body-md mb-6">Hãy đặt mua sản phẩm để bắt đầu!</p>
       <div class="flex gap-3 justify-center">
-        <a href="services_use.html" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-full font-label-md hover:scale-95 transition-all">
-          <span class="material-symbols-outlined text-sm">calendar_add_on</span> Đặt lịch dịch vụ
-        </a>
-        <a href="product_use.html" class="inline-flex items-center gap-2 border border-primary text-primary px-6 py-3 rounded-full font-label-md hover:bg-primary/5 transition-all">
-          <span class="material-symbols-outlined text-sm">storefront</span> Mua sản phẩm
+        <a href="product_use.html" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-full font-label-md hover:scale-95 transition-all">
+          <span class="material-symbols-outlined text-sm">storefront</span> Mua sản phẩm ngay
         </a>
       </div>
     </div>
@@ -485,7 +481,7 @@ const API = 'https://petshop-api.ddnsfree.com/api';
 // ─── STATE ───
 let allItems      = [];
 let filtered      = [];
-let currentFilter = 'all';
+let currentFilter = 'order';
 let currentPage   = 1;
 let resolvedCustomerId = null; // customerId đã xác nhận từ /api/customers
 const PAGE_SIZE   = 6;
@@ -776,23 +772,21 @@ async function loadAllData(user) {
       greet.classList.remove('hidden');
     }
 
-    // Bước 2: Lấy đơn hàng & lịch hẹn theo customer đã xác định
-    const [ordersResult, bookingsResult] = await Promise.allSettled([
-      fetchOrders(customer),
-      fetchBookings(customer),
+    // Bước 2: Chỉ lấy đơn hàng (Orders) theo customer đã xác định
+    const ordersResult = await Promise.allSettled([
+      fetchOrders(customer)
     ]);
 
-    const orders   = ordersResult.status   === 'fulfilled' ? ordersResult.value   : [];
-    const bookings = bookingsResult.status === 'fulfilled' ? bookingsResult.value : [];
+    const orders   = ordersResult[0].status === 'fulfilled' ? ordersResult[0].value : [];
+    const bookings = []; // Trống vì đã ẩn phần lịch hẹn dịch vụ
 
-    console.log(`📦 ${orders.length} đơn hàng | 📅 ${bookings.length} lịch hẹn`);
+    console.log(`📦 ${orders.length} đơn hàng`);
 
     allItems = [
       ...orders.map(o => ({ ...o, _type: 'order' })),
-      ...bookings.map(b => ({ ...b, _type: 'booking' })),
     ].sort((a, b) => {
-      const da = new Date(a.orderDate || a.bookingDate || 0);
-      const db = new Date(b.orderDate || b.bookingDate || 0);
+      const da = new Date(a.orderDate || 0);
+      const db = new Date(b.orderDate || 0);
       return db - da;
     });
 
@@ -807,10 +801,9 @@ async function loadAllData(user) {
 
 // ─── STATS ───
 function updateStats(orders, bookings) {
-  const total = orders.length + bookings.length;
-  const done  = orders.filter(o => o.status === 'Delivered').length +
-                bookings.filter(b => b.status === 'Completed').length;
-  const spend = orders.reduce((s, o) => s + Number(o.finalAmount || o.totalAmount || 0), 0);
+  const total = orders.length;
+  const done  = orders.filter(o => o.status === 'Delivered').length;
+  const spend = orders.filter(o => o.status !== 'Cancelled' && o.status !== 'Refunded').reduce((s, o) => s + Number(o.finalAmount || o.totalAmount || 0), 0);
 
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-done').textContent  = done;
