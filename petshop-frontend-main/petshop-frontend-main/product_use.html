@@ -432,7 +432,7 @@ tailwind.config = {
       <span id="footerInfo"></span>
       <span class="flex items-center gap-1 ml-auto">
         <span class="w-2 h-2 rounded-full bg-error pulse-dot inline-block"></span>
-        Tồn &lt; 50 cần nhập thêm
+        Tồn &lt; 10 cần nhập thêm
       </span>
     </div>
 
@@ -651,7 +651,7 @@ function getFilteredProducts() {
     const matchCat  = selectedCategory === 0 || p.categoryId === selectedCategory;
     const matchQ    = !q || p.productName.toLowerCase().includes(q);
     const matchPrice = maxPrice >= 900000 || p.price <= maxPrice;
-    const matchLow  = !showLow || p.stockQuantity < 50;
+    const matchLow  = !showLow || p.stockQuantity < 10;
     return matchCat && matchQ && matchPrice && matchLow;
   });
 
@@ -672,7 +672,7 @@ function fmtPrice(p) {
 
 /** Badge tồn kho */
 function stockBadge(qty) {
-  const low = qty < 50;
+  const low = qty < 10;
   return low
     ? `<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-error-container text-on-error-container text-xs font-semibold">
          <span class="w-1.5 h-1.5 rounded-full bg-error pulse-dot"></span>Sắp hết (${qty})
@@ -706,7 +706,7 @@ function renderCategories() {
 
 function renderProducts() {
   const all = getFilteredProducts();
-  const lowCount = all.filter(p => p.stockQuantity < 50).length;
+  const lowCount = all.filter(p => p.stockQuantity < 10).length;
 
   // Update chips
   document.getElementById('chipTotal').textContent = `${all.length} sản phẩm`;
@@ -734,7 +734,7 @@ function renderProducts() {
       return `
         <div class="product-card bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_20px_rgba(74,68,63,0.08)] flex flex-col h-full relative cursor-pointer"
              onclick="openModal(${p.id})">
-          ${p.stockQuantity < 50 ? '<div class="absolute top-3 left-3 z-10 bg-error text-on-error text-[10px] font-bold px-2 py-1 rounded-full">Sắp hết</div>' : ''}
+          ${p.stockQuantity < 10 ? '<div class="absolute top-3 left-3 z-10 bg-error text-on-error text-[10px] font-bold px-2 py-1 rounded-full">Sắp hết</div>' : ''}
           <div class="img-wrap w-full aspect-square rounded-lg overflow-hidden mb-3 relative">
             <img alt="${p.productName}" class="w-full h-full object-cover" src="${p.img}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23e9f0e2%22 width=%22200%22 height=%22200%22/><text y=%22110%22 x=%22100%22 text-anchor=%22middle%22 font-size=%2240%22>🐾</text></svg>'"/>
           </div>
