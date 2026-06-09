@@ -435,7 +435,175 @@
       "🥉 đồng": "🥉 Bronze",
       "🥈 bạc": "🥈 Silver",
       "🥇 vàng": "🥇 Gold",
-      "💎 bạch kim": "💎 Platinum"
+      "💎 bạch kim": "💎 Platinum",
+
+      // --- Common / General ---
+      "quản trị hệ thống": "System Administrator",
+      "đang tải dữ liệu...": "Loading data...",
+      "chỉnh sửa": "Edit",
+
+      // --- Bookings Page (bookings.html) ---
+      "quản lý lịch hẹn - petmanager pro": "Booking Management - PetManager Pro",
+      "bạn có thể thêm lịch hẹn mới cho khách hàng.": "You can add new bookings for customers.",
+      "tạo nhanh": "Quick Create",
+      "khách hàng *": "Customer *",
+      "-- chọn khách hàng --": "-- Select Customer --",
+      "thú cưng *": "Pet *",
+      "-- chọn thú cưng --": "-- Select Pet --",
+      "dịch vụ *": "Service *",
+      "ngày *": "Date *",
+      "giờ *": "Time *",
+      "-- phân công sau --": "-- Assign Later --",
+      "trạng thái mới": "New Status",
+      "cập nhật": "Update",
+      "vd: khách bận, đổi lịch...": "e.g., Customer busy, rescheduled...",
+      "cập nhật trạng thái thành công!": "Status updated successfully!",
+      "đã xóa lịch hẹn": "Booking deleted!",
+
+      // --- Pets Page (pets.html) ---
+      "quản lý thú cưng": "Manage Pets",
+      "lọc theo khách hàng": "Filter by Customer",
+      "đang xem kh": "Viewing Customer",
+      "lọc theo loài": "Filter by Species",
+      "🐾 tất cả loài": "🐾 All Species",
+      "🐶 chó": "🐶 Dogs",
+      "🐱 mèo": "🐱 Cats",
+      "🐰 khác": "🐰 Others",
+      "tổng": "Total",
+      "0 thú cưng": "0 pets",
+      "thêm thú cưng": "Add Pet",
+      "tên thú": "Pet Name",
+      "loài": "Species",
+      "giống": "Breed",
+      "cân nặng": "Weight",
+      "chủ sở hữu": "Owner",
+      "nhập mã kh hoặc nhấn \"xem tất cả\" để bắt đầu": "Enter Customer ID or click \"View All\" to start",
+      "chưa có thú cưng nào": "No pets found",
+      "khách hàng này chưa đăng ký thú cưng nào.": "This customer has not registered any pets.",
+      "thêm thú cưng đầu tiên": "Add first pet",
+      "tên thú cưng": "Pet Name",
+      "-- chọn loài --": "-- Select Species --",
+      "🐰 thỏ": "🐰 Rabbit",
+      "🐾 khác": "🐾 Others",
+      "giới tính": "Gender",
+      "-- chọn --": "-- Select --",
+      "♂ đực": "♂ Male",
+      "♀ cái": "♀ Female",
+      "cân nặng (kg)": "Weight (kg)",
+      "màu lông": "Fur Color",
+      "mã kh (chủ)": "Customer ID (Owner)",
+      "ghi chú sức khỏe": "Health Notes",
+      "tìm tên thú cưng, giống...": "Search pet name, breed...",
+      "vàng, đen trắng...": "Yellow, black & white...",
+      "tiêm phòng, bệnh lý, chế độ ăn...": "Vaccinations, medical conditions, diet...",
+      "đực": "Male",
+      "cái": "Female",
+      "thỏ": "Rabbit",
+      "thêm thú cưng thành công! 🐾": "Pet added successfully! 🐾",
+
+      // --- Products Page (products.html) ---
+      "petshop admin - danh sách sản phẩm": "PetShop Admin - Product List",
+      "tất cả danh mục": "All Categories",
+      "thêm sản phẩm": "Add Product",
+      "ảnh": "Image",
+      "tên sản phẩm": "Product Name",
+      "giá": "Price",
+      "đơn vị": "Unit",
+      "tồn kho < 10 cần nhập thêm": "Stock < 10 needs restock",
+      "thêm sản phẩm mới": "Add New Product",
+      "điền thông tin và upload ảnh sản phẩm": "Fill in information and upload product image",
+      "giá bán (₫)": "Price (₫)",
+      "mô tả sản phẩm": "Product Description",
+      "ảnh sản phẩm": "Product Image",
+      "kéo thả ảnh vào đây hoặc": "Drag & drop image here or",
+      "chọn file": "select file",
+      "jpg, png, webp tối đa 5mb": "JPG, PNG, WEBP max 5MB",
+      "xóa ảnh": "Delete Image",
+      "hoặc nhập url ảnh:": "Or enter image URL:",
+      "lưu sản phẩm": "Save Product",
+      "xác nhận xóa sản phẩm": "Confirm Delete Product",
+      "bạn có chắc muốn": "Are you sure you want to",
+      "ngừng kinh doanh": "discontinue this product?",
+      "hành động này có thể khôi phục sau.": "This action can be undone later.",
+      "cập nhật ảnh sản phẩm": "Update Product Image",
+      "ảnh hiện tại": "Current Image",
+      "kéo thả hoặc": "Drag & drop or",
+      "chọn file mới": "select new file",
+      "ảnh mới đã chọn": "New image selected",
+      "hoặc nhập url ảnh mới:": "Or enter new image URL:",
+      "lưu ảnh": "Save Image",
+      "tìm theo tên sản phẩm...": "Search by product name...",
+      "cái / túi / chai": "item / bag / bottle",
+      "mô tả ngắn về sản phẩm...": "Short description of the product...",
+
+      // --- Orders Page (orders.html) ---
+      "quản lý đơn hàng - petshop admin": "Order Management - PetShop Admin",
+      "tạo đơn hàng mới": "Create New Order",
+      "đang tải đơn hàng...": "Loading orders...",
+      "ngày tạo": "Created Date",
+      "chưa có đơn hàng nào": "No orders found",
+      "chọn khách hàng...": "Select customer...",
+      "giảm giá (vnđ)": "Discount (VND)",
+      "chưa có mặt hàng nào": "No items added",
+      "← chọn sản phẩm hoặc dịch vụ bên trái": "← Select products or services on the left",
+      "tạm tính:": "Subtotal:",
+      "giảm giá:": "Discount:",
+      "tổng:": "Total:",
+      "tạo đơn": "Create Order",
+      "đơn hàng:": "Order:",
+      "trạng thái mới": "New Status",
+      "đóng": "Close",
+      "chi tiết đơn hàng": "Order Details",
+      "xác nhận thanh toán": "Confirm Payment",
+      "số tiền cần thu:": "Amount to collect:",
+      "số tiền thanh toán (vnđ)": "Payment amount (VND)",
+      "phương thức thanh toán": "Payment Method",
+      "mã giao dịch": "Transaction Code",
+      "tìm mã đơn, khách hàng...": "Search order ID, customer...",
+      "nhập ghi chú nếu có...": "Enter notes if any...",
+      "thanh toán thành công! bạn có muốn xem hóa đơn ngay không?": "Payment successful! Do you want to view the invoice now?",
+
+      // --- Payments Page (payments.html) ---
+      "chờ thanh toán": "Pending Payment",
+      "tổng thu hôm nay": "Today's Revenue",
+      "tìm kiếm đơn hàng theo id": "Search order by ID",
+      "xóa cache": "Clear Cache",
+      "bảng thanh toán": "Payment Sheet",
+      "trạng thái đơn": "Order Status",
+      "không có đơn hàng nào": "No orders found",
+      "lịch sử thanh toán": "Payment History",
+      "tìm đơn hàng...": "Search orders...",
+      "nhập mã đơn hàng (id)...": "Enter order ID...",
+      "xóa dữ liệu thanh toán online đã lưu": "Clear saved online payment cache",
+      "xóa toàn bộ dữ liệu thanh toán online đã lưu cục bộ?": "Clear all locally saved online payment data?",
+
+      // --- Schedules Page (schedules.html) ---
+      "lịch làm việc - petshop admin": "Work Schedule - PetShop Admin",
+      "chọn nhân viên": "Select Employee",
+      "-- chọn nhân viên --": "-- Select Employee --",
+      "ngày làm việc": "Work Date",
+      "nhập ghi chú...": "Enter notes...",
+      "bạn có chắc muốn xóa ca làm việc này?": "Are you sure you want to delete this shift?",
+
+      // --- Services Page (services.html) ---
+      "quản lý dịch vụ - petshop admin": "Service Management - PetShop Admin",
+      "danh sách dịch vụ": "Service List",
+      "quản lý các dịch vụ thú cưng hiện có trong hệ thống.": "Manage existing pet services in the system.",
+      "thêm dịch vụ mới": "Add New Service",
+      "tên dịch vụ": "Service Name",
+      "giá (vnđ)": "Price (VND)",
+      "thời gian (phút)": "Duration (minutes)",
+      "chưa có dịch vụ nào": "No services found",
+      "15 phút": "15 mins",
+      "30 phút": "30 mins",
+      "45 phút": "45 mins",
+      "60 phút": "60 mins",
+      "90 phút": "90 mins",
+      "120 phút": "120 mins",
+      "trạng thái hoạt động": "Active Status",
+      "cho phép khách hàng đặt lịch dịch vụ này": "Allow customers to book this service",
+      "xác nhận xóa?": "Confirm Delete?",
+      "dịch vụ sẽ bị ngừng hoạt động. hành động này không thể hoàn tác.": "The service will be deactivated. This action cannot be undone."
     }
   };
 
@@ -581,6 +749,21 @@
                            !location.pathname.includes('services.html') &&
                            !location.pathname.includes('payments.html');
       return isClientPage ? 'Dashboard' : 'Manager';
+    }
+    // 19. Confirm delete booking: "Xác nhận xóa lịch hẹn #LHxxx?" -> "Confirm deleting booking #LHxxx?"
+    if (/^xác nhận xóa lịch hẹn\s*(#lh\d+)\??$/i.test(lowerText)) {
+      const match = cleanText.match(/^xác nhận xóa lịch hẹn\s*(#lh\d+)\??$/i);
+      return `Confirm deleting booking ${match[1]}?`;
+    }
+    // 20. Confirm delete pet: "Xóa thú cưng \"name\"? Thao tác này không thể hoàn tác." -> "Delete pet \"name\"?\nThis action cannot be undone."
+    if (/^xóa thú cưng\s+"(.*)"\?\s*thao tác này không thể hoàn tác\.$/i.test(lowerText)) {
+      const match = cleanText.match(/^xóa thú cưng\s+"(.*)"\?\s*thao tác này không thể hoàn tác\.$/i);
+      return `Delete pet "${match[1]}"?\nThis action cannot be undone.`;
+    }
+    // 21. Toast deleted pet: "Đã xóa thú cưng \"name\"" -> "Deleted pet \"name\""
+    if (/^đã xóa thú cưng\s+"(.*)"$/i.test(lowerText)) {
+      const match = cleanText.match(/^đã xóa thú cưng\s+"(.*)"$/i);
+      return `Deleted pet "${match[1]}"`;
     }
 
     const dict = translations[currentLang];

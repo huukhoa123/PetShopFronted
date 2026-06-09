@@ -789,7 +789,7 @@ async function processPayment() {
     // Mở hóa đơn nếu có paymentId trả về
     if (result.paymentId) {
       setTimeout(() => {
-        if (confirm('Thanh toán thành công! Bạn có muốn xem hóa đơn ngay không?')) {
+        if (confirm(_t('Thanh toán thành công! Bạn có muốn xem hóa đơn ngay không?'))) {
           previewInvoice(result.paymentId);
         }
       }, 400);
@@ -932,7 +932,7 @@ function showToast(msg, type = 'success') {
 }
 
 function clearClientPayments() {
-  if (!confirm('Xóa toàn bộ dữ liệu thanh toán online đã lưu cục bộ?')) return;
+  if (!confirm(_t('Xóa toàn bộ dữ liệu thanh toán online đã lưu cục bộ?'))) return;
   localStorage.removeItem('petshop_completed_payments');
   showToast('Đã xóa cache thanh toán online', 'success');
   loadData();
@@ -968,7 +968,10 @@ function toggleSidebar() {
   if (sidebar) sidebar.classList.toggle('-translate-x-full');
   if (overlay) overlay.classList.toggle('hidden');
 }
-
+function logout(){
+  if(!confirm(_t('Đăng xuất?'))) return;
+  localStorage.clear(); location.href='login.html';
+}
 </script>
 <script src="i18n.js"></script>
 </body>

@@ -467,7 +467,7 @@ async function saveSchedule() {
 
 // ── DELETE ──
 async function deleteItem(id) {
-  if (!confirm('Bạn có chắc muốn xóa ca làm việc này?')) return;
+  if (!confirm(_t('Bạn có chắc muốn xóa ca làm việc này?'))) return;
   try {
     showLoading(true);
     const res = await fetch(`${BASE}/schedules/${id}`, { method: 'DELETE' });
@@ -615,7 +615,10 @@ function toggleSidebar() {
   if (sidebar) sidebar.classList.toggle('-translate-x-full');
   if (overlay) overlay.classList.toggle('hidden');
 }
-
+function logout(){
+  if(!confirm(_t('Đăng xuất?'))) return;
+  localStorage.clear(); location.href='login.html';
+}
 </script>
 <script src="i18n.js"></script>
 </body>

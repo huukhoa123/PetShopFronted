@@ -992,7 +992,7 @@ async function processPayment() {
 
     if (result.paymentId) {
       setTimeout(() => {
-        if (confirm('Thanh toán thành công! Bạn có muốn xem hóa đơn ngay không?')) {
+        if (confirm(_t('Thanh toán thành công! Bạn có muốn xem hóa đơn ngay không?'))) {
           previewInvoice(result.paymentId);
         }
       }, 300);
@@ -1135,7 +1135,10 @@ function showToast(msg, type = 'success') {
   setTimeout(() => t.classList.add('hidden'), 3000);
 }
 
-function logout() { window.location.href = 'login.html'; }
+function logout() {
+  if (!confirm(_t('Đăng xuất?'))) return;
+  localStorage.clear(); window.location.href = 'login.html';
+}
 
 function handleVnPayReturnParams() {
   const params = new URLSearchParams(window.location.search);

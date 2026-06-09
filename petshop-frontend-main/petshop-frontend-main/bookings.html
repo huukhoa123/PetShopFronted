@@ -779,7 +779,7 @@ async function updateStatus() {
 
 // ─── XÓA ───
 async function deleteBooking(id) {
-  if (!confirm(`Xác nhận xóa lịch hẹn #LH${String(id).padStart(3,'0')}?`)) return;
+  if (!confirm(_t(`Xác nhận xóa lịch hẹn #LH${String(id).padStart(3,'0')}?`))) return;
   try {
     const r = await fetch(`${API}/bookings/${id}`, { method: 'DELETE' });
     if (r.ok) {
@@ -835,7 +835,10 @@ function toggleSidebar() {
   if (sidebar) sidebar.classList.toggle('-translate-x-full');
   if (overlay) overlay.classList.toggle('hidden');
 }
-
+function logout(){
+  if(!confirm(_t('Đăng xuất?'))) return;
+  localStorage.clear(); location.href='login.html';
+}
 </script>
 <script src="i18n.js"></script>
 </body></html>
