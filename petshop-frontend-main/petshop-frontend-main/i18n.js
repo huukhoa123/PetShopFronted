@@ -1043,6 +1043,32 @@
       return cleanText.replace(/phút/gi, 'mins');
     }
 
+    // 26. Collision resolution for "cái" (Female gender vs Product unit "item")
+    if (lowerText === 'cái') {
+      const isPetPage = location.pathname.includes('pets.html') || 
+                        location.pathname.includes('customers.html') ||
+                        location.pathname.includes('bookings.html');
+      return isPetPage ? 'Female' : 'item';
+    }
+
+    // 27. "Còn hàng (X)" -> "In stock (X)"
+    if (/^còn hàng\s*\(\d+\)$/i.test(lowerText)) {
+      const match = cleanText.match(/^còn hàng\s*\((\d+)\)$/i);
+      return `In stock (${match[1]})`;
+    }
+
+    // 28. "Sắp hết (X)" -> "Low stock (X)"
+    if (/^sắp hết\s*\(\d+\)$/i.test(lowerText)) {
+      const match = cleanText.match(/^sắp hết\s*\((\d+)\)$/i);
+      return `Low stock (${match[1]})`;
+    }
+
+    // 29. "Thêm vào giỏ hàng — X" -> "Add to cart — X"
+    if (/^thêm vào giỏ hàng\s*[-—]\s*(.*)$/i.test(lowerText)) {
+      const match = cleanText.match(/^thêm vào giỏ hàng\s*[-—]\s*(.*)$/i);
+      return `Add to cart — ${match[1]}`;
+    }
+
     const dict = translations[currentLang];
     
     if (dict && dict[lowerText]) {
