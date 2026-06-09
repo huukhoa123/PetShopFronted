@@ -806,7 +806,46 @@
       "tên khách hàng": "Customer Name",
       "vui lòng nhập họ tên.": "Please enter your name.",
       "thanh toán thành công!": "Payment successful!",
-      "thanh toán vnpay thành công!": "VNPay payment successful!"
+      "thanh toán vnpay thành công!": "VNPay payment successful!",
+
+      // --- Services & Bookings Page ---
+      "phổ biến nhất": "Most Popular",
+      "grooming cơ bản": "Basic Grooming",
+      "tắm, sấy, chải lông": "Bath, dry & brush",
+      "khám sức khỏe": "Health Check",
+      "kiểm tra sức khỏe tổng quát": "General health checkup",
+      "từ": "From",
+      "đặt lịch": "Book Appointment",
+      "đặt": "Book",
+      "grooming toàn diện": "Full Grooming",
+      "tắm, sấy, cắt lông, cắt móng": "Bath, dry, haircut & nail trimming",
+      "vệ sinh răng": "Dental Care",
+      "làm sạch răng chuyên nghiệp": "Professional dental cleaning",
+      "tiêm vaccine định kỳ hàng năm": "Annual periodic vaccinations",
+      "không có dịch vụ nào.": "No services available.",
+      "hiện chưa có dịch vụ nào.": "No services available currently.",
+      "không có lịch hẹn nào.": "No bookings found.",
+
+      // --- Mock Services ---
+      "full grooming toàn diện": "Full Premium Grooming",
+      "tắm, sấy, cắt tỉa lông, vệ sinh tai, cắt móng – trọn gói chăm sóc cao cấp.": "Bath, dry, haircut, ear cleaning, nail trim – premium all-in-one care.",
+      "tắm spa & massage": "Spa Bath & Massage",
+      "tắm nước ấm thảo dược kết hợp massage thư giãn.": "Warm herbal bath combined with relaxing massage.",
+      "cắt tỉa lông chuyên sâu": "Professional Haircut & Styling",
+      "tạo kiểu theo yêu cầu bởi groomer chuyên nghiệp.": "Custom styling by our professional groomers.",
+      "chăm sóc răng miệng": "Dental Care",
+      "vệ sinh răng, làm sạch cao răng chuyên nghiệp.": "Professional teeth cleaning and scaling.",
+      "khám sức khỏe định kỳ": "Routine Health Checkup",
+      "khám tổng quát, tư vấn dinh dưỡng và sức khỏe.": "General checkup, nutrition and health counseling.",
+
+      // --- Empty states & Error states ---
+      "chưa có đơn hàng nào": "No orders yet",
+      "hãy đặt mua sản phẩm để bắt đầu!": "Please place an order to get started!",
+      "mua sản phẩm ngay": "Buy products now",
+      "không tìm thấy hồ sơ": "Profile not found",
+      "không khớp tài khoản với dữ liệu khách hàng.": "Account does not match customer records.",
+      "vui lòng liên hệ cửa hàng để được hỗ trợ.": "Please contact the store for assistance.",
+      "liên hệ hỗ trợ": "Contact Support"
     }
   };
 
@@ -982,6 +1021,11 @@
     if (/^vai trò:\s*(.*)$/i.test(lowerText)) {
       const match = cleanText.match(/^vai trò:\s*(.*)$/i);
       return `Role: ${match[1]}`;
+    }
+
+    // 25. "X phút" -> "X mins" (dynamic duration translation)
+    if (/\b\d+\s*phút\b/i.test(lowerText)) {
+      return cleanText.replace(/phút/gi, 'mins');
     }
 
     const dict = translations[currentLang];
