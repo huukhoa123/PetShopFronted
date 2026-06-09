@@ -53,7 +53,7 @@
 <body class="bg-background text-on-background antialiased overflow-hidden flex h-screen">
 
 <!-- ───── SIDEBAR ───── -->
-<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+<aside id="adminSidebar" class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto transition-transform duration-300 -translate-x-full md:translate-x-0">
   <div class="mb-6 px-3 py-2">
     <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
     <p class="text-xs text-slate-500">Management Portal</p>
@@ -76,12 +76,13 @@
     </button>
   </div>
 </aside>
+<div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-[45] hidden"></div>
 
 <!-- ───── MAIN AREA ───── -->
 <div class="flex-1 flex flex-col md:ml-64 w-full h-full relative">
 
   <!-- TOPBAR -->
-  <header class="fixed top-0 right-0 left-64 h-16 bg-white border-b border-slate-200 shadow-sm flex items-center justify-between px-6 z-10">
+  <header class="fixed top-0 right-0 left-0 md:left-64 h-16 bg-white border-b border-slate-200 shadow-sm flex items-center justify-between px-6 z-10">
     <h2 class="text-xl font-bold text-slate-900">Quản lý Nhân viên</h2>
     <!-- Search in topbar -->
     <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden sm:block">
@@ -514,6 +515,14 @@ function showToast(msg, type = 'success') {
   toast.classList.remove('hidden');
   setTimeout(() => toast.classList.add('hidden'), 3000);
 }
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  if (sidebar) sidebar.classList.toggle('-translate-x-full');
+  if (overlay) overlay.classList.toggle('hidden');
+}
+
 </script>
 <script src="i18n.js"></script>
 </body>

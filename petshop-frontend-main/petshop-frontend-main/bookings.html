@@ -62,7 +62,7 @@
 <body class="bg-background font-body-md text-body-md text-on-background flex h-screen overflow-hidden">
 
 <!-- ══════════════════ SIDEBAR (giữ nguyên gốc) ══════════════════ -->
-<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+<aside id="adminSidebar" class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto transition-transform duration-300 -translate-x-full md:translate-x-0">
   <div class="mb-6 px-3 py-2">
     <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
     <p class="text-xs text-slate-500">Management Portal</p>
@@ -85,12 +85,16 @@
     </button>
   </div>
 </aside>
+<div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-[45] hidden"></div>
 <!-- ══════════════════ MAIN ══════════════════ -->
-<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden">
+<main class="ml-0 md:ml-64 flex-1 flex flex-col h-screen overflow-hidden">
 
   <!-- TopNavBar (giữ nguyên gốc, thêm search thật) -->
   <header class="w-full h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center px-6 sticky top-0 z-40">
     <div class="flex items-center gap-4">
+      <button onclick="toggleSidebar()" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 mr-2">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
       <h2 class="text-xl font-black  dark:text-blue-400 font-headline-md">Quản lý Lịch hẹn</h2>
     </div>
     <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:block">
@@ -824,6 +828,14 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden) refreshBookingsIfNeeded();
 });
 window.addEventListener('focus', refreshBookingsIfNeeded);
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  if (sidebar) sidebar.classList.toggle('-translate-x-full');
+  if (overlay) overlay.classList.toggle('hidden');
+}
+
 </script>
 <script src="i18n.js"></script>
 </body></html>

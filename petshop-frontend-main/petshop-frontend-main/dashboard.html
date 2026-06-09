@@ -66,7 +66,7 @@
 <body class="bg-background text-on-background min-h-screen flex">
 
 <!-- ══════════ SIDEBAR ══════════ -->
-<aside class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto">
+<aside id="adminSidebar" class="bg-white w-[240px] h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col p-4 gap-1 z-50 overflow-y-auto transition-transform duration-300 -translate-x-full md:translate-x-0">
   <div class="mb-6 px-3 py-2">
     <h1 class="text-lg font-black tracking-tight text-primary">PetShop Admin</h1>
     <p class="text-xs text-slate-500">Management Portal</p>
@@ -92,13 +92,19 @@
     </button>
   </div>
 </aside>
+<div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-[45] hidden"></div>
 
 <!-- ══════════ MAIN ══════════ -->
-<div class="flex-1 flex flex-col ml-64 min-w-0 bg-background">
+<div class="flex-1 flex flex-col ml-0 md:ml-64 min-w-0 bg-background">
 
   <!-- TOPBAR -->
   <header class="bg-slate-50/90 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 flex justify-between items-center h-16 px-6">
-    <span class="text-xl font-black tracking-tight text-slate-900">PetShop Admin</span>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleSidebar()" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 mr-2">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <span class="text-xl font-black tracking-tight text-slate-900">PetShop Admin</span>
+    </div>
     <div class="flex items-center gap-md">
       <span class="text-xs text-slate-400 hidden md:block" id="lastUpdated"></span>
       <button onclick="loadAll()" id="refreshBtn" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all cursor-pointer hover:bg-slate-100" title="Làm mới">
@@ -1551,8 +1557,15 @@ document.addEventListener('visibilitychange', () => {
   const greet = document.getElementById('greeting');
   if (greet) greet.textContent = 'Xin chào, ' + displayName + ' 👋';
 })();
-</script>
 
+function toggleSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  if (sidebar) sidebar.classList.toggle('-translate-x-full');
+  if (overlay) overlay.classList.toggle('hidden');
+}
+
+</script>
 <script src="i18n.js"></script>
 </body>
 </html>
