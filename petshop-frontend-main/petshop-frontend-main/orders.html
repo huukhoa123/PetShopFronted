@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8"/>
@@ -645,7 +645,7 @@ function renderProductList(list) {
   }
   el.innerHTML = list.map(p => {
     const inCart = orderItems.find(i => i.type === 'product' && i.refId === p.id);
-    const isLow  = p.stockQuantity < 50;
+    const isLow  = p.stockQuantity < 10;
     return `
       <div class="flex items-center gap-2 p-2 rounded-lg border ${inCart ? 'border-primary bg-primary-container/10' : 'border-outline-variant/50 hover:bg-surface-container-low'} transition-colors cursor-pointer group" onclick="addToCart('product', ${p.id}, '${p.productName.replace(/'/g,"\\'")}', ${p.price}, ${p.stockQuantity})">
         <div class="w-8 h-8 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0">
