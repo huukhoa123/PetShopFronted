@@ -516,16 +516,16 @@ const API_BASE = 'https://petshop-api.ddnsfree.com/api/products';
 const STORAGE_KEY = 'petshop_products';
 
 const DEFAULT_PRODUCTS = [
-  { id: 1,  categoryId: 1, productName: 'Royal Canin Adult Dog 10kg', price: 850000, stockQuantity: 50,  unit: 'túi',  description: 'Thức ăn cao cấp cho chó trưởng thành, công thức cân bằng dinh dưỡng tối ưu.', img: 'https://npet.com.vn/wp-content/uploads/2023/11/thuc-an-cho-cho-4.jpg' },
-  { id: 2,  categoryId: 1, productName: 'Pedigree Puppy 3kg',          price: 180000, stockQuantity: 80,  unit: 'túi',  description: 'Thức ăn dinh dưỡng cho chó con, giàu DHA hỗ trợ phát triển não bộ.',         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJOUB9X1yuSY3w2Q6puFgy1gkihZKfc23MgA&s' },
-  { id: 3,  categoryId: 2, productName: 'Whiskas Adult Cat 1.2kg',     price: 120000, stockQuantity: 60,  unit: 'túi',  description: 'Dinh dưỡng hoàn chỉnh cho mèo trưởng thành, hương vị cá hấp dẫn.',            img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8tGAXywsx1QkHoBaat_2HsRHwOj9jqWwLFWDp8auU6ifLsx1nD24ejOINxAz6IryUsicyWIEWXb5hihSuEJ3JjP75dOMO_FxZc9iopk9s6hKvjocbXmuRPL-kvBS8EiBqQ8tjTGEVQdvtCtu-VXcYDmAJWOgysbmvvtXAMZpwM6iCdVuVC0QRt_WTKS9vlTXsTG4otshSjMF39aLizwZPTqsq9l9ym0ved0aUzm85LHn1xhCsR69jTevokxL0rabBcRECr83zwXg' },
-  { id: 4,  categoryId: 2, productName: 'Royal Canin Kitten 400g',     price:  95000, stockQuantity: 70,  unit: 'túi',  description: 'Dinh dưỡng đặc biệt cho mèo con đang phát triển, tăng cường miễn dịch.',       img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDd72hrYWYQmbhKzm5n2_WQk0b8Ei7mOCtsG8exninnousF-gGgSuKcaNoHYWqg3u1w6efz-MUTG18bNUEUJcUsdDlfuRTilaif7rvV3uK79YI2Gib_QCKUHFTWwuAPC4ehBbTfutU77W00CD6YfjRNc0CSmUkcuwmYNrOH2fngOgilHp0F5HnCcE3Yr59Yza2NTQp1d-0OE23gLpjN6zFYGGnNBdHPGp5mL03y5mjH8c3MoIvDAL8UFp1x28QUs851_ZWXe_kcv44' },
+  { id: 1,  categoryId: 1, productName: 'Royal Canin Adult Dog 10kg', price: 850000, stockQuantity: 50,  unit: 'túi',  description: 'Thức ăn cao cấp cho chó trưởng thành, công thức cân bằng dinh dưỡng tối ưu.', img: 'https://npet.com.vn/wp-content/uploads/2023/11/thuc-an-cho-cho-4.jpg', manufacturingDate: '2026-01-15', expiryDate: '2027-01-15' },
+  { id: 2,  categoryId: 1, productName: 'Pedigree Puppy 3kg',          price: 180000, stockQuantity: 80,  unit: 'túi',  description: 'Thức ăn dinh dưỡng cho chó con, giàu DHA hỗ trợ phát triển não bộ.',         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJOUB9X1yuSY3w2Q6puFgy1gkihZKfc23MgA&s', manufacturingDate: '2026-03-01', expiryDate: '2026-07-15' },
+  { id: 3,  categoryId: 2, productName: 'Whiskas Adult Cat 1.2kg',     price: 120000, stockQuantity: 60,  unit: 'túi',  description: 'Dinh dưỡng hoàn chỉnh cho mèo trưởng thành, hương vị cá hấp dẫn.',            img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8tGAXywsx1QkHoBaat_2HsRHwOj9jqWwLFWDp8auU6ifLsx1nD24ejOINxAz6IryUsicyWIEWXb5hihSuEJ3JjP75dOMO_FxZc9iopk9s6hKvjocbXmuRPL-kvBS8EiBqQ8tjTGEVQdvtCtu-VXcYDmAJWOgysbmvvtXAMZpwM6iCdVuVC0QRt_WTKS9vlTXsTG4otshSjMF39aLizwZPTqsq9l9ym0ved0aUzm85LHn1xhCsR69jTevokxL0rabBcRECr83zwXg', manufacturingDate: '2025-05-01', expiryDate: '2026-05-01' },
+  { id: 4,  categoryId: 2, productName: 'Royal Canin Kitten 400g',     price:  95000, stockQuantity: 70,  unit: 'túi',  description: 'Dinh dưỡng đặc biệt cho mèo con đang phát triển, tăng cường miễn dịch.',       img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDd72hrYWYQmbhKzm5n2_WQk0b8Ei7mOCtsG8exninnousF-gGgSuKcaNoHYWqg3u1w6efz-MUTG18bNUEUJcUsdDlfuRTilaif7rvV3uK79YI2Gib_QCKUHFTWwuAPC4ehBbTfutU77W00CD6YfjRNc0CSmUkcuwmYNrOH2fngOgilHp0F5HnCcE3Yr59Yza2NTQp1d-0OE23gLpjN6zFYGGnNBdHPGp5mL03y5mjH8c3MoIvDAL8UFp1x28QUs851_ZWXe_kcv44', manufacturingDate: '2026-02-10', expiryDate: '2027-02-10' },
   { id: 5,  categoryId: 3, productName: 'Vòng cổ da',                  price:  95000, stockQuantity: 40,  unit: 'cái',  description: 'Vòng cổ da thật cao cấp, khóa kim loại chắc chắn, nhiều màu sắc thời trang.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwNVbQjcIqhaCIxyiwg70zpIu2uNWHTahdNg&s' },
   { id: 6,  categoryId: 3, productName: 'Dây dắt tự thu 5m',          price: 185000, stockQuantity: 30,  unit: 'cái',  description: 'Dây dắt tự thu hiện đại dài 5m, thiết kế ergonomic thoải mái khi cầm nắm.',  img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKojqFd-TqOCMk2kqsEyfdONMPecJFyK9aOQ&s' },
-  { id: 7,  categoryId: 4, productName: 'Dầu gội thú cưng 500ml',     price: 125000, stockQuantity: 100, unit: 'chai', description: 'Dầu gội nhẹ nhàng, pH cân bằng cho da thú cưng. Hương thơm tự nhiên.',         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnNDrxTO_0IYmwXvlQvA0dtkhzJdla2HRGSA&s' },
+  { id: 7,  categoryId: 4, productName: 'Dầu gội thú cưng 500ml',     price: 125000, stockQuantity: 100, unit: 'chai', description: 'Dầu gội nhẹ nhàng, pH cân bằng cho da thú cưng. Hương thơm tự nhiên.',         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnNDrxTO_0IYmwXvlQvA0dtkhzJdla2HRGSA&s', manufacturingDate: '2025-08-01', expiryDate: '2027-08-01' },
   { id: 8,  categoryId: 4, productName: 'Lược chải lông',              price:  75000, stockQuantity: 45,  unit: 'cái',  description: 'Lược chải lông chuyên nghiệp, tay cầm ergonomic, không gây đau cho thú cưng.',  img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTigj666i-xrV_Afly287GL36vCd9P0ZAWPKg&s' },
-  { id: 9,  categoryId: 5, productName: 'Dầu cá Omega-3 60 viên',     price: 220000, stockQuantity: 35,  unit: 'chai', description: 'Viên dầu cá Omega-3 cho thú cưng, giúp lông bóng mượt và tăng cường sức đề kháng.', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBity2wZZMq69kipbb2oKed2TV9nEJSRCNDP1RSabIlWv5cebZMnuYAd4ZdZvsrooGJjSNewwQBkdaalI9hW49-iycTjxr4HxhMftyRKUv3_-m__6k6r6tnEZFMsMybvtVbzQsR8yvCYWKTIWm0r14fSQZ1bb8trXvIDoDNzR5sp-UiJG5RyfkGC91bSnvLCujqEeiWxUyCtTJnNrMC_bbOL6Z8G6kdKhBkz2culnxLiaw4-VyuNukwRjc_Y6AY4HoD5F5BJJOOOkk' },
-  { id: 10, categoryId: 5, productName: 'Vitamin C 100 viên',          price:  85000, stockQuantity: 55,  unit: 'chai', description: 'Vitamin C tổng hợp cho thú cưng, tăng sức đề kháng và hỗ trợ hệ miễn dịch.',   img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEqlqFDs_lN1YWKewSvykI_S68yjPSHkN2rQ&s' },
+  { id: 9,  categoryId: 5, productName: 'Dầu cá Omega-3 60 viên',     price: 220000, stockQuantity: 35,  unit: 'chai', description: 'Viên dầu cá Omega-3 cho thú cưng, giúp lông bóng mượt và tăng cường sức đề kháng.', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBity2wZZMq69kipbb2oKed2TV9nEJSRCNDP1RSabIlWv5cebZMnuYAd4ZdZvsrooGJjSNewwQBkdaalI9hW49-iycTjxr4HxhMftyRKUv3_-m__6k6r6tnEZFMsMybvtVbzQsR8yvCYWKTIWm0r14fSQZ1bb8trXvIDoDNzR5sp-UiJG5RyfkGC91bSnvLCujqEeiWxUyCtTJnNrMC_bbOL6Z8G6kdKhBkz2culnxLiaw4-VyuNukwRjc_Y6AY4HoD5F5BJJOOOkk', manufacturingDate: '2026-01-20', expiryDate: '2026-07-20' },
+  { id: 10, categoryId: 5, productName: 'Vitamin C 100 viên',          price:  85000, stockQuantity: 55,  unit: 'chai', description: 'Vitamin C tổng hợp cho thú cưng, tăng sức đề kháng và hỗ trợ hệ miễn dịch.',   img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEqlqFDs_lN1YWKewSvykI_S68yjPSHkN2rQ&s', manufacturingDate: '2026-03-10', expiryDate: '2028-03-10' },
 ];
 
 const DEFAULT_PRODUCT_IMAGES = DEFAULT_PRODUCTS.reduce((images, product) => {
@@ -585,6 +585,8 @@ function normalizeProduct(product) {
     img,
     imageUrl: img,
     isActive: product.isActive !== false,
+    manufacturingDate: product.manufacturingDate || null,
+    expiryDate: product.expiryDate || null,
   };
 }
 
@@ -1043,6 +1045,21 @@ function openModal(productId) {
   const p = PRODUCTS.find(x => x.id === productId);
   if (!p) return;
   const cat = CATEGORIES[p.categoryId] || { name: '—', cls: '' };
+  
+  let expiryInfoHtml = '';
+  if (p.expiryDate) {
+    const isExpired = new Date(p.expiryDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0);
+    expiryInfoHtml = `
+      <div class="bg-stone-50 rounded-xl p-3 col-span-2">
+        <div class="text-stone-400 text-xs mb-1">Hạn sử dụng</div>
+        <div class="font-semibold ${isExpired ? 'text-red-600' : 'text-stone-700'} flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[16px] text-primary">calendar_today</span>
+          ${p.expiryDate.split('-').reverse().join('/')} ${isExpired ? '<span class="text-red-500 font-bold">(Đã hết hạn!)</span>' : ''}
+        </div>
+      </div>
+    `;
+  }
+
   document.getElementById('modalContent').innerHTML = `
     <img src="${p.img}" alt="${p.productName}" class="w-full aspect-square object-cover rounded-xl mb-4"
          onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22><rect fill=%22%23e9f0e2%22 width=%22300%22 height=%22300%22/><text y=%22160%22 x=%22150%22 text-anchor=%22middle%22 font-size=%2270%22>🐾</text></svg>'"/>
@@ -1068,11 +1085,13 @@ function openModal(productId) {
         <div class="text-stone-400 text-xs mb-1">ID sản phẩm</div>
         <div class="font-semibold text-stone-700">#${String(p.id).padStart(4,'0')}</div>
       </div>
+      ${expiryInfoHtml}
     </div>
     <button onclick="addToCart(${p.id}); closeModal();"
-      class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold text-base active:scale-95 transition-transform hover:bg-surface-tint flex items-center justify-center gap-2">
+      class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold text-base active:scale-95 transition-transform hover:bg-surface-tint flex items-center justify-center gap-2"
+      ${p.stockQuantity <= 0 ? 'disabled' : ''}>
       <span class="material-symbols-outlined">add_shopping_cart</span>
-      Thêm vào giỏ hàng — ${fmtPrice(p.price)}
+      ${p.stockQuantity <= 0 ? 'Hết hàng' : `Thêm vào giỏ hàng — ${fmtPrice(p.price)}`}
     </button>`;
   const overlay = document.getElementById('modalOverlay');
   overlay.classList.remove('hidden');
